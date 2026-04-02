@@ -1,61 +1,35 @@
 @echo off
-title Atualizando Dashboard CodeCraft...
-color 0A
+setlocal
 
-echo.
-echo  ============================================
-echo   DASHBOARD CODECRAFT — ATUALIZACAO DIARIA
-echo  ============================================
-echo.
-
-REM --- Caminho da pasta do dashboard ---
+REM --- Caminhos ---
 set PASTA=C:\Users\adria\OneDrive\C3 Gestao\EquipeC3\CODECRAFT\7. Dashboard
-set EXCEL=C:\Users\adria\OneDrive\C3 Gestao\EquipeC3\CODECRAFT\Relatorio Gerencial_Codecraft2026.xlsx
-set PYTHON=python
+set LOG=%PASTA%\log_atualizacao.txt
 
 REM --- Entrar na pasta ---
 cd /d "%PASTA%"
+
+REM --- Registrar inicio no log ---
+echo ========================================= >> "%LOG%"
+echo Inicio: %date% %time% >> "%LOG%"
+
+REM --- Rodar Python silenciosamente ---
+python gerar_dados_dashboard.py >> "%LOG%" 2>&1
 if errorlevel 1 (
-    echo ERRO: Pasta nao encontrada: %PASTA%
-    pause
+    echo ERRO no Python >> "%LOG%"
     exit /b 1
 )
 
-echo [1/3] Atualizando dados do Excel...
-echo.
-%PYTHON% gerar_dados_dashboard.py
+REM --- Enviar para GitHub silenciosamente ---
+git add . >> "%LOG%" 2>&1
+git commit -m "atualizacao automatica %date%" >> "%LOG%" 2>&1
+git push >> "%LOG%" 2>&1
 if errorlevel 1 (
-    echo.
-    echo ERRO ao rodar o script Python.
-    echo Verifique se o Python esta instalado e o Excel esta fechado.
-    pause
+    echo ERRO no Git push >> "%LOG%"
     exit /b 1
 )
 
-echo.
-echo [2/3] Enviando para o GitHub...
-echo.
-git add .
-git commit -m "atualizacao automatica %date% %time%"
-git push
+REM --- Registrar sucesso ---
+echo Sucesso! Dashboard atualizado. >> "%LOG%"
+echo ========================================= >> "%LOG%"
 
-if errorlevel 1 (
-    echo.
-    echo ERRO ao enviar para o GitHub.
-    echo Verifique sua conexao com a internet.
-    pause
-    exit /b 1
-)
-
-echo.
-echo  ============================================
-echo   CONCLUIDO COM SUCESSO!
-echo  ============================================
-echo.
-echo  Link do cliente:
-echo  https://adrianac3gestao-lgtm.github.io/codecraft-dashboard
-echo.
-echo  O dashboard estara atualizado em ~1 minuto.
-echo.
-echo  Pressione qualquer tecla para fechar...
-pause > nul
+endlocal

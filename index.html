@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CodeCraft - Análise Financeira 2025·2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f2f4f9;--white:#fff;--ink:#111827;--ink2:#374151;
+  --muted:#6b7280;--border:#e5e7eb;--light:#f9fafb;
+  --blue:#1d4ed8;--blue-l:#eff6ff;--blue-m:#3b82f6;
+  --green:#065f46;--green-l:#ecfdf5;--green-m:#10b981;
+  --amber:#92400e;--amber-l:#fffbeb;--amber-m:#f59e0b;
+  --red:#991b1b;--red-l:#fef2f2;--red-m:#ef4444;
+  --violet:#4c1d95;--violet-l:#f5f3ff;--violet-m:#8b5cf6;
+  --slate:#334155;--slate-l:#f1f5f9;
+  --nav-h:50px;--tab-h:42px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-size:13px;min-height:100vh}
+.nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:var(--ink);display:flex;align-items:center;padding:0 20px;gap:14px;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.nav-brand{font-family:'Barlow Condensed',sans-serif;font-size:19px;font-weight:800;color:#fff;letter-spacing:-.01em;white-space:nowrap}
+.nav-brand span{color:#60a5fa}
+.nav-tag{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-left:2px;white-space:nowrap}
+.nav-spacer{flex:1}
+.nav-info{font-size:10px;color:rgba(255,255,255,.38);text-align:right;line-height:1.4}
+.tabs{position:fixed;top:var(--nav-h);left:0;right:0;height:var(--tab-h);background:var(--white);border-bottom:2px solid var(--border);display:flex;align-items:stretch;padding:0 20px;gap:2px;z-index:99;overflow-x:auto}
+.tab{display:flex;align-items:center;gap:6px;padding:0 14px;border:none;background:transparent;font-family:'Barlow',sans-serif;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
+.tab:hover{color:var(--ink);background:var(--light)}
+.tab.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
+.tab-icon{font-size:13px}
+.tab-badge{font-size:8px;font-weight:700;padding:1px 5px;border-radius:8px;background:var(--amber-l);color:var(--amber)}
+.page{display:none;padding-top:108px;padding-bottom:28px;padding-left:18px;padding-right:18px}
+.page.active{display:block}
+/* FILTER BAR */
+.filter-bar{background:#eff6ff;border:2px solid var(--blue-m);border-radius:8px;padding:10px 16px;margin-bottom:14px;margin-top:0;display:flex;flex-direction:column;gap:0;box-shadow:0 2px 8px rgba(29,78,216,.12)}
+.filter-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:4px 0;min-height:32px}
+.filter-row+.filter-row{border-top:1px solid #bfdbfe;margin-top:4px;padding-top:4px}
+.filter-label{font-size:9.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);white-space:nowrap;min-width:40px}
+.filter-group{display:flex;gap:3px;flex-wrap:wrap}
+.fbtn{padding:4px 11px;border-radius:14px;border:1.5px solid #93c5fd;background:var(--white);font-family:'Barlow',sans-serif;font-size:11px;font-weight:500;color:#1e40af;cursor:pointer;transition:all .13s;white-space:nowrap}
+.fbtn:hover{border-color:var(--blue-m);color:var(--blue);background:#dbeafe}
+.fbtn.active{background:#1d4ed8;border-color:#1d4ed8;color:#fff;font-weight:700;box-shadow:0 2px 6px rgba(29,78,216,.4)}
+.filter-sep{width:1px;height:20px;background:var(--border);flex-shrink:0}
+/* KPI */
+.kpi-row{display:grid;gap:8px;margin-bottom:11px}
+.kpi-row.col4{grid-template-columns:repeat(4,1fr)}
+.kpi-row.col5{grid-template-columns:repeat(5,1fr)}
+.kpi-row.col3{grid-template-columns:repeat(3,1fr)}
+.kpi-card{background:var(--white);border:1px solid var(--border);border-radius:7px;padding:14px 16px;position:relative;overflow:hidden;transition:all .2s;min-height:78px}
+.kpi-card:hover{box-shadow:0 6px 20px rgba(0,0,0,.13);transform:translateY(-2px);border-color:rgba(0,0,0,.12)}
+.kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px}
+.kk-blue::before{background:var(--blue-m)}.kk-green::before{background:var(--green-m)}
+.kk-amber::before{background:var(--amber-m)}.kk-red::before{background:var(--red-m)}
+.kk-violet::before{background:var(--violet-m)}.kk-slate::before{background:var(--slate)}
+.kk-muted::before{background:var(--muted)}
+.kpi-label{font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+.kpi-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;line-height:1;margin-bottom:3px}
+.kpi-sub{font-size:10px;color:var(--muted);margin-top:2px}
+.c-blue{color:var(--blue-m)}.c-green{color:var(--green-m)}.c-amber{color:var(--amber-m)}
+.c-red{color:var(--red-m)}.c-violet{color:var(--violet-m)}.c-ink{color:var(--ink)}.c-slate{color:var(--slate)}
+/* GRID */
+.grid{display:grid;gap:10px;margin-bottom:10px}
+.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}
+.g-6040{grid-template-columns:1.4fr 1fr}.g-4060{grid-template-columns:1fr 1.4fr}
+/* CARD */
+.card{background:var(--white);border:1px solid var(--border);border-radius:7px;padding:11px 14px}
+.card-scroll{overflow-y:auto;overflow-x:hidden}
+.card-scroll::-webkit-scrollbar{width:5px}
+.card-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+.card.previsto{border-color:#94a3b8;background:var(--slate-l)}
+.card-title{font-family:'Barlow Condensed',sans-serif;font-size:11.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2);margin-bottom:2px}
+.card-sub{font-size:10px;color:var(--muted);margin-bottom:8px}
+/* SECTION HEADER */
+.sec-hd{display:flex;align-items:center;gap:9px;margin-bottom:10px;padding-bottom:7px;border-bottom:1px solid var(--border)}
+.sec-icon{font-size:17px}
+.sec-title{font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:800;color:var(--ink);letter-spacing:-.01em}
+.sec-desc{font-size:10px;color:var(--muted);margin-top:1px}
+.sec-badge{margin-left:auto;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2.5px 7px;border-radius:9px}
+/* TABLE */
+.dt{width:100%;border-collapse:collapse;font-size:11.5px}
+.dt th{font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);padding:5px 7px;border-bottom:1.5px solid var(--border);text-align:left;white-space:nowrap}
+.dt td{padding:5px 7px;border-bottom:1px solid var(--light);vertical-align:middle}
+.dt tbody tr:hover td{background:var(--light)}
+.dt tr:last-child td{border-bottom:none}
+.dt tfoot td{font-weight:700;background:#f3f4f8;border-top:1.5px solid var(--border);padding:6px 7px}
+.dt.previsto th{color:#475569}.dt.previsto tfoot td{background:#e2e8f0}
+.mono{font-family:'Barlow Condensed',sans-serif;font-size:12.5px}
+.pos{color:var(--green-m);font-weight:600}.neg{color:var(--red-m);font-weight:600}
+.pend{color:var(--amber-m);font-weight:600}.prev-val{color:var(--slate);font-weight:600}
+.badge{display:inline-block;padding:1px 5px;border-radius:7px;font-size:9px;font-weight:700;white-space:nowrap}
+.bg{background:var(--green-l);color:var(--green)}.ba{background:var(--amber-l);color:var(--amber)}
+.bb{background:var(--blue-l);color:var(--blue)}.br{background:var(--red-l);color:var(--red)}
+.bv{background:var(--violet-l);color:var(--violet)}.bs{background:var(--slate-l);color:var(--slate)}
+/* ALERT */
+.alert{border-radius:6px;padding:8px 11px;font-size:11px;line-height:1.5;border-left:3px solid;margin-bottom:9px}
+.alert-r{background:var(--red-l);border-color:var(--red-m);color:#7f1d1d}
+.alert-a{background:var(--amber-l);border-color:var(--amber-m);color:#78350f}
+.alert-g{background:var(--green-l);border-color:var(--green-m);color:#064e3b}
+.alert-b{background:var(--blue-l);border-color:var(--blue-m);color:#1e3a8a}
+.alert-v{background:var(--violet-l);border-color:var(--violet-m);color:#3b0764}
+.alert-s{background:var(--slate-l);border-color:var(--slate);color:#1e293b}
+.alert strong{font-weight:700}
+/* LEGEND */
+.legend{display:flex;gap:9px;flex-wrap:wrap;margin-bottom:6px}
+.li{display:flex;align-items:center;gap:3px;font-size:9.5px;color:var(--muted)}
+.ld{width:8px;height:8px;border-radius:2px;flex-shrink:0}
+/* FLOW */
+.flow{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin-bottom:10px}
+.fbox{border-radius:6px;padding:6px 10px;text-align:center;border:1px solid var(--border);min-width:85px}
+.fbox-t{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
+.fbox-v{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700}
+.fbox-s{font-size:8px;color:var(--muted);margin-top:1px}
+.farrow{font-size:14px;color:var(--muted);flex-shrink:0}
+/* BAR TRACK */
+.bar-track{height:4px;background:var(--border);border-radius:3px;overflow:hidden;margin-top:3px}
+.bar-fill{height:100%;border-radius:3px;transition:width .5s ease}
+/* SROW */
+.srow{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--light)}
+.srow:last-child{border-bottom:none}
+.sname{font-size:11.5px;font-weight:500}
+.sval{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;text-align:center;flex:1}
+.spct{font-size:10px;color:var(--muted);min-width:34px;text-align:right}
+/* INSIGHT */
+.insight-list{display:flex;flex-direction:column;gap:6px}
+.insight{display:flex;gap:8px;align-items:flex-start;background:var(--light);border-radius:6px;padding:7px 10px;font-size:11px;line-height:1.5;color:var(--ink2)}
+.i-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-top:4px}
+/* OV GRID */
+.ov-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:11px}
+.ov-card{background:var(--white);border:1px solid var(--border);border-radius:9px;padding:16px 18px;cursor:pointer;transition:all .18s;text-decoration:none;display:block}
+.ov-card:hover{box-shadow:0 4px 16px rgba(0,0,0,.09);transform:translateY(-2px)}
+.ov-icon{font-size:19px;margin-bottom:5px}
+.ov-num{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:2px}
+.ov-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;line-height:1.2;margin-bottom:4px}
+.ov-desc{font-size:10px;color:var(--muted);line-height:1.38;margin-bottom:6px}
+.ov-open{font-size:9px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
+/* YEAR SPLIT */
+.year-split{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.year-panel{background:var(--white);border:1px solid var(--border);border-radius:7px;padding:11px 14px;min-height:0}
+.year-panel.y2025{border-top:3px solid var(--blue-m)}
+.year-panel.y2026{border-top:3px solid var(--green-m)}
+.year-label{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.y2025 .year-label{color:var(--blue)}
+.y2026 .year-label{color:var(--green)}
+::-webkit-scrollbar{width:4px;height:4px}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+/* TOOLTIP */
+.chart-tooltip{position:fixed;background:#111827;color:#f9fafb;border-radius:8px;padding:10px 14px;font-size:11.5px;line-height:1.7;pointer-events:none;z-index:999;box-shadow:0 8px 24px rgba(0,0,0,.35);min-width:180px;display:none;border:1px solid rgba(255,255,255,.08)}
+.chart-tooltip .tt-month{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#60a5fa;margin-bottom:6px;border-bottom:1px solid rgba(255,255,255,.1);padding-bottom:5px}
+.chart-tooltip .tt-row{display:flex;justify-content:space-between;gap:16px}
+.chart-tooltip .tt-label{color:rgba(255,255,255,.6)}
+.chart-tooltip .tt-val{font-weight:600;font-family:'Barlow Condensed',sans-serif;font-size:12.5px}
+.chart-tooltip .tt-pos{color:#34d399}.chart-tooltip .tt-neg{color:#f87171}.chart-tooltip .tt-amb{color:#fbbf24}
+/* DETAIL PANEL */
+.detail-panel{background:var(--white);border:1px solid var(--border);border-radius:7px;padding:14px 16px;margin-bottom:10px;display:none}
+.detail-panel.active{display:block}
+.detail-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.detail-title{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--ink2)}
+.detail-close{background:none;border:none;cursor:pointer;color:var(--muted);font-size:16px;line-height:1;padding:0 2px}
+.detail-close:hover{color:var(--ink)}
+.detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.detail-col h4{font-size:9px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.drow{display:flex;align-items:center;gap:6px;padding:4px 0;border-bottom:1px solid var(--light)}
+.drow:last-child{border-bottom:none}
+.dbar{height:6px;border-radius:3px;flex-shrink:0;transition:width .4s ease}
+.dname{font-size:11px;color:var(--ink2);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dval{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;white-space:nowrap}
+.dsaldo-pos{color:var(--green-m)}.dsaldo-neg{color:var(--red-m)}
+@media(max-width:900px){
+  .kpi-row.col4,.kpi-row.col5{grid-template-columns:1fr 1fr}
+  .g2,.g3,.g-6040,.g-4060,.year-split{grid-template-columns:1fr}
+  .year-split{grid-template-columns:1fr}
+  .ov-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-brand">Code<span>Craft</span><span class="nav-tag"> · Análise Financeira</span></div>
+  <div class="nav-spacer"></div>
+  <div class="nav-info">Consultoria Financeira · Março 2026<br><span style="opacity:.55">Base: Relatorio_Gerencial_Codecraft2026.xlsx - Data Financ</span></div>
+</nav>
+
+<div class="tabs">
+  <button class="tab active" onclick="showPage('home',this)"><span class="tab-icon">⊞</span> Visão Geral</button>
+  <button class="tab" onclick="showPage('b4',this)"><span class="tab-icon">🏢</span> Resultado Operacional <span class="tab-badge">PRINCIPAL</span></button>
+  <button class="tab" onclick="showPage('b1',this)"><span class="tab-icon">🎮</span> Custódia de Jogadores</button>
+  <button class="tab" onclick="showPage('b2',this)"><span class="tab-icon">📈</span> Capital &amp; Investimento</button>
+  <button class="tab" onclick="showPage('b3',this)"><span class="tab-icon">🤝</span> Conta Corrente Sócio</button>
+</div>
+
+<!-- ═══ HOME ═══ -->
+<div class="page active" id="page-home">
+  <div class="kpi-row col4">
+    <div class="kpi-card kk-green"><div class="kpi-label">Receita Inter - Realizada</div><div class="kpi-val c-green" id="h-rec">R$ 1.202</div><div class="kpi-sub">Taxa adm. Brawl - fev/26</div></div>
+    <div class="kpi-card kk-red"><div class="kpi-label">Despesa Operacional</div><div class="kpi-val c-red" id="h-desp">R$ 176.063</div><div class="kpi-sub">Out/25-Mar/26 realizado</div></div>
+    <div class="kpi-card kk-green"><div class="kpi-label">Saldo CDI Aplicado</div><div class="kpi-val c-green">R$ 345.800</div><div class="kpi-sub">+ R$ 13.768 rendimento líquido</div></div>
+    <div class="kpi-card kk-red"><div class="kpi-label">Dívida c/ Sócio Bruno</div><div class="kpi-val c-red">R$ 172.614</div><div class="kpi-sub">A formalizar com a contabilidade</div></div>
+  </div>
+  <div class="ov-grid">
+    <a class="ov-card" onclick="showPage('b4',document.querySelectorAll('.tab')[1]);return false" style="border-top:3px solid var(--amber-m)">
+      <div class="ov-icon">🏢</div><div class="ov-num" style="color:var(--amber)">Resultado Operacional - Principal</div>
+      <div class="ov-title">Receita × Despesa da Empresa</div>
+      <div class="ov-desc">Receita real Inter vs. custos operacionais. Realizado e Previsto separados.</div>
+      <div class="ov-open" style="color:var(--amber)">Abrir análise →</div>
+    </a>
+    <a class="ov-card" onclick="showPage('b1',document.querySelectorAll('.tab')[2]);return false" style="border-top:3px solid var(--blue-m)">
+      <div class="ov-icon">🎮</div><div class="ov-num" style="color:var(--blue)">Custódia de Jogadores</div>
+      <div class="ov-title">Conta Custódia - Mercado Pago</div>
+      <div class="ov-desc">Créditos, saques e saldo da conta intermediária dos torneios.</div>
+      <div class="ov-open" style="color:var(--blue)">Abrir análise →</div>
+    </a>
+    <a class="ov-card" onclick="showPage('b2',document.querySelectorAll('.tab')[3]);return false" style="border-top:3px solid var(--violet-m)">
+      <div class="ov-icon">📈</div><div class="ov-num" style="color:var(--violet)">Capital &amp; Investimento</div>
+      <div class="ov-title">Aporte dos Sócios + CDI</div>
+      <div class="ov-desc">R$ 550K das 3 holdings → CDI → resgates mensais para caixa.</div>
+      <div class="ov-open" style="color:var(--violet)">Abrir análise →</div>
+    </a>
+    <a class="ov-card" onclick="showPage('b3',document.querySelectorAll('.tab')[4]);return false" style="border-top:3px solid var(--green-m)">
+      <div class="ov-icon">🤝</div><div class="ov-num" style="color:var(--green)">Conta Corrente Sócio</div>
+      <div class="ov-title">Sócio Bruno Niro</div>
+      <div class="ov-desc">R$ 172.614 pagos pelo sócio com recursos próprios. Dívida a formalizar.</div>
+      <div class="ov-open" style="color:var(--green)">Abrir análise →</div>
+    </a>
+  </div>
+  <div class="grid g-6040">
+    <div class="card">
+      <div class="card-title">Receita Inter × Despesa - Todo o Período</div>
+      <div class="card-sub">Receita = somente TAXA ADM Inter · Cinza = 20% devida 2025 (não recebida) · Vermelho = despesa realizada</div>
+      <div class="legend">
+        <div class="li"><div class="ld" style="background:#b0c4d8"></div>20% devida 2025</div>
+        <div class="li"><div class="ld" style="background:var(--green-m)"></div>Receita Inter</div>
+        <div class="li"><div class="ld" style="background:rgba(239,68,68,.45)"></div>Despesa realizada</div>
+      </div>
+      <canvas id="h-chartOp" height="160"></canvas>
+    </div>
+    <div class="card">
+      <div class="card-title">Crescimento da Custódia - Créditos</div>
+      <div class="card-sub">Evolução fev/25→mar/26 · Crescimento de 80×</div>
+      <canvas id="h-chartCred" height="160"></canvas>
+    </div>
+  </div>
+  <div class="insight-list">
+    <div class="insight"><div class="i-dot" style="background:var(--red-m)"></div><strong>Dívida com sócio não registrada:</strong> R$ 172.614 pagos por Bruno Niro (abr-out/25) devem ser formalizados via contrato de mútuo - consultar a contabilidade.</div>
+    <div class="insight"><div class="i-dot" style="background:var(--amber-m)"></div><strong>20% de 2025 a regularizar:</strong> R$ 9.929 referentes à taxa adm. de fev-dez/25 ainda não foram transferidos ao Banco Inter.</div>
+    <div class="insight"><div class="i-dot" style="background:var(--violet-m)"></div><strong>Capital dos sócios não é receita:</strong> R$ 550K das holdings → CDI sustentam o caixa. Natureza jurídica pendente de formalização.</div>
+    <div class="insight"><div class="i-dot" style="background:var(--green-m)"></div><strong>Custódia cresceu 80×:</strong> De R$ 183 (fev/25) para R$ 14.660 (mar/26). Breakeven operacional exige ~R$ 157K/mês em créditos.</div>
+  </div>
+</div>
+
+<!-- ═══ RESULTADO OPERACIONAL (B4) ═══ -->
+<div class="page" id="page-b4">
+  <div style="height:8px"></div>
+  <div style="background:#1d4ed8;color:#fff;padding:8px 16px;border-radius:8px 8px 0 0;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:8px">
+    <span>🔍</span> Filtros - Resultado Operacional
+  </div>
+  <div class="filter-bar" style="border-top:none;border-radius:0 0 8px 8px;margin-bottom:14px">
+    <div class="filter-row">
+      <span class="filter-label">Ano</span>
+      <div class="filter-group" id="b4-year">
+        <button class="fbtn active" onclick="setFilter('b4','year','todos',this)">Todos</button>
+        <button class="fbtn" onclick="setFilter('b4','year','2025',this)">2025</button>
+        <button class="fbtn" onclick="setFilter('b4','year','2026',this)">2026</button>
+      </div>
+      <div class="filter-sep"></div>
+      <span class="filter-label">Mês</span>
+      <div class="filter-group" id="b4-month">
+        <button class="fbtn active" onclick="setFilter('b4','month','todos',this)">Todos</button>
+        <button class="fbtn" onclick="setFilter('b4','month','01',this)">Jan</button>
+        <button class="fbtn" onclick="setFilter('b4','month','02',this)">Fev</button>
+        <button class="fbtn" onclick="setFilter('b4','month','03',this)">Mar</button>
+        <button class="fbtn" onclick="setFilter('b4','month','04',this)">Abr</button>
+        <button class="fbtn" onclick="setFilter('b4','month','05',this)">Mai</button>
+        <button class="fbtn" onclick="setFilter('b4','month','06',this)">Jun</button>
+        <button class="fbtn" onclick="setFilter('b4','month','07',this)">Jul</button>
+        <button class="fbtn" onclick="setFilter('b4','month','08',this)">Ago</button>
+        <button class="fbtn" onclick="setFilter('b4','month','09',this)">Set</button>
+        <button class="fbtn" onclick="setFilter('b4','month','10',this)">Out</button>
+        <button class="fbtn" onclick="setFilter('b4','month','11',this)">Nov</button>
+        <button class="fbtn" onclick="setFilter('b4','month','12',this)">Dez</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="kpi-row col5">
+    <div class="kpi-card kk-green"><div class="kpi-label">Receita Realizada (Inter)</div><div class="kpi-val c-green" id="b4k1">-</div><div class="kpi-sub">Taxa adm. creditada no Inter</div></div>
+    <div class="kpi-card kk-amber"><div class="kpi-label">20% Devida 2025</div><div class="kpi-val c-amber" id="b4k2">-</div><div class="kpi-sub">A regularizar - não recebida</div></div>
+    <div class="kpi-card kk-red"><div class="kpi-label">Despesa Realizada</div><div class="kpi-val c-red" id="b4k3">-</div><div class="kpi-sub">Período selecionado</div></div>
+    <div class="kpi-card kk-slate"><div class="kpi-label">Despesa Prevista</div><div class="kpi-val c-slate" id="b4k5">-</div><div class="kpi-sub">Coluna Orçado - futuro</div></div>
+    <div class="kpi-card kk-red"><div class="kpi-label">Queima Média / Mês</div><div class="kpi-val c-red" id="b4k4">-</div><div class="kpi-sub">Realizado no período</div></div>
+  </div>
+
+  <!-- LINHA 1: Gráfico largura total -->
+  <div class="card" style="margin-bottom:10px">
+    <div class="card-title">Receita × Despesa - Todo o Período</div>
+    <div class="legend">
+      <div class="li"><div class="ld" style="background:#b0c4d8"></div>20% devida 2025</div>
+      <div class="li"><div class="ld" style="background:var(--green-m)"></div>Receita Inter 2026</div>
+      <div class="li"><div class="ld" style="background:rgba(239,68,68,.42)"></div>Desp. realizada</div>
+      <div class="li"><div class="ld" style="background:rgba(51,65,85,.35)"></div>Desp. prevista</div>
+    </div>
+    <canvas id="b4-chartAll" height="220"></canvas>
+    <canvas id="b4-chart2025" style="display:none" height="1"></canvas>
+    <canvas id="b4-chart2026" style="display:none" height="1"></canvas>
+  </div>
+
+  <!-- LINHA 2: Receita Inter 50% + Donut 50% — altura igual com scroll -->
+  <div class="grid g2" style="gap:10px;margin-bottom:10px;align-items:start">
+    <div class="card" style="height:300px;display:flex;flex-direction:column">
+      <div class="card-title">Receita Própria — Banco Inter (TAXA DE ADMINISTRAÇÃO)</div>
+      <div class="card-sub">TAXA DE ADMINISTRAÇÃO (+) · Banco Inter · Data Financ realizada</div>
+      <div class="card-scroll" style="flex:1">
+        <table class="dt" style="margin-bottom:8px">
+          <thead><tr><th>Data Financ</th><th>Banco</th><th>Subgrupo</th><th>Descrição</th><th style="text-align:right">R$</th><th>Status</th></tr></thead>
+          <tbody id="b4-rec-tbody"></tbody>
+          <tfoot id="b4-rec-tfoot"></tfoot>
+        </table>
+      </div>
+      <div class="alert alert-a" style="margin-bottom:0;margin-top:8px;flex-shrink:0">
+        <strong>20% devida 2025:</strong> R$ 9.929 (fev-dez/25) ainda nao transferidos ao Inter.
+      </div>
+    </div>
+    <div class="card" style="height:300px;display:flex;flex-direction:column">
+      <div class="card-title">Composição das Despesas</div>
+      <div class="card-sub" id="b4-pie-sub">Período filtrado</div>
+      <div style="flex:1;min-height:0">
+        <canvas id="b4-chartPie" height="220"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- FINAL: Despesas lado a lado -->
+  <div class="grid g2" style="margin-top:0">
+    <div class="card">
+      <div class="card-title">Despesas Realizadas por Mês</div>
+      <div class="card-sub">Filtrado pela seleção acima</div>
+      <table class="dt">
+        <thead><tr><th>Mês</th><th style="text-align:right">Pessoal</th><th style="text-align:right">MKT</th><th style="text-align:right">Jurídico</th><th style="text-align:right">Outros</th><th style="text-align:right">Total</th></tr></thead>
+        <tbody id="b4-tbody"></tbody>
+        <tfoot id="b4-tfoot"></tfoot>
+      </table>
+    </div>
+    <div class="card">
+      <div class="card-title">Despesas por Categoria</div>
+      <div class="card-sub" id="b4-cat-period">Filtrado pela seleção acima</div>
+      <table class="dt" id="b4-cat-table">
+        <thead>
+          <tr>
+            <th>Categoria</th>
+            <th style="text-align:right">Valor</th>
+            <th style="text-align:right">%</th>
+            <th style="min-width:80px">Proporção</th>
+          </tr>
+        </thead>
+        <tbody id="b4-cat-tbody"></tbody>
+        <tfoot id="b4-cat-tfoot"></tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CUSTÓDIA (B1) ═══ -->
+<div class="page" id="page-b1">
+  <div class="sec-hd">
+    <span class="sec-icon">🎮</span>
+    <div><div class="sec-title">Custódia de Jogadores - Mercado Pago</div><div class="sec-desc">Conta intermediária · créditos de torneio · saques de gamers · taxa 20% da CodeCraft</div></div>
+  </div><div style="height:8px"></div>
+  <div style="background:var(--blue-m);color:#fff;padding:8px 16px;border-radius:8px 8px 0 0;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:8px">
+    <span>🎮</span> Filtros - Custódia de Jogadores
+  </div>
+  <div class="filter-bar" style="border-top:none;border-radius:0 0 8px 8px;margin-bottom:14px">  <div class="filter-row">
+      <span class="filter-label">Ano</span>
+      <div class="filter-group" id="b1-year">
+        <button class="fbtn active" onclick="setFilter('b1','year','todos',this)">Todos</button>
+        <button class="fbtn" onclick="setFilter('b1','year','2025',this)">2025</button>
+        <button class="fbtn" onclick="setFilter('b1','year','2026',this)">2026</button>
+      </div>
+      <div class="filter-sep"></div>
+      <span class="filter-label">Mês</span>
+      <div class="filter-group" id="b1-month">
+        <button class="fbtn active" onclick="setFilter('b1','month','todos',this)">Todos</button>
+        <button class="fbtn" onclick="setFilter('b1','month','02',this)">Fev</button>
+        <button class="fbtn" onclick="setFilter('b1','month','03',this)">Mar</button>
+        <button class="fbtn" onclick="setFilter('b1','month','04',this)">Abr</button>
+        <button class="fbtn" onclick="setFilter('b1','month','05',this)">Mai</button>
+        <button class="fbtn" onclick="setFilter('b1','month','06',this)">Jun</button>
+        <button class="fbtn" onclick="setFilter('b1','month','07',this)">Jul</button>
+        <button class="fbtn" onclick="setFilter('b1','month','08',this)">Ago</button>
+        <button class="fbtn" onclick="setFilter('b1','month','09',this)">Set</button>
+        <button class="fbtn" onclick="setFilter('b1','month','10',this)">Out</button>
+        <button class="fbtn" onclick="setFilter('b1','month','11',this)">Nov</button>
+        <button class="fbtn" onclick="setFilter('b1','month','12',this)">Dez</button>
+        <button class="fbtn" onclick="setFilter('b1','month','01',this)">Jan</button>
+      </div>
+    </div>
+  </div>
+  <div class="kpi-row col4">
+    <div class="kpi-card kk-blue"><div class="kpi-label">Crédito Bruto</div><div class="kpi-val c-blue" id="b1k1">-</div><div class="kpi-sub">Entradas na custódia MP</div></div>
+    <div class="kpi-card kk-red"><div class="kpi-label">Saques de Gamers</div><div class="kpi-val c-red" id="b1k2">-</div><div class="kpi-sub">Prêmios pagos</div></div>
+    <div class="kpi-card kk-green"><div class="kpi-label">Saldo Custódia</div><div class="kpi-val c-green" id="b1k3">-</div><div class="kpi-sub">Disponível no MP</div></div>
+    <div class="kpi-card kk-amber"><div class="kpi-label">20% Taxa Adm.</div><div class="kpi-val c-amber" id="b1k4">-</div><div class="kpi-sub">A transferir/transferido ao Inter</div></div>
+  </div>
+  <div class="alert alert-b">
+    <strong>Como funciona:</strong> O jogador deposita no MP antes do torneio. Ao final, o gamer saca o prêmio. <strong>20% do crédito bruto</strong> é a taxa da CodeCraft - transferida ao Banco Inter a partir de jan/2026.
+  </div>
+  <div class="grid g2" style="align-items:start">
+    <div class="card" style="height:360px;display:flex;flex-direction:column">
+      <div class="card-title">Evolução Mensal - Créditos, Saques e Taxa 20%</div>
+      <div class="card-sub">Todo o período (estático)</div>
+      <canvas id="b1-chart1" height="300" style="flex:1"></canvas>
+    </div>
+    <div class="card" style="height:360px;display:flex;flex-direction:column">
+      <div class="card-title">Detalhamento Mensal</div>
+      <div class="card-sub">Por Data Financ · Filtrado acima</div>
+      <div class="card-scroll" style="flex:1">
+        <table class="dt">
+          <thead><tr><th>Mês</th><th style="text-align:right">Créditos</th><th style="text-align:right">Saques</th><th style="text-align:right">Saldo</th><th style="text-align:right">20% Adm.</th></tr></thead>
+          <tbody id="b1-tbody"></tbody>
+          <tfoot><tr><td><strong>TOTAL</strong></td><td class="mono pos" style="text-align:right" id="b1f1"></td><td class="mono neg" style="text-align:right" id="b1f2"></td><td class="mono" style="text-align:right" id="b1f3"></td><td class="mono pend" style="text-align:right" id="b1f4"></td></tr></tfoot>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ CAPITAL & INVESTIMENTO (B2) ═══ -->
+<div class="page" id="page-b2">
+  <div class="sec-hd">
+    <span class="sec-icon">📈</span>
+    <div><div class="sec-title">Capital &amp; Investimento - CDI Banco Inter</div><div class="sec-desc">Aporte das 3 holdings set/25 · Aplicação CDI · Resgates mensais para sustentação do caixa</div></div>
+  </div>
+  <div class="kpi-row col4">
+    <div class="kpi-card kk-violet"><div class="kpi-label">Aporte dos Sócios</div><div class="kpi-val c-violet">R$ 550.000</div><div class="kpi-sub">3 holdings · set/25</div></div>
+    <div class="kpi-card kk-red"><div class="kpi-label">Aplicado em CDI</div><div class="kpi-val c-red">(490.000)</div><div class="kpi-sub">Nov/25 · R$ 60K consumido antes</div></div>
+    <div class="kpi-card kk-green"><div class="kpi-label">Total Resgatado</div><div class="kpi-val c-green" id="b2k3">R$ 144.200</div><div class="kpi-sub">Dez/25-Mar/26</div></div>
+    <div class="kpi-card kk-green"><div class="kpi-label">Rendimento Líquido</div><div class="kpi-val c-green" id="b2k4">R$ 13.768</div><div class="kpi-sub">Após IR e IOF</div></div>
+  </div>
+  <div class="card" style="margin-bottom:10px">
+    <div class="card-title">Fluxo de Origem - Do Aporte ao Saldo Atual</div>
+    <div class="card-sub" style="margin-bottom:10px">Rastreamento do capital desde a entrada até a aplicação</div>
+    <div class="flow">
+      <div class="fbox" style="background:var(--violet-l);border-color:#c4b5fd"><div class="fbox-t" style="color:var(--violet)">3 Holdings</div><div class="fbox-v" style="color:var(--violet)">R$ 550K</div><div class="fbox-s">Set/2025</div></div>
+      <div class="farrow">→</div>
+      <div class="fbox" style="background:var(--amber-l);border-color:#fcd34d"><div class="fbox-t" style="color:var(--amber)">Operação</div><div class="fbox-v" style="color:var(--red-m)">(R$ 60K)</div><div class="fbox-s">Set-Out/25</div></div>
+      <div class="farrow">→</div>
+      <div class="fbox" style="background:var(--green-l);border-color:#6ee7b7"><div class="fbox-t" style="color:var(--green)">CDI Inter</div><div class="fbox-v" style="color:var(--green)">R$ 490K</div><div class="fbox-s">Nov/2025</div></div>
+      <div class="farrow">→</div>
+      <div class="fbox" style="background:var(--green-l);border-color:#6ee7b7"><div class="fbox-t" style="color:var(--green)">Resgates</div><div class="fbox-v" style="color:var(--green-m)">R$ 144K</div><div class="fbox-s">Dez/25-Mar/26</div></div>
+      <div class="farrow">→</div>
+      <div class="fbox" style="background:var(--green-l);border-color:#6ee7b7"><div class="fbox-t" style="color:var(--green)">Saldo CDI</div><div class="fbox-v" style="color:var(--green)">~R$ 346K</div><div class="fbox-s">+ R$13,8K rend.</div></div>
+    </div>
+    <div class="alert alert-v" style="margin-bottom:0"><strong>Nota:</strong> A natureza jurídica do aporte (cotas, mútuo, aumento de capital) está em definição. Recomendamos formalizar com assessoria jurídica.</div>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <div class="card-title">Resgates e Rendimento Mensal CDI</div>
+      <div class="card-sub">Filtro por período ativo</div>
+      <canvas id="b2-chart1" height="185"></canvas>
+    </div>
+    <div class="card">
+      <div class="card-title">Composição do Aporte - 3 Holdings (Set/25)</div>
+      <div class="card-sub">Capital que originou o CDI</div>
+      <div style="margin-bottom:8px">
+        <div class="srow"><span class="sname">Equiprime Holding Ltda</span><span class="sval c-violet">R$ 360.000</span><span class="spct">65,5%</span></div>
+        <div class="srow"><span class="sname">Waimea Serv. e Participações</span><span class="sval c-violet">R$ 100.000</span><span class="spct">18,2%</span></div>
+        <div class="srow"><span class="sname">Zeit Holding Ltda</span><span class="sval c-violet">R$ 90.000</span><span class="spct">16,4%</span></div>
+        <div class="srow" style="border-top:1.5px solid var(--border);font-weight:700"><span class="sname">Total Aportado</span><span class="sval c-violet">R$ 550.000</span><span class="spct">100%</span></div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:5px">
+        <div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:2px"><span>Equiprime 65,5%</span><span>R$ 360.000</span></div><div class="bar-track"><div class="bar-fill" style="width:65.5%;background:var(--violet-m)"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:2px"><span>Waimea 18,2%</span><span>R$ 100.000</span></div><div class="bar-track"><div class="bar-fill" style="width:18.2%;background:#a78bfa"></div></div></div>
+        <div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:2px"><span>Zeit 16,4%</span><span>R$ 90.000</span></div><div class="bar-track"><div class="bar-fill" style="width:16.4%;background:#c4b5fd"></div></div></div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">Extrato CDI - Detalhamento</div>
+    <div class="card-sub">Filtrado pelo período acima</div>
+    <table class="dt">
+      <thead><tr><th>Período</th><th style="text-align:right">Aplicação</th><th style="text-align:right">Resgate</th><th style="text-align:right">Rend. Bruto</th><th style="text-align:right">IR/IOF</th><th style="text-align:right">Líquido</th><th>Status</th></tr></thead>
+      <tbody id="b2-tbody">
+        <tr id="b2r-nov25"><td>Nov/25</td><td class="mono neg" style="text-align:right">(490.000)</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">2.708</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">2.708</td><td><span class="badge bv">Aplicado</span></td></tr>
+        <tr id="b2r-dez25"><td>Dez/25</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">18.000</td><td class="mono pos" style="text-align:right">5.831</td><td class="mono neg" style="text-align:right">(64)</td><td class="mono pos" style="text-align:right">5.767</td><td><span class="badge bg">Resgatado</span></td></tr>
+        <tr id="b2r-jan26"><td>Jan/26</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">40.200</td><td class="mono pos" style="text-align:right">5.224</td><td class="mono neg" style="text-align:right">(181)</td><td class="mono pos" style="text-align:right">5.044</td><td><span class="badge bg">Resgatado</span></td></tr>
+        <tr id="b2r-fev26"><td>Fev/26</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">51.000</td><td class="mono pos" style="text-align:right">1.857</td><td class="mono neg" style="text-align:right">(3.794)</td><td class="mono neg" style="text-align:right">(1.937)</td><td><span class="badge br">Atenção IR</span></td></tr>
+        <tr id="b2r-mar26"><td>Mar/26</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">35.000</td><td class="mono pos" style="text-align:right">2.187</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">2.187</td><td><span class="badge bg">Resgatado</span></td></tr>
+      </tbody>
+      <tfoot><tr><td><strong>TOTAL</strong></td><td class="mono neg" style="text-align:right"><strong>(490.000)</strong></td><td class="mono pos" style="text-align:right"><strong>144.200</strong></td><td class="mono pos" style="text-align:right"><strong>17.807</strong></td><td class="mono neg" style="text-align:right"><strong>(4.039)</strong></td><td class="mono pos" style="text-align:right"><strong>13.768</strong></td><td></td></tr></tfoot>
+    </table>
+  </div>
+</div>
+
+<!-- ═══ CONTA CORRENTE SÓCIO (B3) ═══ -->
+<div class="page" id="page-b3">
+  <div class="sec-hd">
+    <span class="sec-icon">🤝</span>
+    <div><div class="sec-title">Conta Corrente Sócio - Bruno Niro</div><div class="sec-desc">Despesas pagas pelo sócio com recursos próprios · Dívida real a formalizar</div></div>
+    <span class="sec-badge" style="background:var(--red-l);color:var(--red)">REQUER AÇÃO CONTÁBIL</span>
+  </div>
+  <div class="kpi-row col4">
+    <div class="kpi-card kk-red"><div class="kpi-label">Despesas Pagas pelo Sócio</div><div class="kpi-val c-red" id="b3k1">-</div><div class="kpi-sub">Recursos próprios de Bruno</div></div>
+    <div class="kpi-card kk-amber"><div class="kpi-label">Regularização Dez/25</div><div class="kpi-val c-amber">⚠ 172.614</div><div class="kpi-sub">Lançamento fictício identificado</div></div>
+    <div class="kpi-card kk-muted"><div class="kpi-label">Saldo Contábil</div><div class="kpi-val c-ink">Zero</div><div class="kpi-sub">Conta zerada artificialmente</div></div>
+    <div class="kpi-card kk-red"><div class="kpi-label">Dívida Real da Empresa</div><div class="kpi-val c-red" id="b3k4">-</div><div class="kpi-sub">A formalizar com a contabilidade</div></div>
+  </div>
+  <div class="grid g2" style="align-items:start">
+    <!-- COLUNA ESQUERDA: gráfico + análise empilhados -->
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div class="card">
+        <div class="card-title">Despesas por Fornecedor</div>
+        <div class="card-sub">Atualiza conforme filtros</div>
+        <canvas id="b3-chart1" height="160"></canvas>
+      </div>
+      <div class="card" style="border-left:3px solid var(--amber-m);background:var(--amber-l)">
+        <div class="card-title" style="color:var(--amber);margin-bottom:8px">Análise da Consultoria</div>
+        <p style="font-size:11.5px;color:#78350f;line-height:1.65">Entre abr-out/2025, Bruno Niro quitou despesas operacionais da CodeCraft com recursos próprios (R$ 172.614). Em dez/25, foi registrado um lançamento de mesmo valor (<em>"APORTE BRUNO SISTÊMICO"</em>) que zerrou a conta no sistema - esse lançamento <strong>não extingue a obrigação financeira</strong>.</p>
+        <p style="font-size:11.5px;color:#78350f;line-height:1.65;margin-top:8px"><strong>Recomendamos consultar a contabilidade</strong> para formalização via contrato de mútuo com prazo e condições definidos.</p>
+      </div>
+    </div>
+    <!-- COLUNA DIREITA: tabela detalhada -->
+    <div class="card">
+      <div class="card-title">Detalhamento - Despesas Pagas por Bruno</div>
+      <div class="card-sub">Abr-Out/2025</div>
+      <table class="dt">
+        <thead><tr><th>Mês</th><th>Fornecedor</th><th>Natureza</th><th style="text-align:right">R$</th></tr></thead>
+        <tbody id="b3-tbody">
+          <tr data-m="abr25" data-f="pain" data-y="2025"><td>Abr/25</td><td>Pain Gaming Esportes Eletrônicos</td><td><span class="badge bv">Serviços PJ</span></td><td class="mono neg" style="text-align:right">(20.000)</td></tr>
+          <tr data-m="abr25" data-f="outros" data-y="2025"><td>Abr/25</td><td>Prefeitura SP - ISS</td><td><span class="badge br">Imposto</span></td><td class="mono neg" style="text-align:right">(12)</td></tr>
+          <tr data-m="mai25" data-f="pain" data-y="2025"><td>Mai/25</td><td>Pain Gaming Esportes Eletrônicos</td><td><span class="badge bv">Serviços PJ</span></td><td class="mono neg" style="text-align:right">(20.000)</td></tr>
+          <tr data-m="mai25" data-f="outros" data-y="2025"><td>Mai/25</td><td>Prefeitura SP - ISS</td><td><span class="badge br">Imposto</span></td><td class="mono neg" style="text-align:right">(31)</td></tr>
+          <tr data-m="jun25" data-f="outros" data-y="2025"><td>Jun/25</td><td>Flow Games Desenvolvimento</td><td><span class="badge bv">Serviços PJ</span></td><td class="mono neg" style="text-align:right">(8.000)</td></tr>
+          <tr data-m="jun25" data-f="outros" data-y="2025"><td>Jun/25</td><td>Pílula Dourada Publicidade</td><td><span class="badge bb">MKT</span></td><td class="mono neg" style="text-align:right">(10.000)</td></tr>
+          <tr data-m="jun25" data-f="outros" data-y="2025"><td>Jun/25</td><td>Trampos.co Tecnologia</td><td><span class="badge bv">Recrutamento</span></td><td class="mono neg" style="text-align:right">(399)</td></tr>
+          <tr data-m="jun25" data-f="outros" data-y="2025"><td>Jun/25</td><td>Prefeitura SP - ISS</td><td><span class="badge br">Imposto</span></td><td class="mono neg" style="text-align:right">(18)</td></tr>
+          <tr data-m="jul25" data-f="pain" data-y="2025"><td>Jul/25</td><td>Pain Gaming Esportes Eletrônicos</td><td><span class="badge bv">Serviços PJ</span></td><td class="mono neg" style="text-align:right">(20.000)</td></tr>
+          <tr data-m="jul25" data-f="gaud" data-y="2025"><td>Jul/25</td><td>Gaudêncio Soc. de Advogados</td><td><span class="badge bv">Jurídico</span></td><td class="mono neg" style="text-align:right">(13.600)</td></tr>
+          <tr data-m="jul25" data-f="outros" data-y="2025"><td>Jul/25</td><td>Receita Federal + ISS</td><td><span class="badge br">Impostos</span></td><td class="mono neg" style="text-align:right">(836)</td></tr>
+          <tr data-m="ago25" data-f="rmsz" data-y="2025"><td>Ago/25</td><td>RMS&Z Design e Tecnologia</td><td><span class="badge bv">Serviços PJ</span></td><td class="mono neg" style="text-align:right">(25.000)</td></tr>
+          <tr data-m="ago25" data-f="outros" data-y="2025"><td>Ago/25</td><td>Receita Federal + ISS</td><td><span class="badge br">Impostos</span></td><td class="mono neg" style="text-align:right">(1.538)</td></tr>
+          <tr data-m="set25" data-f="rmsz" data-y="2025"><td>Set/25</td><td>RMS&Z Design e Tecnologia</td><td><span class="badge bv">Serviços PJ</span></td><td class="mono neg" style="text-align:right">(25.000)</td></tr>
+          <tr data-m="set25" data-f="outros" data-y="2025"><td>Set/25</td><td>Receita Federal + ISS</td><td><span class="badge br">Impostos</span></td><td class="mono neg" style="text-align:right">(1.572)</td></tr>
+          <tr data-m="out25" data-f="rmsz" data-y="2025"><td>Out/25</td><td>RMS&Z Design e Tecnologia</td><td><span class="badge bv">Serviços PJ</span></td><td class="mono neg" style="text-align:right">(25.000)</td></tr>
+          <tr data-m="out25" data-f="outros" data-y="2025"><td>Out/25</td><td>Receita Federal + ISS</td><td><span class="badge br">Impostos</span></td><td class="mono neg" style="text-align:right">(1.559)</td></tr>
+          <tr style="background:#fffbeb"><td colspan="3" style="color:var(--amber);font-size:10px;font-style:italic">⚠ Dez/25 - Regularização contábil (lançamento fictício)</td><td class="mono pend" style="text-align:right">+172.614</td></tr>
+        </tbody>
+        <tfoot><tr><td colspan="3"><strong>Dívida real com o sócio</strong></td><td class="mono neg" style="text-align:right" id="b3-total"><strong>(172.614)</strong></td></tr></tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+  DADOS - SUBSTITUIR ESTE BLOCO AO ATUALIZAR O EXCEL
+  Execute: python gerar_dados_dashboard.py  e cole o DB aqui
+══════════════════════════════════════════════════════════ -->
+<script>
+
+// ============================================================
+// DATA BLOCK - update with gerar_dados_dashboard.py
+// ============================================================
+const DB = {
+  "2025-02":{"cred":183.0,"saques":-79.0,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":0.0,"desp_total":0.0},
+  "2025-03":{"cred":1625.5,"saques":-1207.0,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":0.0,"desp_total":0.0},
+  "2025-04":{"cred":3767.5,"saques":-922.0,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":10.1,"desp_total":10.1},
+  "2025-05":{"cred":7738.0,"saques":-5647.24,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":114.28,"desp_total":114.28},
+  "2025-06":{"cred":4486.5,"saques":-2608.6,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":20.2,"desp_total":20.2},
+  "2025-07":{"cred":3730.5,"saques":-2309.6,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":1034.27,"desp_total":1034.27},
+  "2025-08":{"cred":8197.0,"saques":-2877.8,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":0.0,"desp_total":0.0},
+  "2025-09":{"cred":8561.0,"saques":-5463.8,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":19.09,"desp_total":19.09},
+  "2025-10":{"cred":5428.0,"saques":-6459.6,"rec_inter":0.0,"desp_pessoal":14700.0,"desp_mkt":13500.0,"desp_juridico":0.0,"desp_outros":765.39,"desp_total":28965.39},
+  "2025-11":{"cred":2941.0,"saques":-6670.8,"rec_inter":0.0,"desp_pessoal":14700.0,"desp_mkt":13500.0,"desp_juridico":0.0,"desp_outros":849.03,"desp_total":29049.03},
+  "2025-12":{"cred":2987.5,"saques":-960.4,"rec_inter":0.0,"desp_pessoal":15500.0,"desp_mkt":3575.0,"desp_juridico":0.0,"desp_outros":4833.39,"desp_total":23908.39},
+  "2026-01":{"cred":6009.46,"saques":-6616.2,"rec_inter":0.0,"desp_pessoal":14700.0,"desp_mkt":8000.0,"desp_juridico":7200.0,"desp_outros":5431.0,"desp_total":35331.0},
+  "2026-02":{"cred":11608.21,"saques":-7337.0,"rec_inter":1201.89,"desp_pessoal":14700.0,"desp_mkt":22386.45,"desp_juridico":10800.0,"desp_outros":7983.17,"desp_total":55869.62},
+  "2026-03":{"cred":14660.31,"saques":-14378.2,"rec_inter":0.0,"desp_pessoal":14700.0,"desp_mkt":11698.73,"desp_juridico":5400.0,"desp_outros":5318.5,"desp_total":37117.23}
+};
+
+// Receita Inter - somente TAXA DE ADMINISTRAÇÃO (+)
+const REC_INTER_DETAIL = [
+  {"data_fin":"2026-02-04","banco":"BANCO INTER","subgrupo":"RECEITA_GAMERS BRAWL","descricao":"Pix recebido - Codecraft Smart Tech Ltda","val":1201.89,"status":"Recebido"}
+];
+
+// 20% devida 2025 (por competência, não recebida no Inter)
+const REC20_2025 = {
+  "2025-02":36.6,"2025-03":325.1,"2025-04":753.5,"2025-05":1547.6,
+  "2025-06":897.3,"2025-07":746.1,"2025-08":1639.4,"2025-09":1712.2,
+  "2025-10":1085.6,"2025-11":588.2,"2025-12":597.5
+};
+const TOTAL_REC20_2025 = 9929.1;
+
+// Despesas PREVISTAS - coluna Orçado (datas futuras)
+const DB_PREVISTO = {
+  "2026-04":{"desp_pessoal":14700.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":4409.46,"desp_total":19109.46},
+  "2026-05":{"desp_pessoal":14700.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":4409.46,"desp_total":19109.46},
+  "2026-06":{"desp_pessoal":14700.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":4409.46,"desp_total":19109.46},
+  "2026-07":{"desp_pessoal":14700.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":4409.46,"desp_total":19109.46},
+  "2026-08":{"desp_pessoal":14700.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":4409.46,"desp_total":19109.46},
+  "2026-09":{"desp_pessoal":14700.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":4409.46,"desp_total":19109.46},
+  "2026-10":{"desp_pessoal":14700.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":4409.46,"desp_total":19109.46},
+  "2026-11":{"desp_pessoal":14700.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":4119.66,"desp_total":18819.66},
+  "2026-12":{"desp_pessoal":14700.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":4354.66,"desp_total":19054.66}
+};
+
+// DB_CATEGORIAS - apenas despesas BANCO INTER por categoria e mes
+// Gerado por gerar_dados_dashboard.py
+const DB_CAT = {
+  "SALARIOS E ORDENADOS ADM":          {"2025-10":14700,"2025-11":14700,"2025-12":14700,"2026-01":14700,"2026-02":14700,"2026-03":14700},
+  "SERVS. DE PUBLICIDADE E PROPAGANDA":{"2025-10":13500,"2025-11":13500,"2026-01":8000,"2026-02":18000,"2026-03":8000},
+  "SERVS. ADVOCATICIOS":               {"2026-01":7200,"2026-02":10800,"2026-03":5400},
+  "SERVS. DE ASSESSORIA E CONSULTORIA":{"2025-12":3200,"2026-01":2200,"2026-02":2200,"2026-03":3200},
+  "SERVS. DE CONTABILIDADE":           {"2025-10":400,"2025-11":400,"2025-12":400,"2026-01":400,"2026-02":430,"2026-03":430},
+  "SERVICO PRESTADOS POR TERCEIROS":   {"2026-01":1800},
+  "CSRF":                              {"2025-11":32.6,"2026-01":219.78,"2026-02":47.6,"2026-03":748.87},
+  "PREMIOS E GRATIFICACOES ADM":       {"2025-12":800},
+  "SERVS. ADMINISTRATIVOS":            {"2026-02":647.98},
+  "SISTEMAS OPERACIONAIS":             {"2026-01":500},
+  "ISS":                               {"2025-10":360.34,"2025-11":21.73,"2025-12":11.76,"2026-01":11.46,"2026-02":24.03,"2026-03":67.27},
+  "REEMB DESPESAS GERAIS":             {"2025-11":341.6,"2026-03":79.49},
+  "SERVS. CERTIFICADO DIGITAL":        {"2025-12":235},
+  "ESTORNO_DEVOLUCAO (-)":             {"2025-11":38},
+};
+// Category color map
+const CAT_COLORS = {
+  "SALARIOS E ORDENADOS ADM":           "#f59e0b",
+  "SERVS. DE PUBLICIDADE E PROPAGANDA": "#8b5cf6",
+  "SERVS. ADVOCATICIOS":                "#ef4444",
+  "SERVS. DE ASSESSORIA E CONSULTORIA": "#10b981",
+  "SERVS. DE CONTABILIDADE":            "#14b8a6",
+  "SERVICO PRESTADOS POR TERCEIROS":    "#a855f7",
+  "CSRF":                               "#64748b",
+  "PREMIOS E GRATIFICACOES ADM":        "#d97706",
+  "SERVS. ADMINISTRATIVOS":             "#475569",
+  "SISTEMAS OPERACIONAIS":              "#f97316",
+  "ISS":                                "#be185d",
+  "REEMB DESPESAS GERAIS":              "#65a30d",
+  "SERVS. CERTIFICADO DIGITAL":         "#b45309",
+  "ESTORNO_DEVOLUCAO (-)":              "#9ca3af",
+};
+const LABEL_MAP = {
+  "2025-02":"Fev/25","2025-03":"Mar/25","2025-04":"Abr/25","2025-05":"Mai/25",
+  "2025-06":"Jun/25","2025-07":"Jul/25","2025-08":"Ago/25","2025-09":"Set/25",
+  "2025-10":"Out/25","2025-11":"Nov/25","2025-12":"Dez/25",
+  "2026-01":"Jan/26","2026-02":"Fev/26","2026-03":"Mar/26",
+  "2026-04":"Abr/26","2026-05":"Mai/26","2026-06":"Jun/26","2026-07":"Jul/26",
+  "2026-08":"Ago/26","2026-09":"Set/26","2026-10":"Out/26","2026-11":"Nov/26","2026-12":"Dez/26"
+};
+
+const MESES_R = Object.keys(DB);
+const MESES_P = Object.keys(DB_PREVISTO);
+const ANO = k => k.slice(0,4);
+const MES = k => k.slice(5,7);
+
+// -- STATE --------------------------------------------------
+const F = {
+  b1:{year:'todos',month:'todos'},
+  b2:{year:'todos',month:'todos'},
+  b3:{year:'todos',month:'todos',forn:'todos'},
+  b4:{year:'todos',month:'todos'}
+};
+
+// -- NAVIGATION ---------------------------------------------
+function showPage(id, tabEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  if (tabEl) tabEl.classList.add('active');
+  window.scrollTo({top:0, behavior:'instant'});
+  ({home:renderHome,b1:renderB1,b2:renderB2,b3:renderB3,b4:renderB4})[id]?.();
+}
+
+function setFilter(bloco, type, val, btn) {
+  document.querySelectorAll('#'+bloco+'-'+type+' .fbtn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  F[bloco][type] = val;
+  ({b1:renderB1,b2:renderB2,b3:renderB3,b4:renderB4})[bloco]?.();
+}
+
+// -- HELPERS ------------------------------------------------
+const sum = a => a.reduce((x,y)=>x+y,0);
+const fmtR = (v,dec=0) => 'R$ '+Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+const fmtN = (v,dec=0) => v<0?'('+Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:dec})+')':'R$ '+v.toLocaleString('pt-BR',{minimumFractionDigits:dec,maximumFractionDigits:dec});
+
+function filterRealizadoKeys(year, month) {
+  return MESES_R.filter(k => {
+    const yOk = year==='todos' || ANO(k)===year;
+    const mOk = month==='todos' || MES(k)===month;
+    return yOk && mOk;
+  });
+}
+function filterPrevistoKeys(year, month) {
+  if(year==='2025') return [];
+  return MESES_P.filter(k => month==='todos'||MES(k)===month);
+}
+
+// ============================================================
+// PURE CANVAS CHART ENGINE - sem dependências externas
+// ============================================================
+const CHARTSTORE = {};
+
+// Color palette
+const COLORS = {
+  blue:'#3b82f6', blueA:'rgba(59,130,246,0.22)',
+  green:'#10b981', greenA:'rgba(16,185,129,0.75)',
+  red:'#ef4444', redA:'rgba(239,68,68,0.42)',
+  amber:'#f59e0b', amberA:'rgba(245,158,11,0.5)',
+  violet:'#8b5cf6', violetA:'rgba(139,92,246,0.22)',
+  slate:'rgba(51,65,85,0.3)', slateB:'#475569',
+  gray:'#b0c4d8', grayB:'#8fa8bf',
+  muted:'#9ca3af', border:'#e5e7eb',
+  ink:'#374151'
+};
+
+function getDevicePixelRatio() { return window.devicePixelRatio || 1; }
+
+function setupCanvas(id, heightPx) {
+  const canvas = document.getElementById(id);
+  if (!canvas) return null;
+  const dpr = getDevicePixelRatio();
+
+  // Reset canvas size to 0 first so parent collapses to its natural CSS width
+  canvas.style.width  = '0px';
+  canvas.style.height = heightPx + 'px';
+  canvas.width  = 0;
+  canvas.height = heightPx * dpr;
+
+  // Now read parent width - it reflects CSS layout, not old canvas size
+  const parent = canvas.parentElement;
+  const cs     = getComputedStyle(parent);
+  const padL   = parseFloat(cs.paddingLeft)  || 0;
+  const padR   = parseFloat(cs.paddingRight) || 0;
+  const w      = Math.max(parent.clientWidth - padL - padR, 100);
+
+  // Set final canvas dimensions
+  canvas.width       = w * dpr;
+  canvas.style.width = w + 'px';
+  const ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  return {ctx, w, h: heightPx};
+}
+
+// Tooltip global
+const TT = document.getElementById('chart-tooltip');
+function showTT(e, html) {
+  if(!TT) return;
+  TT.innerHTML = html;
+  TT.style.display = 'block';
+  moveTT(e);
+}
+function moveTT(e) {
+  if(!TT || TT.style.display==='none') return;
+  const x = e.clientX, y = e.clientY;
+  const w = TT.offsetWidth, h = TT.offsetHeight;
+  TT.style.left = (x + 14 + w > window.innerWidth ? x - w - 10 : x + 14) + 'px';
+  TT.style.top  = (y + 8 + h > window.innerHeight ? y - h - 8  : y + 8)  + 'px';
+}
+function hideTT() { if(TT) TT.style.display='none'; }
+
+// Hit regions for bar charts
+const HIT_REGIONS = {};
+function registerHits(id, regions) { HIT_REGIONS[id] = regions; }
+
+function attachBarEvents(canvas, id, opts) {
+  canvas.style.cursor = 'default';
+  canvas.onmousemove = function(e) {
+    const r = canvas.getBoundingClientRect();
+    const mx = e.clientX - r.left;
+    const regions = HIT_REGIONS[id] || [];
+    let hit = null;
+    for(const reg of regions) {
+      if(mx >= reg.x && mx <= reg.x + reg.w) { hit = reg; break; }
+    }
+    if(hit) {
+      canvas.style.cursor = 'pointer';
+      if(opts.onHover) opts.onHover(e, hit);
+    } else {
+      canvas.style.cursor = 'default';
+      hideTT();
+    }
+  };
+  canvas.onmouseleave = hideTT;
+  canvas.onclick = function(e) {
+    const r = canvas.getBoundingClientRect();
+    const mx = e.clientX - r.left;
+    const regions = HIT_REGIONS[id] || [];
+    for(const reg of regions) {
+      if(mx >= reg.x && mx <= reg.x + reg.w) {
+        if(opts.onClick) opts.onClick(e, reg);
+        return;
+      }
+    }
+  };
+}
+
+// -- BAR CHART ----------------------------------------------
+function drawBar(id, labels, datasets, opts={}) {
+  const heightPx = opts.height || 130;
+  const c = setupCanvas(id, heightPx);
+  if(!c) return;
+  const {ctx, w, h} = c;
+
+  const PAD = {
+    top:    opts.padTop    ?? 24,
+    right:  opts.padRight  ?? 10,
+    bottom: opts.padBottom ?? 44,
+    left:   opts.padLeft   ?? 52
+  };
+  const cw = w - PAD.left - PAD.right;
+  const ch = h - PAD.top - PAD.bottom;
+
+  // Flatten all data to find max
+  const allVals = datasets.flatMap(d=>d.data.map(v=>v||0));
+  const maxV = Math.max(...allVals, 1);
+  const minV = Math.min(...allVals, 0);
+  const span = maxV - Math.min(minV, 0);
+
+  // Grid lines
+  const ticks = opts.ticks || 4;
+  ctx.strokeStyle = COLORS.border;
+  ctx.lineWidth = 0.5;
+  ctx.fillStyle = COLORS.muted;
+  ctx.font = '9px system-ui,sans-serif';
+  ctx.textAlign = 'right';
+  for(let i=0; i<=ticks; i++){
+    const val = Math.min(minV,0) + (span/ticks)*i;
+    const y = PAD.top + ch - (ch * (val - Math.min(minV,0)) / span);
+    ctx.beginPath(); ctx.moveTo(PAD.left, y); ctx.lineTo(PAD.left+cw, y); ctx.stroke();
+    const lbl = Math.abs(val)>=1000 ? (val/1000).toFixed(0)+'K' : val.toFixed(0);
+    ctx.fillText(lbl, PAD.left-4, y+3);
+  }
+
+  // Zero line if negative data
+  if(minV < 0){
+    const y0 = PAD.top + ch - (ch * (0 - minV) / span);
+    ctx.strokeStyle = COLORS.ink; ctx.lineWidth = 0.8;
+    ctx.beginPath(); ctx.moveTo(PAD.left, y0); ctx.lineTo(PAD.left+cw, y0); ctx.stroke();
+    ctx.strokeStyle = COLORS.border; ctx.lineWidth = 0.5;
+  }
+
+  // Stacked mode detection
+  const stacked = datasets.some(d=>d.stack);
+  const groups = {};
+  if(stacked){
+    datasets.forEach(d=>{ if(!groups[d.stack]) groups[d.stack]=[]; groups[d.stack].push(d); });
+  }
+
+  const nGroups = stacked ? Object.keys(groups).length : datasets.length;
+  const barW = Math.max((cw/labels.length)*0.7, 4);
+  const groupW = barW * (stacked ? 1 : datasets.length) + (stacked?0:2*(datasets.length-1));
+  const slotW = cw / labels.length;
+
+  // Draw bars
+  if(stacked){
+    const stackKeys = Object.keys(groups);
+    labels.forEach((lbl,xi)=>{
+      const cx = PAD.left + xi*slotW + slotW/2;
+      stackKeys.forEach((sk,si)=>{
+        let posOffset=0, negOffset=0;
+        groups[sk].forEach(ds=>{
+          const v = ds.data[xi]||0;
+          const zero = PAD.top + ch - (ch * (0 - Math.min(minV,0)) / span);
+          const bh = Math.abs(ch * v / span);
+          let by;
+          if(v>=0){ by = zero - posOffset - bh; posOffset+=bh; }
+          else { by = zero + negOffset; negOffset+=bh; }
+          const bx = cx - barW/2 + si*(barW+2);
+          ctx.fillStyle = ds.backgroundColor||COLORS.blueA;
+          ctx.strokeStyle = ds.borderColor||COLORS.blue;
+          ctx.lineWidth = ds.borderWidth||1;
+          const r = 2;
+          ctx.beginPath();
+          ctx.roundRect ? ctx.roundRect(bx,by,barW,bh,r) : ctx.rect(bx,by,barW,bh);
+          ctx.fill(); ctx.stroke();
+        });
+      });
+    });
+  } else {
+    const totalBarW = barW * datasets.length + 2*(datasets.length-1);
+    labels.forEach((lbl,xi)=>{
+      const slotCx = PAD.left + xi*slotW + slotW/2;
+      datasets.forEach((ds,di)=>{
+        if(ds.type==='line') return; // skip lines in bar loop
+        const v = ds.data[xi]||0;
+        const zero = PAD.top + ch * (maxV/(maxV-Math.min(minV,0)));
+        const bh = Math.abs(ch * v / span);
+        const by = v>=0 ? PAD.top + ch - (ch*(v-Math.min(minV,0))/span) : PAD.top + ch - (ch*(0-Math.min(minV,0))/span);
+        const bx = slotCx - totalBarW/2 + di*(barW+2);
+        ctx.fillStyle = ds.backgroundColor||COLORS.blueA;
+        ctx.strokeStyle = ds.borderColor||COLORS.blue;
+        ctx.lineWidth = ds.borderWidth||1;
+        ctx.beginPath();
+        ctx.roundRect ? ctx.roundRect(bx,by,barW,bh,2) : ctx.rect(bx,by,barW,bh);
+        ctx.fill(); ctx.stroke();
+      });
+    });
+  }
+
+  // Line datasets
+  datasets.filter(d=>d.type==='line').forEach(ds=>{
+    ctx.strokeStyle = ds.borderColor||COLORS.amber;
+    ctx.lineWidth = ds.borderWidth||2;
+    ctx.lineJoin = 'round';
+    ctx.setLineDash([]);
+    const pts = ds.data.map((v,xi)=>({
+      x: PAD.left + xi*slotW + slotW/2,
+      y: PAD.top + ch - (ch*(v-Math.min(minV,0))/span)
+    }));
+    ctx.beginPath();
+    pts.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));
+    ctx.stroke();
+    pts.forEach(p=>{
+      ctx.beginPath(); ctx.arc(p.x,p.y,2.5,0,Math.PI*2);
+      ctx.fillStyle = ds.borderColor||COLORS.amber; ctx.fill();
+    });
+  });
+
+  // Value labels on top of each bar column (only for static charts with showValues)
+  if(opts.showValues) {
+    ctx.font = 'bold 8.5px system-ui,sans-serif';
+    ctx.textAlign = 'center';
+    labels.forEach((lbl,xi)=>{
+      let colMax = 0;
+      datasets.forEach(ds=>{
+        if(ds.type==='line') return;
+        const v = ds.data[xi]||0;
+        if(v>0) colMax+=v;
+      });
+      if(!colMax) return;
+      const y0 = PAD.top + ch - (ch * (colMax - Math.min(minV,0)) / span);
+      const label = colMax>=1000000?'R$'+(colMax/1000000).toFixed(1)+'M':colMax>=1000?'R$'+(colMax/1000).toFixed(0)+'K':'R$'+colMax.toFixed(0);
+      // Draw right above the bar top
+      const yLabel = Math.max(y0 - 2, PAD.top + 9);
+      ctx.fillStyle = 'rgba(30,30,30,0.85)';
+      const tw = ctx.measureText(label).width;
+      const xc = PAD.left + xi*slotW + slotW/2;
+      ctx.fillRect(xc - tw/2 - 2, yLabel - 8, tw + 4, 10);
+      ctx.fillStyle = '#fff';
+      ctx.fillText(label, xc, yLabel);
+    });
+  }
+
+  // X labels
+  ctx.fillStyle = COLORS.ink;
+  ctx.font = '8.5px system-ui,sans-serif';
+  ctx.textAlign = 'center';
+  const hitRegs = [];
+  labels.forEach((lbl,xi)=>{
+    const x = PAD.left + xi*slotW + slotW/2;
+    ctx.save(); ctx.translate(x, h-PAD.bottom+14); ctx.rotate(-0.6);
+    ctx.fillText(lbl, 0, 0); ctx.restore();
+    // Register hit region for this slot
+    hitRegs.push({x: PAD.left + xi*slotW, w: slotW, xi, label: lbl});
+  });
+
+  // Legend
+  if(opts.legend !== false){
+    let lx = PAD.left;
+    const ly = 10;
+    datasets.forEach(ds=>{
+      ctx.fillStyle = ds.borderColor||ds.backgroundColor||COLORS.blue;
+      ctx.fillRect(lx, ly-6, 10, 8);
+      ctx.fillStyle = COLORS.ink;
+      ctx.font = '9px system-ui,sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(ds.label||'', lx+13, ly+1);
+      lx += ctx.measureText(ds.label||'').width + 28;
+    });
+  }
+
+  // Register hits and attach mouse events
+  if(opts.onHover || opts.onClick) {
+    const canvas = document.getElementById(id);
+    registerHits(id, hitRegs);
+    attachBarEvents(canvas, id, opts);
+  }
+}
+
+// -- LINE CHART ----------------------------------------------
+function drawLine(id, labels, datasets, opts={}) {
+  const heightPx = opts.height || 130;
+  const c = setupCanvas(id, heightPx);
+  if(!c) return;
+  const {ctx, w, h} = c;
+
+  const PAD = {top:16, right:10, bottom:44, left:52};
+  const cw = w - PAD.left - PAD.right;
+  const ch = h - PAD.top - PAD.bottom;
+
+  const allVals = datasets.flatMap(d=>d.data);
+  const maxV = Math.max(...allVals, 1);
+  const minV = 0;
+  const span = maxV - minV;
+
+  // Grid
+  ctx.strokeStyle = COLORS.border; ctx.lineWidth=0.5;
+  ctx.fillStyle = COLORS.muted; ctx.font='9px system-ui,sans-serif'; ctx.textAlign='right';
+  for(let i=0;i<=4;i++){
+    const v = minV + (span/4)*i;
+    const y = PAD.top + ch - (ch*(v-minV)/span);
+    ctx.beginPath(); ctx.moveTo(PAD.left,y); ctx.lineTo(PAD.left+cw,y); ctx.stroke();
+    const lbl = v>=1000?(v/1000).toFixed(0)+'K':v.toFixed(0);
+    ctx.fillText(lbl, PAD.left-4, y+3);
+  }
+
+  const slotW = cw / Math.max(labels.length-1, 1);
+
+  datasets.forEach(ds=>{
+    const pts = ds.data.map((v,xi)=>({
+      x: PAD.left + xi*slotW,
+      y: PAD.top + ch - (ch*(v-minV)/span)
+    }));
+
+    // Fill area
+    if(ds.fill){
+      ctx.beginPath();
+      ctx.moveTo(pts[0].x, PAD.top+ch);
+      pts.forEach(p=>ctx.lineTo(p.x,p.y));
+      ctx.lineTo(pts[pts.length-1].x, PAD.top+ch);
+      ctx.closePath();
+      ctx.fillStyle = ds.backgroundColor||'rgba(59,130,246,0.1)';
+      ctx.fill();
+    }
+
+    // Line
+    ctx.strokeStyle = ds.borderColor||COLORS.blue;
+    ctx.lineWidth = ds.borderWidth||2;
+    ctx.lineJoin='round'; ctx.setLineDash([]);
+    ctx.beginPath();
+    pts.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));
+    ctx.stroke();
+
+    // Dots
+    pts.forEach(p=>{
+      ctx.beginPath(); ctx.arc(p.x,p.y,2.5,0,Math.PI*2);
+      ctx.fillStyle=ds.borderColor||COLORS.blue; ctx.fill();
+    });
+  });
+
+  // Value labels on highest point of each series
+  if(opts.showValues) {
+    const allPts = datasets.flatMap(ds=>ds.data||[]).filter(v=>v>0);
+    const mxV = Math.max(...allPts,1), mnV = Math.min(0,...allPts);
+    const spn = mxV - mnV;
+    datasets.forEach(ds=>{
+      if(!ds.data||ds.type==='bar') return;
+      ds.data.forEach((v,xi)=>{
+        if(!v||v<=0) return;
+        const x = PAD.left + xi*slotW;
+        const yp = PAD.top + ch - (ch*(v-mnV)/spn);
+        const label = v>=1000000?'R$'+(v/1000000).toFixed(1)+'M':v>=1000?'R$'+(v/1000).toFixed(0)+'K':'R$'+v.toFixed(0);
+        const tw = ctx.measureText(label).width;
+        ctx.font='bold 8.5px system-ui,sans-serif'; ctx.textAlign='center';
+        const yL = Math.max(yp-3, PAD.top+9);
+        ctx.fillStyle='rgba(30,30,30,0.85)';
+        ctx.fillRect(x-tw/2-2,yL-8,tw+4,10);
+        ctx.fillStyle='#fff';
+        ctx.fillText(label,x,yL);
+      });
+    });
+  }
+
+  // X labels
+  ctx.fillStyle=COLORS.ink; ctx.font='8.5px system-ui,sans-serif'; ctx.textAlign='center';
+  labels.forEach((lbl,xi)=>{
+    const x = PAD.left + xi*slotW;
+    ctx.save(); ctx.translate(x, h-PAD.bottom+14); ctx.rotate(-0.6);
+    ctx.fillText(lbl,0,0); ctx.restore();
+  });
+}
+
+// -- HORIZONTAL BAR -----------------------------------------
+function drawHBar(id, labels, data, color, opts={}) {
+  const heightPx = Math.max(labels.length*36+24, 90);
+  const c = setupCanvas(id, opts.height||heightPx);
+  if(!c) return;
+  const {ctx, w, h} = c;
+
+  const PAD = {top:8, right:70, bottom:8, left:130};
+  const cw = w - PAD.left - PAD.right;
+  const ch = h - PAD.top - PAD.bottom;
+  const maxV = Math.max(...data, 1);
+  const barH = Math.min(ch/labels.length - 6, 22);
+
+  labels.forEach((lbl,i)=>{
+    const y = PAD.top + i*(ch/labels.length) + (ch/labels.length - barH)/2;
+    const bw = (data[i]/maxV)*cw;
+
+    // Label
+    ctx.fillStyle=COLORS.ink; ctx.font='10px system-ui,sans-serif'; ctx.textAlign='right';
+    ctx.fillText(lbl, PAD.left-6, y+barH/2+3);
+
+    // Bar
+    ctx.fillStyle = color+'44';
+    ctx.strokeStyle = color;
+    ctx.lineWidth=1;
+    ctx.beginPath();
+    ctx.roundRect?ctx.roundRect(PAD.left,y,bw,barH,3):ctx.rect(PAD.left,y,bw,barH);
+    ctx.fill(); ctx.stroke();
+
+    // Value
+    ctx.fillStyle=COLORS.ink; ctx.font='10px system-ui,sans-serif'; ctx.textAlign='left';
+    const vStr = data[i]>=1000?(data[i]/1000).toFixed(0)+'K':data[i].toFixed(0);
+    ctx.fillText('R$'+vStr, PAD.left+bw+4, y+barH/2+3);
+  });
+}
+
+// -- DONUT CHART ---------------------------------------------
+function drawDonut(id, labels, data, colors, opts={}) {
+  const heightPx = opts.height||130;
+  const c = setupCanvas(id, heightPx);
+  if(!c) return;
+  const {ctx, w, h} = c;
+
+  const total = data.reduce((a,b)=>a+b,0);
+  if(!total) return;
+
+  // Donut on LEFT 40%, legend on RIGHT 60%
+  const legW   = Math.min(w * 0.55, 220);
+  const donW   = w - legW;
+  const cx     = donW * 0.5;
+  const cy     = h * 0.5;
+  const r      = Math.min(donW * 0.4, h * 0.42);
+  const ir     = r * 0.58;
+  let angle    = -Math.PI/2;
+
+  data.forEach((v,i)=>{
+    const slice = (v/total)*Math.PI*2;
+    ctx.beginPath(); ctx.moveTo(cx,cy);
+    ctx.arc(cx,cy,r,angle,angle+slice);
+    ctx.closePath();
+    ctx.fillStyle = colors[i]||COLORS.blue;
+    ctx.strokeStyle='#fff'; ctx.lineWidth=2;
+    ctx.fill(); ctx.stroke();
+    angle+=slice;
+  });
+
+  // Hole
+  ctx.beginPath(); ctx.arc(cx,cy,ir,0,Math.PI*2);
+  ctx.fillStyle='#fff'; ctx.fill();
+
+  // Center label
+  ctx.fillStyle=COLORS.ink; ctx.font='bold 11px system-ui,sans-serif'; ctx.textAlign='center';
+  const totStr = total>=1000000?'R$'+(total/1000000).toFixed(1)+'M':total>=1000?'R$'+(total/1000).toFixed(0)+'K':'R$'+total.toFixed(0);
+  ctx.fillText(totStr, cx, cy+4);
+
+  // Legend RIGHT side - each row: swatch + name + pct + value
+  const legX   = donW + 2;
+  const rowH   = Math.min(Math.floor((h - 10) / labels.length), 34);
+  const startY = (h - rowH * labels.length) / 2;
+
+  labels.forEach((lbl,i)=>{
+    const y   = startY + i * rowH + rowH/2 - 4;
+    const pct = ((data[i]/total)*100).toFixed(1);
+    const val = data[i]>=1000?(data[i]/1000).toFixed(0)+'K':data[i].toFixed(0);
+
+    // Swatch
+    ctx.fillStyle = colors[i]||COLORS.blue;
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(legX, y-5, 10, 10, 2) : ctx.rect(legX, y-5, 10, 10);
+    ctx.fill();
+
+    // Name bold, bigger, truncate if needed
+    const maxNameW = legW - 12;
+    ctx.fillStyle = COLORS.ink;
+    ctx.font = 'bold 11px system-ui,sans-serif';
+    ctx.textAlign = 'left';
+    let name = lbl;
+    while(ctx.measureText(name).width > maxNameW && name.length > 4) name = name.slice(0,-1);
+    if(name !== lbl) name = name.slice(0,-1) + '..';
+    ctx.fillText(name, legX+14, y+1);
+
+    // Pct + value on second line
+    ctx.fillStyle = COLORS.muted;
+    ctx.font = '10px system-ui,sans-serif';
+    ctx.fillText(pct+'%  R$'+val, legX+14, y+14);
+  });
+}
+
+// ============================================================
+// RENDER FUNCTIONS
+// ============================================================
+
+function renderHome() {
+  const recTotal = MESES_R.reduce((a,k)=>a+DB[k].rec_inter,0);
+  const despTotal = MESES_R.reduce((a,k)=>a+DB[k].desp_total,0);
+  document.getElementById('h-rec').textContent = fmtR(recTotal,2);
+  document.getElementById('h-desp').textContent = fmtR(despTotal);
+
+  const labels = MESES_R.map(k=>LABEL_MAP[k]);
+
+  drawBar('h-chartOp', labels, [
+    {label:'20% devida 2025', data:MESES_R.map(k=>REC20_2025[k]||0), backgroundColor:COLORS.gray+'44', borderColor:COLORS.grayB, borderWidth:1, stack:'r'},
+    {label:'Receita Inter',   data:MESES_R.map(k=>DB[k].rec_inter), backgroundColor:COLORS.greenA, borderColor:COLORS.green, borderWidth:1, stack:'r'},
+    {label:'Despesa realizada',data:MESES_R.map(k=>DB[k].desp_total), backgroundColor:COLORS.redA,  borderColor:COLORS.red, borderWidth:1, stack:'d'},
+  ], {
+    height:180, legend:true, showValues:true,
+    onHover: (e, reg) => showTT(e, makeTTHtml(MESES_R[reg.xi])),
+    onClick: (e, reg) => {}
+  });
+
+  drawLine('h-chartCred', labels, [
+    {label:'Créditos', data:MESES_R.map(k=>DB[k].cred), borderColor:COLORS.blue, backgroundColor:'rgba(59,130,246,0.1)', fill:true, borderWidth:2},
+  ], {height:180, showValues:true});
+}
+
+function renderB1() {
+  const fy=F.b1.year, fm=F.b1.month;
+  const keys = MESES_R.filter(k=>(fy==='todos'||ANO(k)===fy)&&(fm==='todos'||MES(k)===fm));
+  const labels = keys.map(k=>LABEL_MAP[k]);
+  const cred   = keys.map(k=>DB[k].cred);
+  const saques = keys.map(k=>Math.abs(DB[k].saques));
+  const pct20  = cred.map(v=>+(v*.2).toFixed(0));
+  const saldos = cred.map((c,i)=>c-saques[i]);
+  const tC=sum(cred),tS=sum(saques),tSaldo=sum(saldos),t20=sum(pct20);
+
+  document.getElementById('b1k1').textContent=fmtR(tC);
+  document.getElementById('b1k2').textContent='('+tS.toLocaleString('pt-BR')+')';
+  document.getElementById('b1k3').textContent=fmtN(tSaldo);
+  document.getElementById('b1k4').textContent=fmtR(t20);
+
+  // Grafico FIXO - sempre todo o periodo (nao varia com filtro)
+  const allB1Keys = MESES_R;
+  const allB1Cred   = allB1Keys.map(k=>DB[k].cred);
+  const allB1Saques = allB1Keys.map(k=>Math.abs(DB[k].saques));
+  const allB1Pct20  = allB1Cred.map(v=>+(v*.2).toFixed(0));
+  drawBar('b1-chart1', allB1Keys.map(k=>LABEL_MAP[k]), [
+    {label:'Créditos', data:allB1Cred,   backgroundColor:COLORS.blueA, borderColor:COLORS.blue, borderWidth:1.5},
+    {label:'Saques',   data:allB1Saques, backgroundColor:'rgba(239,68,68,0.2)', borderColor:COLORS.red, borderWidth:1.5},
+    {label:'20% Adm.', data:allB1Pct20,  type:'line', borderColor:COLORS.amber, borderWidth:2},
+  ], {height:320, padTop:28, padBottom:46, padLeft:56, padRight:8, ticks:5, showValues:true});
+
+  const tb=document.getElementById('b1-tbody'); tb.innerHTML='';
+  labels.forEach((m,i)=>{
+    const s=cred[i]-saques[i];
+    tb.innerHTML+=`<tr><td>${m}</td><td class="mono pos" style="text-align:right">${cred[i].toLocaleString('pt-BR',{minimumFractionDigits:0})}</td><td class="mono neg" style="text-align:right">(${saques[i].toLocaleString('pt-BR',{minimumFractionDigits:0})})</td><td class="mono ${s>=0?'pos':'neg'}" style="text-align:right">${s<0?'(':''}${Math.abs(s).toLocaleString('pt-BR',{minimumFractionDigits:0})}${s<0?')':''}</td><td class="mono pend" style="text-align:right">${pct20[i].toLocaleString('pt-BR',{minimumFractionDigits:0})}</td></tr>`;
+  });
+  document.getElementById('b1f1').textContent=tC.toLocaleString('pt-BR',{minimumFractionDigits:0});
+  document.getElementById('b1f2').textContent='('+tS.toLocaleString('pt-BR',{minimumFractionDigits:0})+')';
+  document.getElementById('b1f3').innerHTML=`<span class="${tSaldo>=0?'pos':'neg'}">${tSaldo<0?'(':''}${Math.abs(tSaldo).toLocaleString('pt-BR',{minimumFractionDigits:0})}${tSaldo<0?')':''}</span>`;
+  document.getElementById('b1f4').textContent=t20.toLocaleString('pt-BR',{minimumFractionDigits:0});
+}
+
+const B2_ROWS = [
+  {key:'nov25', label:'Nov/25', year:'2025', month:'11', resgate:0,      rend:2708,  aplicacao:490000},
+  {key:'dez25', label:'Dez/25', year:'2025', month:'12', resgate:18000,  rend:5767,  aplicacao:0},
+  {key:'jan26', label:'Jan/26', year:'2026', month:'01', resgate:40200,  rend:5044,  aplicacao:0},
+  {key:'fev26', label:'Fev/26', year:'2026', month:'02', resgate:51000,  rend:-1937, aplicacao:0},
+  {key:'mar26', label:'Mar/26', year:'2026', month:'03', resgate:35000,  rend:2187,  aplicacao:0},
+];
+
+function renderB2() {
+  const fy=F.b2.year, fm=F.b2.month;
+  const active = B2_ROWS.filter(r=>
+    (fy==='todos' || r.year===fy) &&
+    (fm==='todos' || r.month===fm)
+  );
+  // Show/hide table rows
+  B2_ROWS.forEach(r=>{
+    const el=document.getElementById('b2r-'+r.key);
+    if(el) el.style.display=active.find(a=>a.key===r.key)?'':'none';
+  });
+  let tR=0,tL=0;
+  active.forEach(r=>{tR+=r.resgate;tL+=r.rend;});
+  document.getElementById('b2k3').textContent=fmtR(tR);
+  document.getElementById('b2k4').textContent=fmtN(tL);
+
+  const labels = active.map(r=>r.label);
+  const resgates = active.map(r=>r.resgate);
+  const rendimentos = active.map(r=>r.rend);
+  drawBar('b2-chart1', labels, [
+    {label:'Resgates CDI',   data:resgates,   backgroundColor:COLORS.greenA+'44', borderColor:COLORS.green, borderWidth:1.5},
+    {label:'Rendimento Líq.',data:rendimentos, type:'line', borderColor:COLORS.green, borderWidth:2},
+  ], {height:185, legend:true});
+}
+
+const B3_DATA=[
+  {m:'abr25',y:'2025',f:'pain',val:20000},{m:'abr25',y:'2025',f:'outros',val:12},
+  {m:'mai25',y:'2025',f:'pain',val:20000},{m:'mai25',y:'2025',f:'outros',val:31},
+  {m:'jun25',y:'2025',f:'outros',val:8000},{m:'jun25',y:'2025',f:'outros',val:10000},{m:'jun25',y:'2025',f:'outros',val:399},{m:'jun25',y:'2025',f:'outros',val:18},
+  {m:'jul25',y:'2025',f:'pain',val:20000},{m:'jul25',y:'2025',f:'gaud',val:13600},{m:'jul25',y:'2025',f:'outros',val:836},
+  {m:'ago25',y:'2025',f:'rmsz',val:25000},{m:'ago25',y:'2025',f:'outros',val:1538},
+  {m:'set25',y:'2025',f:'rmsz',val:25000},{m:'set25',y:'2025',f:'outros',val:1572},
+  {m:'out25',y:'2025',f:'rmsz',val:25000},{m:'out25',y:'2025',f:'outros',val:1559},
+];
+const B3L={pain:'Pain Gaming',rmsz:'RMS&Z Tec.',gaud:'Gaudêncio Adv.',outros:'Outros'};
+
+function renderB3() {
+  const fy=F.b3.year, fm=F.b3.month, ff=F.b3.forn;
+  const rows=document.querySelectorAll('#b3-tbody tr[data-m]');
+  let total=0;
+  rows.forEach(r=>{
+    const rowYear = r.dataset.y || '2025';
+    const ok=(fy==='todos'||rowYear===fy)&&(fm==='todos'||r.dataset.m===fm)&&(ff==='todos'||r.dataset.f===ff);
+    r.style.display=ok?'':'none';
+    if(ok){const t=r.querySelector('td:last-child').textContent.replace(/[().,\s]/g,'');total+=parseInt(t)||0;}
+  });
+  document.getElementById('b3k1').textContent='('+total.toLocaleString('pt-BR')+')';
+  document.getElementById('b3k4').textContent='('+total.toLocaleString('pt-BR')+')';
+  document.getElementById('b3-total').textContent='('+total.toLocaleString('pt-BR')+')';
+
+  const filt=B3_DATA.filter(d=>(fy==='todos'||d.y===fy)&&(fm==='todos'||d.m===fm)&&(ff==='todos'||d.f===ff));
+  const byF={};filt.forEach(d=>{byF[d.f]=(byF[d.f]||0)+d.val;});
+  if(!Object.keys(byF).length) return;
+  const lbls=Object.keys(byF).map(k=>B3L[k]||k);
+  const vals=Object.values(byF);
+  drawHBar('b3-chart1', lbls, vals, COLORS.violet, {height:Math.max(lbls.length*36+20,80)});
+}
+
+function renderB4() {
+  const fy=F.b4.year, fm=F.b4.month;
+  const keysR=filterRealizadoKeys(fy,fm);
+  const keysP=filterPrevistoKeys(fy,fm);
+  const sP=true, sM=true, sJ=true, sO=true;
+
+  let tP=0,tM=0,tJ=0,tO=0;
+  keysR.forEach(k=>{const d=DB[k];if(sP)tP+=d.desp_pessoal;if(sM)tM+=d.desp_mkt;if(sJ)tJ+=d.desp_juridico;if(sO)tO+=d.desp_outros;});
+  const tTot=tP+tM+tJ+tO;
+  const tRecInter=keysR.reduce((a,k)=>a+DB[k].rec_inter,0);
+  const tDev2025=fy==='2026r'||fy==='2026p'?0:keysR.reduce((a,k)=>a+(REC20_2025[k]||0),0);
+  const tPrev=keysP.reduce((a,k)=>a+DB_PREVISTO[k].desp_total,0);
+  const nMeses=keysR.filter(k=>DB[k].desp_total>0).length||1;
+
+  document.getElementById('b4k1').textContent=tRecInter>0?fmtR(tRecInter,2):'R$ 0,00';
+  document.getElementById('b4k2').textContent=tDev2025>0?fmtR(tDev2025,2):'-';
+  document.getElementById('b4k3').textContent='('+Math.round(tTot).toLocaleString('pt-BR')+')';
+  document.getElementById('b4k5').textContent=tPrev>0?fmtR(tPrev):'-';
+  document.getElementById('b4k4').textContent='~R$ '+Math.round(tTot/nMeses).toLocaleString('pt-BR')+'/mês';
+
+  // Grafico FIXO - sempre todo o periodo realizado (nao varia com filtro)
+  const allKeys = [...MESES_R];
+  const allLabels = allKeys.map(k=>LABEL_MAP[k]);
+  const allR20 = allKeys.map(k=>REC20_2025[k]||0);
+  const allRecInter = allKeys.map(k=>DB[k].rec_inter);
+  const allDespReal = allKeys.map(k=>{const d=DB[k];return d.desp_pessoal+d.desp_mkt+d.desp_juridico+d.desp_outros;});
+  drawBar('b4-chartAll', allLabels, [
+    {label:'20% devida 2025', data:allR20, backgroundColor:COLORS.gray+'44', borderColor:COLORS.grayB, borderWidth:1, stack:'r'},
+    {label:'Receita Inter', data:allRecInter, backgroundColor:COLORS.greenA, borderColor:COLORS.green, borderWidth:1, stack:'r'},
+    {label:'Desp. realizada', data:allDespReal, backgroundColor:COLORS.redA, borderColor:COLORS.red, borderWidth:1, stack:'d'},
+  ], {
+    height:240, legend:false, showValues:true,
+    onHover: (e, reg) => showTT(e, makeTTHtml(allKeys[reg.xi])),
+    onClick: (e, reg) => { const k=allKeys[reg.xi]; if(DB[k]) openDetail(k); }
+  });
+
+  // Donut
+  const pD=[],pL=[],pC=[];
+  if(sP&&tP){pD.push(tP);pL.push('Pessoal');pC.push(COLORS.amber);}
+  if(sM&&tM){pD.push(tM);pL.push('MKT');pC.push(COLORS.violet);}
+  if(sJ&&tJ){pD.push(tJ);pL.push('Jurídico');pC.push(COLORS.red);}
+  if(sO&&tO){pD.push(tO);pL.push('Outros');pC.push(COLORS.muted);}
+  if(pD.length) drawDonut('b4-chartPie', pL, pD, pC, {height:220});
+
+  // Tabela despesas
+  const tb=document.getElementById('b4-tbody'); tb.innerHTML='';
+  keysR.forEach(k=>{
+    const d=DB[k];
+    const vP=sP?d.desp_pessoal:0,vM=sM?d.desp_mkt:0,vJ=sJ?d.desp_juridico:0,vO=sO?d.desp_outros:0;
+    const tot=vP+vM+vJ+vO;
+    if(!tot) return;
+    const cell=v=>v?`<td class="mono neg" style="text-align:right">(${v.toLocaleString('pt-BR',{minimumFractionDigits:0})})</td>`:`<td class="mono" style="text-align:right;color:var(--muted)">-</td>`;
+    tb.innerHTML+=`<tr><td>${LABEL_MAP[k]}</td>${cell(vP)}${cell(vM)}${cell(vJ)}${cell(vO)}<td class="mono neg" style="text-align:right;font-weight:700">(${tot.toLocaleString('pt-BR',{minimumFractionDigits:0})})</td></tr>`;
+  });
+  const tf=document.getElementById('b4-tfoot');
+  tf.innerHTML=`<tr><td><strong>TOTAL</strong></td>${[tP,tM,tJ,tO].map(v=>v?`<td class="mono neg" style="text-align:right"><strong>(${v.toLocaleString('pt-BR',{minimumFractionDigits:0})})</strong></td>`:'<td></td>').join('')}<td class="mono neg" style="text-align:right"><strong>(${tTot.toLocaleString('pt-BR',{minimumFractionDigits:0})})</strong></td></tr>`;
+
+  // Tabela real por categoria do Excel - filtra por ano+mes
+  const catTb     = document.getElementById('b4-cat-tbody');
+  const catTf     = document.getElementById('b4-cat-tfoot');
+  const catPeriod = document.getElementById('b4-cat-period');
+  if(catTb){
+    catTb.innerHTML='';
+    // Determine which mes keys match the current filter
+    const allMesKeys = MESES_R;
+    const filtMes = allMesKeys.filter(k=>{
+      const yOk = fy==='todos'?true:ANO(k)===fy;
+      const mOk = fm==='todos'||MES(k)===fm;
+      return yOk && mOk;
+    });
+
+    // Sum each category across filtered months
+    const catRows = Object.entries(DB_CAT).map(([cat, mesData])=>{
+      const total = filtMes.reduce((a,m)=>a+(mesData[m]||0), 0);
+      return {cat, total, color: CAT_COLORS[cat]||'#9ca3af'};
+    }).filter(r=>r.total>0).sort((a,b)=>b.total-a.total);
+
+    const grandTotal = catRows.reduce((a,r)=>a+r.total, 0);
+    const maxVal = catRows[0]?.total || 1;
+
+    // Period label
+    const yrLabel = fy==='todos'?'Acumulado total':fy==='2025'?'2025':'2026';
+    const msLabel = fm==='todos'?'todos os meses':LABEL_MAP['2025-'+fm]||LABEL_MAP['2026-'+fm]||fm;
+    if(catPeriod) catPeriod.textContent = yrLabel + ' · ' + msLabel;
+
+    catRows.forEach(r=>{
+      const pct = ((r.total/grandTotal)*100).toFixed(1);
+      const barW = Math.round((r.total/maxVal)*80);
+      const shortCat = r.cat.length>28 ? r.cat.slice(0,27)+'...' : r.cat;
+      catTb.innerHTML += `<tr title="${r.cat}">
+        <td style="font-size:10.5px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${shortCat}</td>
+        <td class="mono neg" style="text-align:right;white-space:nowrap">(${r.total.toLocaleString('pt-BR',{minimumFractionDigits:0})})</td>
+        <td class="mono" style="text-align:right;color:var(--muted);font-size:10px">${pct}%</td>
+        <td style="padding-right:4px"><div style="height:6px;border-radius:3px;background:${r.color};width:${barW}px;max-width:100px;margin-top:5px"></div></td>
+      </tr>`;
+    });
+
+    if(catTf) catTf.innerHTML = grandTotal
+      ? `<tr><td><strong>Total Despesas</strong></td><td class="mono neg" style="text-align:right"><strong>(${grandTotal.toLocaleString('pt-BR',{minimumFractionDigits:0})})</strong></td><td></td><td></td></tr>`
+      : `<tr><td colspan="4" style="color:var(--muted);text-align:center;padding:12px">Sem despesas no periodo</td></tr>`;
+  }
+
+  // Tabela receita
+  const rtb=document.getElementById('b4-rec-tbody'); rtb.innerHTML='';
+  const filtRec=REC_INTER_DETAIL.filter(()=>fy!=='2025'&&(fm==='todos'||fm==='02'));
+  let totRec=0;
+  filtRec.forEach(r=>{
+    totRec+=r.val;
+    rtb.innerHTML+=`<tr><td>Fev/26</td><td>${r.banco}</td><td style="font-size:10px;color:var(--muted)">${r.subgrupo}</td><td style="font-size:10px;color:var(--muted)">${r.descricao}</td><td class="mono pos" style="text-align:right">${r.val.toLocaleString('pt-BR',{minimumFractionDigits:2})}</td><td><span class="badge bg">Recebido</span></td></tr>`;
+  });
+  if(!filtRec.length) rtb.innerHTML=`<tr><td colspan="6" style="color:var(--muted);text-align:center;padding:12px">Nenhuma receita Inter no período selecionado</td></tr>`;
+  document.getElementById('b4-rec-tfoot').innerHTML=`<tr><td colspan="4"><strong>Total TAXA DE ADMINISTRAÇÃO (+)</strong></td><td class="mono pos" style="text-align:right"><strong>${totRec.toLocaleString('pt-BR',{minimumFractionDigits:2})}</strong></td><td></td></tr>`;
+
+}
+
+
+// ============================================================
+// TOOLTIP + DETAIL PANEL FUNCTIONS
+// ============================================================
+function closeDetail() {
+  const p = document.getElementById('b4-detail-panel');
+  if(p)  p.classList.remove('active');
+}
+
+function openDetail(mesKey) {
+  const d = DB[mesKey];
+  if(!d) return;
+  const panel = document.getElementById('b4-detail-panel');
+  if(!panel) return;
+
+  const lbl = LABEL_MAP[mesKey] || mesKey;
+  document.getElementById('b4-detail-title').textContent = 'Detalhamento - ' + lbl;
+
+  // Receita
+  const rec20 = REC20_2025[mesKey] || 0;
+  const recInter = d.rec_inter || 0;
+  const recTotal = rec20 + recInter;
+  const recDiv = document.getElementById('b4-detail-rec');
+  recDiv.innerHTML = '';
+  if(recInter) {
+    recDiv.innerHTML += `<div class="drow"><div class="dbar" style="width:60px;background:var(--green-m)"></div><span class="dname">Receita Inter</span><span class="dval tt-pos">R$ ${recInter.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span></div>`;
+  }
+  if(rec20) {
+    recDiv.innerHTML += `<div class="drow"><div class="dbar" style="width:${Math.round(rec20/Math.max(recTotal,1)*60)}px;background:#b0c4d8"></div><span class="dname">20% Devida 2025</span><span class="dval" style="color:var(--muted)">R$ ${rec20.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span></div>`;
+  }
+  if(!recInter && !rec20) {
+    recDiv.innerHTML = '<div style="font-size:11px;color:var(--muted);padding:6px 0">Sem receita neste mês</div>';
+  }
+
+  // Despesas
+  const cats = [
+    {k:'desp_pessoal',  l:'Pessoal',       c:'#f59e0b'},
+    {k:'desp_mkt',      l:'Marketing',      c:'#8b5cf6'},
+    {k:'desp_juridico', l:'Jurídico',       c:'#ef4444'},
+    {k:'desp_outros',   l:'Outros',         c:'#9ca3af'},
+  ];
+  const despDiv = document.getElementById('b4-detail-desp');
+  despDiv.innerHTML = '';
+  const maxDesp = Math.max(...cats.map(c=>d[c.k]||0), 1);
+  cats.forEach(cat=>{
+    const v = d[cat.k] || 0;
+    if(!v) return;
+    const barW = Math.max(Math.round((v/maxDesp)*80), 3);
+    const pct = ((v/d.desp_total)*100).toFixed(1);
+    despDiv.innerHTML += `<div class="drow"><div class="dbar" style="width:${barW}px;background:${cat.c}"></div><span class="dname">${cat.l}</span><span class="dval tt-neg">(${v.toLocaleString('pt-BR',{minimumFractionDigits:0})}) <span style="font-size:9px;color:var(--muted)">${pct}%</span></span></div>`;
+  });
+
+  // Saldo e %
+  const saldo = recTotal - d.desp_total;
+  const pctRD = d.desp_total > 0 ? ((recTotal/d.desp_total)*100).toFixed(1)+'%' : '-';
+  const sEl = document.getElementById('b4-detail-saldo');
+  sEl.textContent = (saldo>=0?'R$ ':'(R$ ')+Math.abs(saldo).toLocaleString('pt-BR',{minimumFractionDigits:0})+(saldo<0?')':'');
+  sEl.className = saldo>=0 ? 'dsaldo-pos' : 'dsaldo-neg';
+  document.getElementById('b4-detail-pct').textContent = 'Receita cobre '+pctRD+' da despesa';
+
+  panel.classList.add('active');
+}
+
+function makeTTHtml(mesKey) {
+  const d = DB[mesKey];
+  const prev = DB_PREVISTO[mesKey];
+  if(!d && !prev) return '';
+  const lbl = LABEL_MAP[mesKey] || mesKey;
+  const rec20 = REC20_2025[mesKey] || 0;
+  const recI  = d ? d.rec_inter : 0;
+  const desp  = d ? d.desp_total : (prev ? prev.desp_total : 0);
+  const saldo = (rec20 + recI) - desp;
+  const tag = d ? '' : '<span style="font-size:9px;opacity:.6"> (previsto)</span>';
+  let h = `<div class="tt-month">${lbl}${tag}</div>`;
+  if(rec20)  h += `<div class="tt-row"><span class="tt-label">20% devida</span><span class="tt-val tt-amb">R$ ${rec20.toLocaleString('pt-BR',{minimumFractionDigits:0})}</span></div>`;
+  if(recI)   h += `<div class="tt-row"><span class="tt-label">Receita Inter</span><span class="tt-val tt-pos">R$ ${recI.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span></div>`;
+  if(desp)   h += `<div class="tt-row"><span class="tt-label">Despesa</span><span class="tt-val tt-neg">(${desp.toLocaleString('pt-BR',{minimumFractionDigits:0})})</span></div>`;
+  if(d) {
+    const sldColor = saldo>=0?'tt-pos':'tt-neg';
+    h += `<div class="tt-row" style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,.12)"><span class="tt-label">Saldo</span><span class="tt-val ${sldColor}">${saldo<0?'(':''}R$ ${Math.abs(saldo).toLocaleString('pt-BR',{minimumFractionDigits:0})}${saldo<0?')':''}</span></div>`;
+    h += `<div style="font-size:9px;opacity:.55;margin-top:4px;text-align:center">Clique para detalhar</div>`;
+  }
+  return h;
+}
+
+function openDetailAccum() {
+  // Build accumulated data from current filtered keys
+  const fy=F.b4.year, fm=F.b4.month;
+  const keys = filterRealizadoKeys(fy, fm);
+  if(!keys.length) { closeDetail(); return; }
+
+  const lbl = fm !== 'todos'
+    ? (keys[0] ? LABEL_MAP[keys[0]] : fm)
+    : (fy === '2025' ? 'Acumulado 2025' : fy === '2026r' ? 'Acumulado 2026' : 'Acumulado Total');
+
+  const panel = document.getElementById('b4-detail-panel');
+  if(!panel) return;
+
+  document.getElementById('b4-detail-title').textContent = 'Detalhamento - ' + lbl;
+
+  // Totals across filtered keys
+  let recI=0, rec20=0, tP=0, tM=0, tJ=0, tO=0;
+  keys.forEach(k=>{
+    recI  += DB[k].rec_inter;
+    rec20 += REC20_2025[k]||0;
+    tP    += DB[k].desp_pessoal;
+    tM    += DB[k].desp_mkt;
+    tJ    += DB[k].desp_juridico;
+    tO    += DB[k].desp_outros;
+  });
+  const tDesp = tP+tM+tJ+tO;
+  const recTotal = recI + rec20;
+
+  // Receita
+  const recDiv = document.getElementById('b4-detail-rec');
+  recDiv.innerHTML = '';
+  if(recI) recDiv.innerHTML += `<div class="drow"><div class="dbar" style="width:60px;background:var(--green-m)"></div><span class="dname">Receita Inter</span><span class="dval tt-pos">R$ ${recI.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span></div>`;
+  if(rec20) recDiv.innerHTML += `<div class="drow"><div class="dbar" style="width:${Math.round(rec20/Math.max(recTotal,1)*60)}px;background:#b0c4d8"></div><span class="dname">20% Devida 2025</span><span class="dval" style="color:var(--muted)">R$ ${rec20.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span></div>`;
+  if(!recI && !rec20) recDiv.innerHTML = '<div style="font-size:11px;color:var(--muted);padding:6px 0">Sem receita no periodo</div>';
+
+  // Despesas
+  const cats = [
+    {k:tP, l:'Pessoal',   c:'#f59e0b'},
+    {k:tM, l:'Marketing', c:'#8b5cf6'},
+    {k:tJ, l:'Juridico',  c:'#ef4444'},
+    {k:tO, l:'Outros',    c:'#9ca3af'},
+  ];
+  const despDiv = document.getElementById('b4-detail-desp');
+  despDiv.innerHTML = '';
+  const maxD = Math.max(...cats.map(c=>c.k), 1);
+  cats.forEach(cat=>{
+    if(!cat.k) return;
+    const bw = Math.max(Math.round((cat.k/maxD)*80),3);
+    const pct = tDesp ? ((cat.k/tDesp)*100).toFixed(1) : '0.0';
+    despDiv.innerHTML += `<div class="drow"><div class="dbar" style="width:${bw}px;background:${cat.c}"></div><span class="dname">${cat.l}</span><span class="dval tt-neg">(${cat.k.toLocaleString('pt-BR',{minimumFractionDigits:0})}) <span style="font-size:9px;color:var(--muted)">${pct}%</span></span></div>`;
+  });
+
+  // Saldo
+  const saldo = recTotal - tDesp;
+  const pctRD = tDesp > 0 ? ((recTotal/tDesp)*100).toFixed(1)+'%' : '-';
+  const sEl = document.getElementById('b4-detail-saldo');
+  sEl.textContent = (saldo>=0 ? 'R$ ' : '(R$ ') + Math.abs(saldo).toLocaleString('pt-BR',{minimumFractionDigits:0}) + (saldo<0?')':'');
+  sEl.className = saldo>=0 ? 'dsaldo-pos' : 'dsaldo-neg';
+  document.getElementById('b4-detail-pct').textContent = 'Receita cobre ' + pctRD + ' da despesa';
+
+  panel.classList.add('active');
+}
+// -- INIT ---------------------------------------------------
+window.addEventListener('load', renderHome);
+
+</script>
+<div class="chart-tooltip" id="chart-tooltip"></div>
+</body>
+</html>

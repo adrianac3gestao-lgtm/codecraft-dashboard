@@ -1,0 +1,396 @@
+========================================= 
+Inicio: 02/04/2026 14:26:02,96 
+Traceback (most recent call last):
+  File "C:\Users\adria\OneDrive\C3 Gestao\EquipeC3\CODECRAFT\7. Dashboard\gerar_dados_dashboard.py", line 301, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\adria\OneDrive\C3 Gestao\EquipeC3\CODECRAFT\7. Dashboard\gerar_dados_dashboard.py", line 111, in main
+    print("\n" + "\u2550" * 58)
+    ~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\adria\AppData\Local\Programs\Python\Python314\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode characters in position 2-59: character maps to <undefined>
+ERRO no Python 
+========================================= 
+Inicio: 02/04/2026 14:29:21,16 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+? Excel : Relatorio Gerencial_Codecraft2026.xlsx
+? HTML  : index.html
+? Backup: _backups_dashboard\index.backup_20260402.html
+
+? Lendo Excel...
+Traceback (most recent call last):
+  File "C:\Users\adria\AppData\Local\Programs\Python\Python314\Lib\site-packages\pandas\core\indexes\base.py", line 3641, in get_loc
+    return self._engine.get_loc(casted_key)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "pandas/_libs/index.pyx", line 168, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/index.pyx", line 197, in pandas._libs.index.IndexEngine.get_loc
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7668, in pandas._libs.hashtable.PyObjectHashTable.get_item
+  File "pandas/_libs/hashtable_class_helper.pxi", line 7676, in pandas._libs.hashtable.PyObjectHashTable.get_item
+KeyError: 'Orcado'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\adria\OneDrive\C3 Gestao\EquipeC3\CODECRAFT\7. Dashboard\gerar_dados_dashboard.py", line 303, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\adria\OneDrive\C3 Gestao\EquipeC3\CODECRAFT\7. Dashboard\gerar_dados_dashboard.py", line 157, in main
+    df['Orcado']      = pd.to_datetime(df['Orcado'],      errors='coerce')
+                                       ~~^^^^^^^^^^
+  File "C:\Users\adria\AppData\Local\Programs\Python\Python314\Lib\site-packages\pandas\core\frame.py", line 4378, in __getitem__
+    indexer = self.columns.get_loc(key)
+  File "C:\Users\adria\AppData\Local\Programs\Python\Python314\Lib\site-packages\pandas\core\indexes\base.py", line 3648, in get_loc
+    raise KeyError(key) from err
+KeyError: 'Orcado'
+ERRO no Python 
+========================================= 
+Inicio: 02/04/2026 14:36:24,16 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+? Excel : Relatorio Gerencial_Codecraft2026.xlsx
+? HTML  : index.html
+? Backup: _backups_dashboard\index.backup_20260402.html
+
+? Lendo Excel...
+? Realizados : 2025-02 ? 2026-04  (15 meses)
+? Previstos  : 8 meses  (2026-05, 2026-06, 2026-07, 2026-08...)
+
+??  Calculando dados...
+??  Atualizando HTML...
+
+OK HTML atualizado com sucesso!
+   ? Abra o arquivo no navegador para ver os novos dados.
+
+----------------------------------------------------------
+  RESUMO
+----------------------------------------------------------
+  Receita Inter (TAXA ADM):              R$ 0,00
+  20% devida 2025:                     R$ 195,00
+  Despesa realizada (total):       R$ 120.953,96
+  Despesa prevista (total):         R$ 34.931,08
+  Meses realizados:                           15
+  Meses previstos:                             8
+----------------------------------------------------------
+
+Pressione Enter para fechar...^C========================================= 
+Inicio: 02/04/2026 14:50:42,99 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+? Excel : Relatorio Gerencial_Codecraft2026.xlsx
+? HTML  : index.html
+? Backup: _backups_dashboard\index.backup_20260402.html
+
+? Lendo Excel...
+? Realizados : 2025-02 ? 2026-04  (15 meses)
+? Previstos  : 8 meses  (2026-05, 2026-06, 2026-07, 2026-08...)
+
+??  Calculando dados...
+??  Atualizando HTML...
+
+OK HTML atualizado com sucesso!
+   ? Abra o arquivo no navegador para ver os novos dados.
+
+----------------------------------------------------------
+  RESUMO
+----------------------------------------------------------
+  Receita Inter (TAXA ADM):          R$ 3.521,55
+  20% devida 2025:                     R$ 195,00
+  Despesa realizada (total):       R$ 120.153,23
+  Despesa prevista (total):              R$ 0,00
+  Meses realizados:                           15
+  Meses previstos:                             8
+----------------------------------------------------------
+
+Pressione Enter para fechar...^C========================================= 
+Inicio: 02/04/2026 14:57:14,50 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+? Excel : Relatorio Gerencial_Codecraft2026.xlsx
+? HTML  : index.html
+? Backup: _backups_dashboard\index.backup_20260402.html
+
+? Lendo Excel...
+? Realizados : 2025-02 ? 2026-04  (15 meses)
+? Previstos  : 8 meses  (2026-05, 2026-06, 2026-07, 2026-08...)
+
+??  Calculando dados...
+??  Atualizando HTML...
+
+OK HTML atualizado com sucesso!
+   ? Abra o arquivo no navegador para ver os novos dados.
+
+----------------------------------------------------------
+  RESUMO
+----------------------------------------------------------
+  Receita Inter (TAXA ADM):          R$ 3.521,55
+  20% devida 2025:                     R$ 195,00
+  Despesa realizada (total):       R$ 106.062,11
+  Despesa prevista (total):              R$ 0,00
+  Meses realizados:                           15
+  Meses previstos:                             8
+----------------------------------------------------------
+
+Pressione Enter para fechar...^C========================================= 
+Inicio: 02/04/2026 19:34:46,79 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+? Excel : Relatorio Gerencial_Codecraft2026.xlsx
+? HTML  : index.html
+? Backup: _backups_dashboard\index.backup_20260402.html
+
+? Lendo Excel...
+? Realizados : 2025-02 ? 2026-04  (15 meses)
+? Previstos  : 8 meses  (2026-05, 2026-06, 2026-07, 2026-08...)
+
+??  Calculando dados...
+??  Atualizando HTML...
+
+OK HTML atualizado com sucesso!
+   ? Abra o arquivo no navegador para ver os novos dados.
+
+----------------------------------------------------------
+  RESUMO
+----------------------------------------------------------
+  Receita Inter (TAXA ADM):          R$ 3.521,55
+  20% devida 2025:                     R$ 195,00
+  Despesa realizada (total):       R$ 115.100,63
+  Despesa prevista (total):              R$ 0,00
+  Meses realizados:                           15
+  Meses previstos:                             8
+----------------------------------------------------------
+
+Pressione Enter para fechar...^C========================================= 
+Inicio: 02/04/2026 20:13:27,72 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+? Excel : Relatorio Gerencial_Codecraft2026.xlsx
+? HTML  : index.html
+? Backup: _backups_dashboard\index.backup_20260402.html
+
+? Lendo Excel...
+? Realizados : 2025-02 ? 2026-04  (15 meses)
+? Previstos  : 8 meses  (2026-05, 2026-06, 2026-07, 2026-08...)
+
+??  Calculando dados...
+??  Atualizando HTML...
+
+OK HTML atualizado com sucesso!
+   ? Abra o arquivo no navegador para ver os novos dados.
+
+----------------------------------------------------------
+  RESUMO
+----------------------------------------------------------
+  Receita Inter (TAXA ADM):          R$ 3.521,55
+  20% devida 2025:                     R$ 195,00
+  Despesa realizada (total):       R$ 115.100,63
+  Despesa prevista (total):              R$ 0,00
+  Meses realizados:                           15
+  Meses previstos:                             8
+----------------------------------------------------------
+
+Pressione Enter para fechar...^C========================================= 
+Inicio: 06/04/2026  8:23:12,68 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+? Excel : Relatorio Gerencial_Codecraft2026.xlsx
+? HTML  : index.html
+? Backup: _backups_dashboard\index.backup_20260406.html
+
+? Lendo Excel...
+? Realizados : 2025-02 ? 2026-04  (15 meses)
+? Previstos  : 8 meses  (2026-05, 2026-06, 2026-07, 2026-08...)
+
+??  Calculando dados...
+??  Atualizando HTML...
+
+OK HTML atualizado com sucesso!
+   ? Abra o arquivo no navegador para ver os novos dados.
+
+----------------------------------------------------------
+  RESUMO
+----------------------------------------------------------
+  Receita Inter (TAXA ADM):          R$ 3.521,55
+  20% devida 2025:                     R$ 195,00
+  Despesa realizada (total):       R$ 115.100,63
+  Despesa prevista (total):              R$ 0,00
+  Meses realizados:                           15
+  Meses previstos:                             8
+----------------------------------------------------------
+
+Pressione Enter para fechar...^C========================================= 
+Inicio: 06/04/2026 10:20:08,70 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+? Excel : Relatorio Gerencial_Codecraft2026.xlsx
+? HTML  : index.html
+? Backup: _backups_dashboard\index.backup_20260406.html
+
+? Lendo Excel...
+? Realizados : 2025-02 ? 2026-04  (15 meses)
+? Previstos  : 8 meses  (2026-05, 2026-06, 2026-07, 2026-08...)
+
+??  Calculando dados...
+??  Atualizando HTML...
+
+OK HTML atualizado com sucesso!
+   ? Abra o arquivo no navegador para ver os novos dados.
+
+----------------------------------------------------------
+  RESUMO
+----------------------------------------------------------
+  Receita Inter (TAXA ADM):          R$ 3.521,55
+  20% devida 2025:                     R$ 195,00
+  Despesa realizada (total):       R$ 115.100,63
+  Despesa prevista (total):              R$ 0,00
+  Meses realizados:                           15
+  Meses previstos:                             8
+----------------------------------------------------------
+
+Pressione Enter para fechar...^C========================================= 
+Inicio: 06/04/2026 10:35:59,31 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+? Excel : Relatorio Gerencial_Codecraft2026.xlsx
+? HTML  : index.html
+? Backup: _backups_dashboard\index.backup_20260406.html
+
+? Lendo Excel...
+? Realizados : 2025-02 ? 2026-04  (15 meses)
+? Previstos  : 8 meses  (2026-05, 2026-06, 2026-07, 2026-08...)
+Traceback (most recent call last):
+  File "C:\Users\adria\OneDrive\C3 Gestao\EquipeC3\CODECRAFT\7. Dashboard\gerar_dados_dashboard.py", line 368, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\adria\OneDrive\C3 Gestao\EquipeC3\CODECRAFT\7. Dashboard\gerar_dados_dashboard.py", line 255, in main
+    desp_p['cat_norm'] = desp_p['Categoria'].apply(norm)
+                                                   ^^^^
+UnboundLocalError: cannot access local variable 'norm' where it is not associated with a value
+ERRO no Python 
+========================================= 
+Inicio: 06/04/2026 10:40:28,12 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+? Excel : Relatorio Gerencial_Codecraft2026.xlsx
+? HTML  : index.html
+? Backup: _backups_dashboard\index.backup_20260406.html
+
+? Lendo Excel...
+? Realizados : 2025-02 ? 2026-04  (15 meses)
+? Previstos  : 8 meses  (2026-05, 2026-06, 2026-07, 2026-08...)
+Traceback (most recent call last):
+  File "C:\Users\adria\OneDrive\C3 Gestao\EquipeC3\CODECRAFT\7. Dashboard\gerar_dados_dashboard.py", line 368, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\adria\OneDrive\C3 Gestao\EquipeC3\CODECRAFT\7. Dashboard\gerar_dados_dashboard.py", line 255, in main
+    desp_p['cat_norm'] = desp_p['Categoria'].apply(norm)
+                                                   ^^^^
+UnboundLocalError: cannot access local variable 'norm' where it is not associated with a value
+ERRO no Python 
+========================================= 
+Inicio: 06/04/2026 11:00:20,83 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+? Excel : Relatorio Gerencial_Codecraft2026.xlsx
+? HTML  : index.html
+? Backup: _backups_dashboard\index.backup_20260406.html
+
+? Lendo Excel...
+? Realizados : 2025-02 ? 2026-04  (15 meses)
+? Previstos  : 8 meses  (2026-05, 2026-06, 2026-07, 2026-08...)
+Traceback (most recent call last):
+  File "C:\Users\adria\OneDrive\C3 Gestao\EquipeC3\CODECRAFT\7. Dashboard\gerar_dados_dashboard.py", line 368, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\adria\OneDrive\C3 Gestao\EquipeC3\CODECRAFT\7. Dashboard\gerar_dados_dashboard.py", line 255, in main
+    desp_p['cat_norm'] = desp_p['Categoria'].apply(norm)
+                                                   ^^^^
+UnboundLocalError: cannot access local variable 'norm' where it is not associated with a value
+ERRO no Python 
+========================================= 
+Inicio: 06/04/2026 11:05:12,78 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+? Excel : Relatorio Gerencial_Codecraft2026.xlsx
+? HTML  : index.html
+? Backup: _backups_dashboard\index.backup_20260406.html
+
+? Lendo Excel...
+? Realizados : 2025-02 ? 2026-04  (15 meses)
+? Previstos  : 8 meses  (2026-05, 2026-06, 2026-07, 2026-08...)
+Traceback (most recent call last):
+  File "C:\Users\adria\OneDrive\C3 Gestao\EquipeC3\CODECRAFT\7. Dashboard\gerar_dados_dashboard.py", line 368, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\adria\OneDrive\C3 Gestao\EquipeC3\CODECRAFT\7. Dashboard\gerar_dados_dashboard.py", line 255, in main
+    desp_p['cat_norm'] = desp_p['Categoria'].apply(norm)
+                                                   ^^^^
+UnboundLocalError: cannot access local variable 'norm' where it is not associated with a value
+ERRO no Python 
+========================================= 
+Inicio: 06/04/2026 16:31:31,06 
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+? Excel : Relatorio Gerencial_Codecraft2026.xlsx
+? HTML  : index.html
+? Backup: _backups_dashboard\index.backup_20260406.html
+
+? Lendo Excel...
+? Realizados : 2025-02 ? 2026-04  (15 meses)
+? Previstos  : 8 meses  (2026-05, 2026-06, 2026-07, 2026-08...)
+
+??  Calculando dados...
+??  Atualizando HTML...
+
+OK HTML atualizado com sucesso!
+   ? Abra o arquivo no navegador para ver os novos dados.
+
+----------------------------------------------------------
+  RESUMO
+----------------------------------------------------------
+  Receita Inter (TAXA ADM):          R$ 6.602,42
+  20% devida 2025:                     R$ 195,00
+  Despesa realizada (total):       R$ 118.730,63
+  Despesa prevista (total):              R$ 0,00
+  Meses realizados:                           15
+  Meses previstos:                             8
+----------------------------------------------------------

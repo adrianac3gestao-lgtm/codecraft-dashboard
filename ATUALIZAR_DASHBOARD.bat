@@ -12,23 +12,23 @@ REM --- Registrar inicio no log ---
 echo ========================================= >> "%LOG%"
 echo Inicio: %date% %time% >> "%LOG%"
 
-REM --- Rodar Python silenciosamente ---
-python gerar_dados_dashboard.py >> "%LOG%" 2>&1
+REM --- Rodar Python (< nul fecha stdin, nao trava esperando Enter) ---
+python gerar_dados_dashboard.py < nul >> "%LOG%" 2>&1
 if errorlevel 1 (
     echo ERRO no Python >> "%LOG%"
     exit /b 1
 )
 
-REM --- Enviar para GitHub silenciosamente ---
+REM --- Enviar para GitHub ---
 git add . >> "%LOG%" 2>&1
-git commit -m "atualizacao automatica %date%" >> "%LOG%" 2>&1
+git commit -m "atualizacao %date%" >> "%LOG%" 2>&1
 git push >> "%LOG%" 2>&1
 if errorlevel 1 (
     echo ERRO no Git push >> "%LOG%"
     exit /b 1
 )
 
-REM --- Registrar sucesso ---
+REM --- Sucesso ---
 echo Sucesso! Dashboard atualizado. >> "%LOG%"
 echo ========================================= >> "%LOG%"
 

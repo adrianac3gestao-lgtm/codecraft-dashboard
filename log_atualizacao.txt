@@ -394,3 +394,130 @@ OK HTML atualizado com sucesso!
   Meses realizados:                           15
   Meses previstos:                             8
 ----------------------------------------------------------
+warning: in the working copy of 'ATUALIZAR_DASHBOARD.bat', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'ATUALIZAR_DASHBOARD_SILENCIOSO.vbs', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'gerar_dados_dashboard.py', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '_backups_dashboard/index.backup_20260402.html', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of '_backups_dashboard/index.backup_20260406.html', LF will be replaced by CRLF the next time Git touches it
+[main 5a3b4b2] atualizacao automatica 06/04/2026
+ 5 files changed, 4046 insertions(+), 131 deletions(-)
+ create mode 100644 _backups_dashboard/index.backup_20260402.html
+ create mode 100644 _backups_dashboard/index.backup_20260406.html
+ create mode 100644 log_atualizacao.txt
+To https://github.com/adrianac3gestao-lgtm/codecraft-dashboard.git
+   21b50da..5a3b4b2  main -> main
+Sucesso! Dashboard atualizado. 
+========================================= 
+========================================= 
+Inicio: 06/04/2026 22:14:09,70 
+python: can't open file 'C:\\Users\\adria\\OneDrive\\C3 Gestao\\EquipeC3\\CODECRAFT\\7. Dashboard\\gerar_dados_dashboard.py': [Errno 2] No such file or directory
+ERRO no Python 
+========================================= 
+Inicio: 06/04/2026 22:14:16,11 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+  Excel : Relatorio Gerencial_Codecraft2026.xlsx
+  HTML  : index.html
+  Backup: _backups_dashboard/index.backup_20260406.html
+
+  Lendo Excel...
+  Realizados: 2025-02 a 2026-04 (15 meses)
+
+  Calculando dados...
+  Atualizando HTML...
+
+  ======================================================
+  HTML atualizado com sucesso!
+  ======================================================
+  Receita Inter (TAXA ADM):  R$ 6.602,42
+  20% devida total:          R$ 16.763,24
+  Despesa realizada:         R$ 398.368,24
+  Meses realizados:          15
+  Meses previstos:           0
+  ======================================================
+
+Pressione Enter para fechar...^C========================================= 
+Inicio: 06/04/2026 22:15:34,57 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+  Excel : Relatorio Gerencial_Codecraft2026.xlsx
+  HTML  : index.html
+  Backup: _backups_dashboard/index.backup_20260406.html
+
+  Lendo Excel...
+  Realizados: 2025-02 a 2026-04 (15 meses)
+
+  Calculando dados...
+  Atualizando HTML...
+
+  ======================================================
+  HTML atualizado com sucesso!
+  ======================================================
+  Receita Inter (TAXA ADM):  R$ 6.602,42
+  20% devida total:          R$ 16.763,24
+  Despesa realizada:         R$ 398.368,24
+  Meses realizados:          15
+  Meses previstos:           0
+  ======================================================
+
+Pressione Enter para fechar...^C========================================= 
+Inicio: 07/04/2026  7:38:43,72 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+  Excel : Relatorio Gerencial_Codecraft2026.xlsx
+  HTML  : index.html
+  Backup: _backups_dashboard/index.backup_20260407.html
+
+  Lendo Excel...
+  Realizados: 2025-02 a 2026-04 (15 meses)
+
+  Calculando dados...
+  Atualizando HTML...
+
+  ======================================================
+  HTML atualizado com sucesso!
+  ======================================================
+  Receita Inter (TAXA ADM):  R$ 6.602,42
+  20% devida total:          R$ 16.763,24
+  Despesa realizada:         R$ 398.368,24
+  Meses realizados:          15
+  Meses previstos:           0
+  ======================================================
+
+Pressione Enter para fechar...^C========================================= 
+Inicio: 07/04/2026  7:39:25,67 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+  Excel : Relatorio Gerencial_Codecraft2026.xlsx
+  HTML  : index.html
+  Backup: _backups_dashboard/index.backup_20260407.html
+
+  Lendo Excel...
+  Realizados: 2025-02 a 2026-04 (15 meses)
+
+  Calculando dados...
+  Atualizando HTML...
+
+  ======================================================
+  HTML atualizado com sucesso!
+  ======================================================
+  Receita Inter (TAXA ADM):  R$ 6.602,42
+  20% devida total:          R$ 16.763,24
+  Despesa realizada:         R$ 398.368,24
+  Meses realizados:          15
+  Meses previstos:           0
+  ======================================================
+
+Pressione Enter para fechar...

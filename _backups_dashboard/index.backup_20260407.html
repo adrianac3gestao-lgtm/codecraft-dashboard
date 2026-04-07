@@ -552,6 +552,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 <script><script><script>
 
 // ============================================================
+// ============================================================
 // DATA BLOCK - update with gerar_dados_dashboard.py
 // ============================================================
 const DB = {
@@ -563,19 +564,17 @@ const DB = {
   "2025-07":{"cred":3730.5,"saques":-2309.6,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":34452.28,"desp_total":34452.28},
   "2025-08":{"cred":8197.0,"saques":-2877.8,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":26570.28,"desp_total":26570.28},
   "2025-09":{"cred":8561.0,"saques":-5463.8,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":26571.78,"desp_total":26571.78},
-  "2025-10":{"cred":5428.0,"saques":-6459.6,"rec_inter":0.0,"desp_pessoal":14700.0,"desp_mkt":13500.0,"desp_juridico":0.0,"desp_outros":27319.57,"desp_total":55519.57},
-  "2025-11":{"cred":2941.0,"saques":-6670.8,"rec_inter":0.0,"desp_pessoal":14700.0,"desp_mkt":13500.0,"desp_juridico":0.0,"desp_outros":833.93,"desp_total":29033.93},
-  "2025-12":{"cred":2987.5,"saques":-960.4,"rec_inter":0.0,"desp_pessoal":15500.0,"desp_mkt":3575.0,"desp_juridico":0.0,"desp_outros":4677.88,"desp_total":23752.88},
-  "2026-01":{"cred":6009.46,"saques":-6616.2,"rec_inter":0.0,"desp_pessoal":14700.0,"desp_mkt":8000.0,"desp_juridico":7200.0,"desp_outros":5131.24,"desp_total":35031.24},
-  "2026-02":{"cred":11608.21,"saques":-7337.0,"rec_inter":1201.89,"desp_pessoal":14700.0,"desp_mkt":22386.45,"desp_juridico":10800.0,"desp_outros":4156.56,"desp_total":52043.01},
-  "2026-03":{"cred":15404.33,"saques":-16045.2,"rec_inter":2319.66,"desp_pessoal":14700.0,"desp_mkt":11698.73,"desp_juridico":5400.0,"desp_outros":5604.43,"desp_total":37403.16},
-  "2026-04":{"cred":1148.72,"saques":-3835.87,"rec_inter":3080.87,"desp_pessoal":14700.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":4830.0,"desp_total":19530.0}
+  "2025-10":{"cred":5428.0,"saques":-6459.6,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":55519.57,"desp_total":55519.57},
+  "2025-11":{"cred":2941.0,"saques":-6670.8,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":29033.93,"desp_total":29033.93},
+  "2025-12":{"cred":2987.5,"saques":-960.4,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":23752.88,"desp_total":23752.88},
+  "2026-01":{"cred":6009.46,"saques":-6616.2,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":35031.24,"desp_total":35031.24},
+  "2026-02":{"cred":11608.21,"saques":-7337.0,"rec_inter":1201.89,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":52043.01,"desp_total":52043.01},
+  "2026-03":{"cred":15404.33,"saques":-16045.2,"rec_inter":2319.66,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":37403.16,"desp_total":37403.16},
+  "2026-04":{"cred":1148.72,"saques":-3835.87,"rec_inter":3080.87,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":19530.0,"desp_total":19530.0}
 };
 
-// Receita Inter - somente TAXA DE ADMINISTRACAO (+)
 const REC_INTER_DETAIL = [{"data_fin": "2026-02-04", "banco": "BANCO INTER", "subgrupo": "RECEITA_GAMERS BRAWL", "descricao": "Pix recebido - Codecraft Smart Tech Ltda", "val": 1201.89, "status": "Recebido"}, {"data_fin": "2026-03-31", "banco": "BANCO INTER", "subgrupo": "RECEITA_GAMERS BRAWL", "descricao": "Pix recebido - Codecraft Smart Tech Ltda", "val": 2319.66, "status": "Recebido"}, {"data_fin": "2026-04-02", "banco": "BANCO INTER", "subgrupo": "RECEITA_GAMERS BRAWL", "descricao": "Pix recebido - Codecraft Smart Tech Ltda", "val": 3080.87, "status": "Recebido"}];
 
-// 20% devida 2025 (por competencia, nao recebida no Inter)
 const REC20_2025 = {
   "2025-02": 36.6,
   "2025-03": 325.1,
@@ -595,11 +594,8 @@ const REC20_2025 = {
 };
 const TOTAL_REC20_2025 = 16763.24;
 
-// Sem previstos - usa apenas Data Financ
 const DB_PREVISTO = {};
 
-// DB_CATEGORIAS - apenas despesas BANCO INTER por categoria e mes
-// Gerado por gerar_dados_dashboard.py
 const DB_CAT = {
   "SERVICOS PRESTADOS PJ - INICIAL": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":18000.0, "2025-07":33600.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":25000.0, "2026-03":285.93},
   "SALARIOS E ORDENADOS ADM": {"2025-10":14700.0, "2025-11":14700.0, "2025-12":14700.0, "2026-01":14700.0, "2026-02":14700.0, "2026-03":14700.0, "2026-04":14700.0},
@@ -620,7 +616,7 @@ const DB_CAT = {
   "SERVS. CERTIFICADO DIGITAL": {"2025-12":235.0},
   "ESTORNO_DEVOLUCAO (-)": {"2025-11":38.0}
 };
-// Category color map
+
 const CAT_COLORS = {
   "SALARIOS E ORDENADOS ADM": "#f59e0b",
   "SERVS. DE PUBLICIDADE E PROPAGANDA": "#8b5cf6",
@@ -641,6 +637,7 @@ const CAT_COLORS = {
   "IMPOSTOS - INICIAL": "#dc2626",
   "SERVS. DE RECRUTAMENTO E SELECAO - PJ": "#0891b2"
 };
+
 const DB_CC = {
   "TECNOLOGIA - DESENVOLVIMENTO": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":8000.0, "2025-07":20000.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":31700.0, "2025-11":6700.0, "2025-12":7241.32, "2026-01":7200.0, "2026-02":7217.15, "2026-03":7203.07, "2026-04":6700.0},
   "MKT - INFLUENCERS": {"2025-06":10000.0, "2025-10":13500.0, "2025-11":13500.0, "2025-12":2751.84, "2026-01":8000.0, "2026-02":22386.45, "2026-03":11698.73},
@@ -650,6 +647,7 @@ const DB_CC = {
   "COMMUNITY MANAGER": {"2025-10":2500.0, "2025-11":2500.0, "2025-12":2500.0, "2026-01":2500.0, "2026-02":2500.0, "2026-03":2500.0, "2026-04":2500.0},
   "TRANSITORIO": {"2025-11":38.0}
 };
+
 const CC_COLORS = {
   "TECNOLOGIA - DESENVOLVIMENTO": "#8b5cf6",
   "MKT - INFLUENCERS": "#f59e0b",
@@ -657,7 +655,8 @@ const CC_COLORS = {
   "SOCIAL MEDIA - DESIGN": "#ec4899",
   "OPERACIONAL": "#10b981",
   "COMMUNITY MANAGER": "#f97316",
-  "TRANSITORIO": "#9ca3af"
+  "TRANSITORIO": "#9ca3af",
+  "SEM CC": "#64748b"
 };
 
 const LABEL_MAP = {

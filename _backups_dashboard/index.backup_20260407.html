@@ -549,13 +549,10 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
   DADOS - SUBSTITUIR ESTE BLOCO AO ATUALIZAR O EXCEL
   Execute: python gerar_dados_dashboard.py  e cole o DB aqui
 ══════════════════════════════════════════════════════════ -->
-<script><script>
+<script><script><script>
 
 // ============================================================
-// ============================================================
-// ============================================================
 // DATA BLOCK - update with gerar_dados_dashboard.py
-// Gerado em: 07/04/2026  |  Arquivo: Relatorio Gerencial_Codecraft2026.xlsx
 // ============================================================
 const DB = {
   "2025-02":{"cred":183.0,"saques":-79.0,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":0.0,"desp_total":0.0},
@@ -575,35 +572,10 @@ const DB = {
   "2026-04":{"cred":1148.72,"saques":-3835.87,"rec_inter":3080.87,"desp_pessoal":14700.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":4830.0,"desp_total":19530.0}
 };
 
-// Receita Inter - somente TAXA DE ADMINISTRACAO (+)
-const REC_INTER_DETAIL = [
-  {
-    "data_fin": "2026-02-04",
-    "banco": "BANCO INTER",
-    "subgrupo": "RECEITA_GAMERS BRAWL",
-    "descricao": "",
-    "val": 1201.89,
-    "status": "Recebido"
-  },
-  {
-    "data_fin": "2026-03-31",
-    "banco": "BANCO INTER",
-    "subgrupo": "RECEITA_GAMERS BRAWL",
-    "descricao": "",
-    "val": 2319.66,
-    "status": "Recebido"
-  },
-  {
-    "data_fin": "2026-04-02",
-    "banco": "BANCO INTER",
-    "subgrupo": "RECEITA_GAMERS BRAWL",
-    "descricao": "",
-    "val": 3080.87,
-    "status": "Recebido"
-  }
-];
+// Receita Inter - somente TAXA DE ADMINISTRAÇÃO (+)
+const REC_INTER_DETAIL = [{"data_fin": "2026-02-04", "banco": "BANCO INTER", "subgrupo": "RECEITA_GAMERS BRAWL", "descricao": "Pix recebido - Codecraft Smart Tech Ltda", "val": 1201.89, "status": "Recebido"}, {"data_fin": "2026-03-31", "banco": "BANCO INTER", "subgrupo": "RECEITA_GAMERS BRAWL", "descricao": "Pix recebido - Codecraft Smart Tech Ltda", "val": 2319.66, "status": "Recebido"}, {"data_fin": "2026-04-02", "banco": "BANCO INTER", "subgrupo": "RECEITA_GAMERS BRAWL", "descricao": "Pix recebido - Codecraft Smart Tech Ltda", "val": 3080.87, "status": "Recebido"}];
 
-// 20% devida por mes (20% do credito bruto MP de cada mes)
+// 20% devida 2025 (por competência, não recebida no Inter)
 const REC20_2025 = {
   "2025-02": 36.6,
   "2025-03": 325.1,
@@ -623,12 +595,11 @@ const REC20_2025 = {
 };
 const TOTAL_REC20_2025 = 16763.24;
 
-// Despesas PREVISTAS - coluna Orcado
-const DB_PREVISTO = {
+// Sem previstos - usa apenas Data Financ
+const DB_PREVISTO = {};
 
-};
-
-// DB_CAT: despesas por categoria (Inter + Cartao + Bruno)
+// DB_CATEGORIAS - apenas despesas BANCO INTER por categoria e mes
+// Gerado por gerar_dados_dashboard.py
 const DB_CAT = {
   "SERVICOS PRESTADOS PJ - INICIAL": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":18000.0, "2025-07":33600.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":25000.0, "2026-03":285.93},
   "SALARIOS E ORDENADOS ADM": {"2025-10":14700.0, "2025-11":14700.0, "2025-12":14700.0, "2026-01":14700.0, "2026-02":14700.0, "2026-03":14700.0, "2026-04":14700.0},
@@ -649,8 +620,7 @@ const DB_CAT = {
   "SERVS. CERTIFICADO DIGITAL": {"2025-12":235.0},
   "ESTORNO_DEVOLUCAO (-)": {"2025-11":38.0}
 };
-
-// Cores por categoria
+// Category color map
 const CAT_COLORS = {
   "SALARIOS E ORDENADOS ADM": "#f59e0b",
   "SERVS. DE PUBLICIDADE E PROPAGANDA": "#8b5cf6",
@@ -666,10 +636,11 @@ const CAT_COLORS = {
   "REEMB DESPESAS GERAIS": "#65a30d",
   "SERVS. CERTIFICADO DIGITAL": "#b45309",
   "ESTORNO_DEVOLUCAO (-)": "#9ca3af",
-  "COMPRA DE ATIVO IMOBILIZADO": "#0284c7"
+  "COMPRA DE ATIVO IMOBILIZADO": "#0284c7",
+  "SERVICOS PRESTADOS PJ - INICIAL": "#7c3aed",
+  "IMPOSTOS - INICIAL": "#dc2626",
+  "SERVS. DE RECRUTAMENTO E SELECAO - PJ": "#0891b2"
 };
-
-// DB_CC: despesas por Centro de Custo e mes
 const DB_CC = {
   "TECNOLOGIA - DESENVOLVIMENTO": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":8000.0, "2025-07":20000.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":31700.0, "2025-11":6700.0, "2025-12":7241.32, "2026-01":7200.0, "2026-02":7217.15, "2026-03":7203.07, "2026-04":6700.0},
   "MKT - INFLUENCERS": {"2025-06":10000.0, "2025-10":13500.0, "2025-11":13500.0, "2025-12":2751.84, "2026-01":8000.0, "2026-02":22386.45, "2026-03":11698.73},
@@ -679,8 +650,6 @@ const DB_CC = {
   "COMMUNITY MANAGER": {"2025-10":2500.0, "2025-11":2500.0, "2025-12":2500.0, "2026-01":2500.0, "2026-02":2500.0, "2026-03":2500.0, "2026-04":2500.0},
   "TRANSITORIO": {"2025-11":38.0}
 };
-
-// Cores por Centro de Custo
 const CC_COLORS = {
   "TECNOLOGIA - DESENVOLVIMENTO": "#8b5cf6",
   "MKT - INFLUENCERS": "#f59e0b",
@@ -690,6 +659,7 @@ const CC_COLORS = {
   "COMMUNITY MANAGER": "#f97316",
   "TRANSITORIO": "#9ca3af"
 };
+
 const LABEL_MAP = {
   "2025-02":"Fev/25","2025-03":"Mar/25","2025-04":"Abr/25","2025-05":"Mai/25",
   "2025-06":"Jun/25","2025-07":"Jul/25","2025-08":"Ago/25","2025-09":"Set/25",
@@ -1660,7 +1630,7 @@ function openDetailAccum() {
   document.getElementById('b4-detail-pct').textContent = 'Receita cobre ' + pctRD + ' da despesa';
 
   panel.classList.add('active');
-}
+};
 // -- INIT ---------------------------------------------------
 window.addEventListener('load', renderHome);
 

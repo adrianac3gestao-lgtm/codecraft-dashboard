@@ -328,7 +328,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
   <!-- FINAL: Despesas lado a lado -->
   <div class="grid g2" style="margin-top:0">
     <div class="card">
-      <div class="card-title">Despesas Realizadas por Mês</div>
+      <div class="card-title">Despesas Realizadas por Mes - Centro de Custo</div>
       <div class="card-sub">Filtrado pela seleção acima</div>
       <table class="dt">
         <thead><tr><th>Mês</th><th style="text-align:right">Tecnologia</th><th style="text-align:right">MKT</th><th style="text-align:right">Administrativo</th><th style="text-align:right">Social Media</th><th style="text-align:right">Operacional</th><th style="text-align:right">Community Mgr</th><th style="text-align:right">Transitório</th><th style="text-align:right">Total</th></tr></thead>
@@ -1473,7 +1473,7 @@ function renderB4() {
       const barW = Math.round((r.total/maxVal)*80);
       const shortCat = r.cat.length>28 ? r.cat.slice(0,27)+'...' : r.cat;
       catTb.innerHTML += `<tr title="${r.cat}">
-        <td style="font-size:10.5px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${shortCat}</td>
+        <td style="font-size:10.5px;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${shortCat}</td>
         <td class="mono neg" style="text-align:right;white-space:nowrap">(${r.total.toLocaleString('pt-BR',{minimumFractionDigits:0})})</td>
         <td class="mono" style="text-align:right;color:var(--muted);font-size:10px">${pct}%</td>
         <td style="padding-right:4px"><div style="height:6px;border-radius:3px;background:${r.color};width:${barW}px;max-width:100px;margin-top:5px"></div></td>

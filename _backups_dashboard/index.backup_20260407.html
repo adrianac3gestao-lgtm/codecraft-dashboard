@@ -552,9 +552,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 <script><script><script>
 
 // ============================================================
-// ============================================================
 // DATA BLOCK - update with gerar_dados_dashboard.py
-// Gerado em: 07/04/2026  |  Arquivo: Relatorio Gerencial_Codecraft2026.xlsx
 // ============================================================
 const DB = {
   "2025-02":{"cred":183.0,"saques":-79.0,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":0.0,"desp_total":0.0},
@@ -575,34 +573,9 @@ const DB = {
 };
 
 // Receita Inter - somente TAXA DE ADMINISTRACAO (+)
-const REC_INTER_DETAIL = [
-  {
-    "data_fin": "2026-02-04",
-    "banco": "BANCO INTER",
-    "subgrupo": "RECEITA_GAMERS BRAWL",
-    "descricao": "",
-    "val": 1201.89,
-    "status": "Recebido"
-  },
-  {
-    "data_fin": "2026-03-31",
-    "banco": "BANCO INTER",
-    "subgrupo": "RECEITA_GAMERS BRAWL",
-    "descricao": "",
-    "val": 2319.66,
-    "status": "Recebido"
-  },
-  {
-    "data_fin": "2026-04-02",
-    "banco": "BANCO INTER",
-    "subgrupo": "RECEITA_GAMERS BRAWL",
-    "descricao": "",
-    "val": 3080.87,
-    "status": "Recebido"
-  }
-];
+const REC_INTER_DETAIL = [{"data_fin": "2026-02-04", "banco": "BANCO INTER", "subgrupo": "RECEITA_GAMERS BRAWL", "descricao": "Pix recebido - Codecraft Smart Tech Ltda", "val": 1201.89, "status": "Recebido"}, {"data_fin": "2026-03-31", "banco": "BANCO INTER", "subgrupo": "RECEITA_GAMERS BRAWL", "descricao": "Pix recebido - Codecraft Smart Tech Ltda", "val": 2319.66, "status": "Recebido"}, {"data_fin": "2026-04-02", "banco": "BANCO INTER", "subgrupo": "RECEITA_GAMERS BRAWL", "descricao": "Pix recebido - Codecraft Smart Tech Ltda", "val": 3080.87, "status": "Recebido"}];
 
-// 20% devida por mes (20% do credito bruto MP de cada mes)
+// 20% devida 2025 (por competencia, nao recebida no Inter)
 const REC20_2025 = {
   "2025-02": 36.6,
   "2025-03": 325.1,
@@ -622,12 +595,11 @@ const REC20_2025 = {
 };
 const TOTAL_REC20_2025 = 16763.24;
 
-// Despesas PREVISTAS - coluna Orcado
-const DB_PREVISTO = {
+// Sem previstos - usa apenas Data Financ
+const DB_PREVISTO = {};
 
-};
-
-// DB_CAT: despesas por categoria (Inter + Cartao + Bruno)
+// DB_CATEGORIAS - apenas despesas BANCO INTER por categoria e mes
+// Gerado por gerar_dados_dashboard.py
 const DB_CAT = {
   "SERVICOS PRESTADOS PJ - INICIAL": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":18000.0, "2025-07":33600.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":25000.0, "2026-03":285.93},
   "SALARIOS E ORDENADOS ADM": {"2025-10":14700.0, "2025-11":14700.0, "2025-12":14700.0, "2026-01":14700.0, "2026-02":14700.0, "2026-03":14700.0, "2026-04":14700.0},
@@ -648,8 +620,7 @@ const DB_CAT = {
   "SERVS. CERTIFICADO DIGITAL": {"2025-12":235.0},
   "ESTORNO_DEVOLUCAO (-)": {"2025-11":38.0}
 };
-
-// Cores por categoria
+// Category color map
 const CAT_COLORS = {
   "SALARIOS E ORDENADOS ADM": "#f59e0b",
   "SERVS. DE PUBLICIDADE E PROPAGANDA": "#8b5cf6",
@@ -665,10 +636,11 @@ const CAT_COLORS = {
   "REEMB DESPESAS GERAIS": "#65a30d",
   "SERVS. CERTIFICADO DIGITAL": "#b45309",
   "ESTORNO_DEVOLUCAO (-)": "#9ca3af",
-  "COMPRA DE ATIVO IMOBILIZADO": "#0284c7"
+  "COMPRA DE ATIVO IMOBILIZADO": "#0284c7",
+  "SERVICOS PRESTADOS PJ - INICIAL": "#7c3aed",
+  "IMPOSTOS - INICIAL": "#dc2626",
+  "SERVS. DE RECRUTAMENTO E SELECAO - PJ": "#0891b2"
 };
-
-// DB_CC: despesas por Centro de Custo e mes
 const DB_CC = {
   "TECNOLOGIA - DESENVOLVIMENTO": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":8000.0, "2025-07":20000.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":31700.0, "2025-11":6700.0, "2025-12":7241.32, "2026-01":7200.0, "2026-02":7217.15, "2026-03":7203.07, "2026-04":6700.0},
   "MKT - INFLUENCERS": {"2025-06":10000.0, "2025-10":13500.0, "2025-11":13500.0, "2025-12":2751.84, "2026-01":8000.0, "2026-02":22386.45, "2026-03":11698.73},
@@ -678,8 +650,6 @@ const DB_CC = {
   "COMMUNITY MANAGER": {"2025-10":2500.0, "2025-11":2500.0, "2025-12":2500.0, "2026-01":2500.0, "2026-02":2500.0, "2026-03":2500.0, "2026-04":2500.0},
   "TRANSITORIO": {"2025-11":38.0}
 };
-
-// Cores por Centro de Custo
 const CC_COLORS = {
   "TECNOLOGIA - DESENVOLVIMENTO": "#8b5cf6",
   "MKT - INFLUENCERS": "#f59e0b",
@@ -689,6 +659,7 @@ const CC_COLORS = {
   "COMMUNITY MANAGER": "#f97316",
   "TRANSITORIO": "#9ca3af"
 };
+
 const LABEL_MAP = {
   "2025-02":"Fev/25","2025-03":"Mar/25","2025-04":"Abr/25","2025-05":"Mai/25",
   "2025-06":"Jun/25","2025-07":"Jul/25","2025-08":"Ago/25","2025-09":"Set/25",
@@ -745,7 +716,7 @@ function filterPrevistoKeys(year, month) {
 }
 
 // ============================================================
-// PURE CANVAS CHART ENGINE - sem dependências externas
+// PURE CANVAS CHART ENGINE - sem dependencias externas
 // ============================================================
 const CHARTSTORE = {};
 
@@ -1264,7 +1235,7 @@ function renderHome() {
   const saldoCDI = 345800;
   const runway = queimaMedia > 0 ? Math.floor(saldoCDI / queimaMedia) : 0;
 
-  // Breakeven: queima media / 20% = custódia necessária por mês
+  // Breakeven: queima media / 20% = custodia necessaria por mes
   const custodiaBreakeven = queimaMedia > 0 ? Math.round(queimaMedia / 0.20) : 0;
 
   document.getElementById('h-rec').textContent = fmtR(recTotal,2);
@@ -1272,7 +1243,7 @@ function renderHome() {
   if(document.getElementById('h-runway'))
     document.getElementById('h-runway').textContent = runway + ' meses';
   if(document.getElementById('h-breakeven'))
-    document.getElementById('h-breakeven').textContent = fmtR(custodiaBreakeven) + '/mês';
+    document.getElementById('h-breakeven').textContent = fmtR(custodiaBreakeven) + '/mes';
 
   const labels = MESES_R.map(k=>LABEL_MAP[k]);
 
@@ -1314,7 +1285,7 @@ function renderB1() {
   const allB1Saques = allB1Keys.map(k=>Math.abs(DB[k].saques));
   const allB1Pct20  = allB1Cred.map(v=>+(v*.2).toFixed(0));
   drawBar('b1-chart1', allB1Keys.map(k=>LABEL_MAP[k]), [
-    {label:'Créditos', data:allB1Cred,   backgroundColor:COLORS.blueA, borderColor:COLORS.blue, borderWidth:1.5},
+    {label:'Creditos', data:allB1Cred,   backgroundColor:COLORS.blueA, borderColor:COLORS.blue, borderWidth:1.5},
     {label:'Saques',   data:allB1Saques, backgroundColor:'rgba(239,68,68,0.2)', borderColor:COLORS.red, borderWidth:1.5},
     {label:'20% Adm.', data:allB1Pct20,  type:'line', borderColor:COLORS.amber, borderWidth:2},
   ], {height:320, padTop:28, padBottom:46, padLeft:56, padRight:8, ticks:5, showValues:true});
@@ -1359,7 +1330,7 @@ function renderB2() {
   const rendimentos = active.map(r=>r.rend);
   drawBar('b2-chart1', labels, [
     {label:'Resgates CDI',   data:resgates,   backgroundColor:COLORS.greenA+'44', borderColor:COLORS.green, borderWidth:1.5},
-    {label:'Rendimento Líq.',data:rendimentos, type:'line', borderColor:COLORS.green, borderWidth:2},
+    {label:'Rendimento Liq.',data:rendimentos, type:'line', borderColor:COLORS.green, borderWidth:2},
   ], {height:185, legend:true});
 }
 
@@ -1372,7 +1343,7 @@ const B3_DATA=[
   {m:'set25',y:'2025',f:'rmsz',val:25000},{m:'set25',y:'2025',f:'outros',val:1572},
   {m:'out25',y:'2025',f:'rmsz',val:25000},{m:'out25',y:'2025',f:'outros',val:1559},
 ];
-const B3L={pain:'Pain Gaming',rmsz:'RMS&Z Tec.',gaud:'Gaudêncio Adv.',outros:'Outros'};
+const B3L={pain:'Pain Gaming',rmsz:'RMS&Z Tec.',gaud:'Gaudencio Adv.',outros:'Outros'};
 
 function renderB3() {
   const fy=F.b3.year, fm=F.b3.month, ff=F.b3.forn;
@@ -1414,7 +1385,7 @@ function renderB4() {
   document.getElementById('b4k2').textContent=tDev2025>0?fmtR(tDev2025,2):'-';
   document.getElementById('b4k3').textContent='('+Math.round(tTot).toLocaleString('pt-BR')+')';
   // b4k5 removido (sem previsto)
-  document.getElementById('b4k4').textContent='~R$ '+Math.round(tTot/nMeses).toLocaleString('pt-BR')+'/mês';
+  document.getElementById('b4k4').textContent='~R$ '+Math.round(tTot/nMeses).toLocaleString('pt-BR')+'/mes';
 
   // Grafico FIXO - sempre todo o periodo realizado (nao varia com filtro)
   const allKeys = [...MESES_R];
@@ -1481,7 +1452,7 @@ function renderB4() {
     // Period label
     const yrLabel = fy==='todos'?'Acumulado total':fy==='2025'?'2025':'2026';
     const msLabel = fm==='todos'?'todos os meses':LABEL_MAP['2025-'+fm]||LABEL_MAP['2026-'+fm]||fm;
-    if(catPeriod) catPeriod.textContent = yrLabel + ' · ' + msLabel;
+    if(catPeriod) catPeriod.textContent = yrLabel + ' - ' + msLabel;
 
     catRows.forEach(r=>{
       const pct = ((r.total/grandTotal)*100).toFixed(1);
@@ -1545,14 +1516,14 @@ function openDetail(mesKey) {
     recDiv.innerHTML += `<div class="drow"><div class="dbar" style="width:${Math.round(rec20/Math.max(recTotal,1)*60)}px;background:#b0c4d8"></div><span class="dname">20% Devida 2025</span><span class="dval" style="color:var(--muted)">R$ ${rec20.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span></div>`;
   }
   if(!recInter && !rec20) {
-    recDiv.innerHTML = '<div style="font-size:11px;color:var(--muted);padding:6px 0">Sem receita neste mês</div>';
+    recDiv.innerHTML = '<div style="font-size:11px;color:var(--muted);padding:6px 0">Sem receita neste mes</div>';
   }
 
   // Despesas
   const cats = [
     {k:'desp_pessoal',  l:'Pessoal',       c:'#f59e0b'},
     {k:'desp_mkt',      l:'Marketing',      c:'#8b5cf6'},
-    {k:'desp_juridico', l:'Jurídico',       c:'#ef4444'},
+    {k:'desp_juridico', l:'Juridico',       c:'#ef4444'},
     {k:'desp_outros',   l:'Outros',         c:'#9ca3af'},
   ];
   const despDiv = document.getElementById('b4-detail-desp');

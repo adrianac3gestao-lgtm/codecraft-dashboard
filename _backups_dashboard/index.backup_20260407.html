@@ -549,7 +549,22 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
   DADOS - SUBSTITUIR ESTE BLOCO AO ATUALIZAR O EXCEL
   Execute: python gerar_dados_dashboard.py  e cole o DB aqui
 ══════════════════════════════════════════════════════════ -->
-<script><script><script>
+<script><script><div class="chart-tooltip" id="chart-tooltip"></div>
+<div id="b4-detail-panel" style="display:none;position:fixed;top:0;right:0;width:320px;height:100vh;background:#fff;border-left:1px solid #e5e7eb;padding:20px;z-index:1000;overflow-y:auto">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+    <div id="b4-detail-title" style="font-weight:700;font-size:14px"></div>
+    <button onclick="closeDetail()" style="border:none;background:none;cursor:pointer;font-size:18px">x</button>
+  </div>
+  <div style="font-size:11px;color:#6b7280;margin-bottom:4px">RECEITA</div>
+  <div id="b4-detail-rec" style="margin-bottom:16px"></div>
+  <div style="font-size:11px;color:#6b7280;margin-bottom:4px">DESPESAS</div>
+  <div id="b4-detail-desp" style="margin-bottom:16px"></div>
+  <div style="border-top:1px solid #e5e7eb;padding-top:12px">
+    <div id="b4-detail-saldo" style="font-size:18px;font-weight:700"></div>
+    <div id="b4-detail-pct" style="font-size:11px;color:#6b7280;margin-top:4px"></div>
+  </div>
+</div>
+<script>
 
 // ============================================================
 // ============================================================
@@ -1634,6 +1649,16 @@ function openDetailAccum() {
 window.addEventListener('load', renderHome);
 
 </script>
-<div class="chart-tooltip" id="chart-tooltip"></div>
+    <button onclick="closeDetail()" style="border:none;background:none;cursor:pointer;font-size:18px">×</button>
+  </div>
+  <div style="font-size:11px;color:#6b7280;margin-bottom:4px">RECEITA</div>
+  <div id="b4-detail-rec" style="margin-bottom:16px"></div>
+  <div style="font-size:11px;color:#6b7280;margin-bottom:4px">DESPESAS</div>
+  <div id="b4-detail-desp" style="margin-bottom:16px"></div>
+  <div style="border-top:1px solid #e5e7eb;padding-top:12px">
+    <div id="b4-detail-saldo" style="font-size:18px;font-weight:700"></div>
+    <div id="b4-detail-pct" style="font-size:11px;color:#6b7280;margin-top:4px"></div>
+  </div>
+</div>
 </body>
 </html>

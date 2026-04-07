@@ -204,7 +204,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
     <a class="ov-card" onclick="showPage('b4',document.querySelectorAll('.tab')[1]);return false" style="border-top:3px solid var(--amber-m)">
       <div class="ov-icon">🏢</div><div class="ov-num" style="color:var(--amber)">Resultado Operacional - Principal</div>
       <div class="ov-title">Receita × Despesa da Empresa</div>
-      <div class="ov-desc">Receita real Inter vs. custos operacionais. Realizado e Previsto separados.</div>
+      <div class="ov-desc">Receita real Inter vs. custos operacionais. Realizado acumulado.</div>
       <div class="ov-open" style="color:var(--amber)">Abrir análise →</div>
     </a>
     <a class="ov-card" onclick="showPage('b1',document.querySelectorAll('.tab')[2]);return false" style="border-top:3px solid var(--blue-m)">
@@ -288,7 +288,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
     <div class="kpi-card kk-green"><div class="kpi-label">Receita Realizada (Inter)</div><div class="kpi-val c-green" id="b4k1">-</div><div class="kpi-sub">Taxa adm. creditada no Inter</div></div>
     <div class="kpi-card kk-amber"><div class="kpi-label">20% Devida 2025</div><div class="kpi-val c-amber" id="b4k2">-</div><div class="kpi-sub">A regularizar - não recebida</div></div>
     <div class="kpi-card kk-red"><div class="kpi-label">Despesa Realizada</div><div class="kpi-val c-red" id="b4k3">-</div><div class="kpi-sub">Período selecionado</div></div>
-    <div class="kpi-card kk-slate"><div class="kpi-label">Despesa Prevista</div><div class="kpi-val c-slate" id="b4k5">-</div><div class="kpi-sub">Coluna Orçado - futuro</div></div>
+
     <div class="kpi-card kk-red"><div class="kpi-label">Queima Média / Mês</div><div class="kpi-val c-red" id="b4k4">-</div><div class="kpi-sub">Realizado no período</div></div>
   </div>
 
@@ -552,11 +552,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 <script><script>
 
 // ============================================================
-// ============================================================
-// ============================================================
-// ============================================================
 // DATA BLOCK - update with gerar_dados_dashboard.py
-// Gerado em: 07/04/2026  |  Arquivo: Relatorio Gerencial_Codecraft2026.xlsx
 // ============================================================
 const DB = {
   "2025-02":{"cred":183.0,"saques":-79.0,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":0.0,"desp_total":0.0},
@@ -574,37 +570,12 @@ const DB = {
   "2026-02":{"cred":11608.21,"saques":-7337.0,"rec_inter":1201.89,"desp_pessoal":14700.0,"desp_mkt":22386.45,"desp_juridico":10800.0,"desp_outros":4156.56,"desp_total":52043.01},
   "2026-03":{"cred":15404.33,"saques":-16045.2,"rec_inter":2319.66,"desp_pessoal":14700.0,"desp_mkt":11698.73,"desp_juridico":5400.0,"desp_outros":5604.43,"desp_total":37403.16},
   "2026-04":{"cred":1148.72,"saques":-3835.87,"rec_inter":3080.87,"desp_pessoal":14700.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":4830.0,"desp_total":19530.0}
-};
+}
 
-// Receita Inter - somente TAXA DE ADMINISTRACAO (+)
-const REC_INTER_DETAIL = [
-  {
-    "data_fin": "2026-02-04",
-    "banco": "BANCO INTER",
-    "subgrupo": "RECEITA_GAMERS BRAWL",
-    "descricao": "",
-    "val": 1201.89,
-    "status": "Recebido"
-  },
-  {
-    "data_fin": "2026-03-31",
-    "banco": "BANCO INTER",
-    "subgrupo": "RECEITA_GAMERS BRAWL",
-    "descricao": "",
-    "val": 2319.66,
-    "status": "Recebido"
-  },
-  {
-    "data_fin": "2026-04-02",
-    "banco": "BANCO INTER",
-    "subgrupo": "RECEITA_GAMERS BRAWL",
-    "descricao": "",
-    "val": 3080.87,
-    "status": "Recebido"
-  }
-];
+// Receita Inter - somente TAXA DE ADMINISTRAÇÃO (+)
+const REC_INTER_DETAIL = [{"data_fin": "2026-02-04", "banco": "BANCO INTER", "subgrupo": "RECEITA_GAMERS BRAWL", "descricao": "Pix recebido - Codecraft Smart Tech Ltda", "val": 1201.89, "status": "Recebido"}, {"data_fin": "2026-03-31", "banco": "BANCO INTER", "subgrupo": "RECEITA_GAMERS BRAWL", "descricao": "Pix recebido - Codecraft Smart Tech Ltda", "val": 2319.66, "status": "Recebido"}, {"data_fin": "2026-04-02", "banco": "BANCO INTER", "subgrupo": "RECEITA_GAMERS BRAWL", "descricao": "Pix recebido - Codecraft Smart Tech Ltda", "val": 3080.87, "status": "Recebido"}];
 
-// 20% devida por mes (20% do credito bruto MP de cada mes)
+// 20% devida 2025 (por competência, não recebida no Inter)
 const REC20_2025 = {
   "2025-02": 36.6,
   "2025-03": 325.1,
@@ -621,15 +592,14 @@ const REC20_2025 = {
   "2026-02": 2321.64,
   "2026-03": 3080.87,
   "2026-04": 229.74
-};
+}
 const TOTAL_REC20_2025 = 16763.24;
 
-// Despesas PREVISTAS - coluna Orcado
-const DB_PREVISTO = {
+// Sem previstos - usa apenas Data Financ
+const DB_PREVISTO = {};
 
-};
-
-// DB_CAT: despesas por categoria (Inter + Cartao + Bruno)
+// DB_CATEGORIAS - apenas despesas BANCO INTER por categoria e mes
+// Gerado por gerar_dados_dashboard.py
 const DB_CAT = {
   "SERVICOS PRESTADOS PJ - INICIAL": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":18000.0, "2025-07":33600.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":25000.0, "2026-03":285.93},
   "SALARIOS E ORDENADOS ADM": {"2025-10":14700.0, "2025-11":14700.0, "2025-12":14700.0, "2026-01":14700.0, "2026-02":14700.0, "2026-03":14700.0, "2026-04":14700.0},
@@ -649,9 +619,8 @@ const DB_CAT = {
   "SERVS. DE RECRUTAMENTO E SELECAO - PJ": {"2025-06":399.0},
   "SERVS. CERTIFICADO DIGITAL": {"2025-12":235.0},
   "ESTORNO_DEVOLUCAO (-)": {"2025-11":38.0}
-};
-
-// Cores por categoria
+}
+// Category color map
 const CAT_COLORS = {
   "SALARIOS E ORDENADOS ADM": "#f59e0b",
   "SERVS. DE PUBLICIDADE E PROPAGANDA": "#8b5cf6",
@@ -667,10 +636,11 @@ const CAT_COLORS = {
   "REEMB DESPESAS GERAIS": "#65a30d",
   "SERVS. CERTIFICADO DIGITAL": "#b45309",
   "ESTORNO_DEVOLUCAO (-)": "#9ca3af",
-  "COMPRA DE ATIVO IMOBILIZADO": "#0284c7"
-};
-
-// DB_CC: despesas por Centro de Custo e mes
+  "COMPRA DE ATIVO IMOBILIZADO": "#0284c7",
+  "SERVICOS PRESTADOS PJ - INICIAL": "#7c3aed",
+  "IMPOSTOS - INICIAL": "#dc2626",
+  "SERVS. DE RECRUTAMENTO E SELECAO - PJ": "#0891b2"
+}
 const DB_CC = {
   "TECNOLOGIA - DESENVOLVIMENTO": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":8000.0, "2025-07":20000.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":31700.0, "2025-11":6700.0, "2025-12":7241.32, "2026-01":7200.0, "2026-02":7217.15, "2026-03":7203.07, "2026-04":6700.0},
   "MKT - INFLUENCERS": {"2025-06":10000.0, "2025-10":13500.0, "2025-11":13500.0, "2025-12":2751.84, "2026-01":8000.0, "2026-02":22386.45, "2026-03":11698.73},
@@ -679,9 +649,7 @@ const DB_CC = {
   "OPERACIONAL": {"2025-04":12.14, "2025-05":30.95, "2025-06":417.02, "2025-07":14452.28, "2025-08":1570.28, "2025-09":1571.78, "2025-10":1919.57, "2025-11":54.33, "2025-12":11.76, "2026-01":231.24, "2026-02":71.63, "2026-03":1181.56},
   "COMMUNITY MANAGER": {"2025-10":2500.0, "2025-11":2500.0, "2025-12":2500.0, "2026-01":2500.0, "2026-02":2500.0, "2026-03":2500.0, "2026-04":2500.0},
   "TRANSITORIO": {"2025-11":38.0}
-};
-
-// Cores por Centro de Custo
+}
 const CC_COLORS = {
   "TECNOLOGIA - DESENVOLVIMENTO": "#8b5cf6",
   "MKT - INFLUENCERS": "#f59e0b",
@@ -690,7 +658,8 @@ const CC_COLORS = {
   "OPERACIONAL": "#10b981",
   "COMMUNITY MANAGER": "#f97316",
   "TRANSITORIO": "#9ca3af"
-};
+}
+
 const LABEL_MAP = {
   "2025-02":"Fev/25","2025-03":"Mar/25","2025-04":"Abr/25","2025-05":"Mai/25",
   "2025-06":"Jun/25","2025-07":"Jul/25","2025-08":"Ago/25","2025-09":"Set/25",
@@ -743,8 +712,7 @@ function filterRealizadoKeys(year, month) {
   });
 }
 function filterPrevistoKeys(year, month) {
-  if(year==='2025') return [];
-  return MESES_P.filter(k => month==='todos'||MES(k)===month);
+  return []; // sem previstos - usa apenas Data Financ
 }
 
 // ============================================================
@@ -1416,7 +1384,7 @@ function renderB4() {
   document.getElementById('b4k1').textContent=tRecInter>0?fmtR(tRecInter,2):'R$ 0,00';
   document.getElementById('b4k2').textContent=tDev2025>0?fmtR(tDev2025,2):'-';
   document.getElementById('b4k3').textContent='('+Math.round(tTot).toLocaleString('pt-BR')+')';
-  document.getElementById('b4k5').textContent=tPrev>0?fmtR(tPrev):'-';
+  // b4k5 removido (sem previsto)
   document.getElementById('b4k4').textContent='~R$ '+Math.round(tTot/nMeses).toLocaleString('pt-BR')+'/mês';
 
   // Grafico FIXO - sempre todo o periodo realizado (nao varia com filtro)
@@ -1512,8 +1480,8 @@ function renderB4() {
     const label = LABEL_MAP[mesLabel] || r.data_fin;
     rtb.innerHTML+=`<tr><td>${label}</td><td>${r.banco}</td><td style="font-size:10px;color:var(--muted)">${r.subgrupo}</td><td style="font-size:10px;color:var(--muted)">${r.descricao}</td><td class="mono pos" style="text-align:right">${r.val.toLocaleString('pt-BR',{minimumFractionDigits:2})}</td><td><span class="badge bg">Recebido</span></td></tr>`;
   });
-  if(!REC_INTER_DETAIL.length) rtb.innerHTML=`<tr><td colspan="6" style="color:var(--muted);text-align:center;padding:12px">Nenhuma receita TAXA DE ADMINISTRAÇÃO lançada</td></tr>`;
-  document.getElementById('b4-rec-tfoot').innerHTML=`<tr><td colspan="4"><strong>Total TAXA DE ADMINISTRAÇÃO (+)</strong></td><td class="mono pos" style="text-align:right"><strong>${totRec.toLocaleString('pt-BR',{minimumFractionDigits:2})}</strong></td><td></td></tr>`;
+  if(!REC_INTER_DETAIL.length) rtb.innerHTML=`<tr><td colspan="6" style="color:var(--muted);text-align:center;padding:12px">Nenhuma receita TAXA DE ADMINISTRACAO lancada</td></tr>`;
+  document.getElementById('b4-rec-tfoot').innerHTML=`<tr><td colspan="4"><strong>Total TAXA DE ADMINISTRACAO (+)</strong></td><td class="mono pos" style="text-align:right"><strong>${totRec.toLocaleString('pt-BR',{minimumFractionDigits:2})}</strong></td><td></td></tr>`;
 
 }
 
@@ -1582,14 +1550,13 @@ function openDetail(mesKey) {
 
 function makeTTHtml(mesKey) {
   const d = DB[mesKey];
-  const prev = DB_PREVISTO[mesKey];
-  if(!d && !prev) return '';
+  if(!d) return '';
   const lbl = LABEL_MAP[mesKey] || mesKey;
   const rec20 = REC20_2025[mesKey] || 0;
   const recI  = d ? d.rec_inter : 0;
   const desp  = d ? d.desp_total : (prev ? prev.desp_total : 0);
   const saldo = (rec20 + recI) - desp;
-  const tag = d ? '' : '<span style="font-size:9px;opacity:.6"> (previsto)</span>';
+  const tag = '';
   let h = `<div class="tt-month">${lbl}${tag}</div>`;
   if(rec20)  h += `<div class="tt-row"><span class="tt-label">20% devida</span><span class="tt-val tt-amb">R$ ${rec20.toLocaleString('pt-BR',{minimumFractionDigits:0})}</span></div>`;
   if(recI)   h += `<div class="tt-row"><span class="tt-label">Receita Inter</span><span class="tt-val tt-pos">R$ ${recI.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span></div>`;

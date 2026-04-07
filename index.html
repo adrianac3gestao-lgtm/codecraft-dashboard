@@ -204,7 +204,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
     <a class="ov-card" onclick="showPage('b4',document.querySelectorAll('.tab')[1]);return false" style="border-top:3px solid var(--amber-m)">
       <div class="ov-icon">🏢</div><div class="ov-num" style="color:var(--amber)">Resultado Operacional - Principal</div>
       <div class="ov-title">Receita × Despesa da Empresa</div>
-      <div class="ov-desc">Receita real Inter vs. custos operacionais. Realizado e Previsto separados.</div>
+      <div class="ov-desc">Receita real Inter vs. custos operacionais. Realizado acumulado.</div>
       <div class="ov-open" style="color:var(--amber)">Abrir análise →</div>
     </a>
     <a class="ov-card" onclick="showPage('b1',document.querySelectorAll('.tab')[2]);return false" style="border-top:3px solid var(--blue-m)">
@@ -288,7 +288,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
     <div class="kpi-card kk-green"><div class="kpi-label">Receita Realizada (Inter)</div><div class="kpi-val c-green" id="b4k1">-</div><div class="kpi-sub">Taxa adm. creditada no Inter</div></div>
     <div class="kpi-card kk-amber"><div class="kpi-label">20% Devida 2025</div><div class="kpi-val c-amber" id="b4k2">-</div><div class="kpi-sub">A regularizar - não recebida</div></div>
     <div class="kpi-card kk-red"><div class="kpi-label">Despesa Realizada</div><div class="kpi-val c-red" id="b4k3">-</div><div class="kpi-sub">Período selecionado</div></div>
-    <div class="kpi-card kk-slate"><div class="kpi-label">Despesa Prevista</div><div class="kpi-val c-slate" id="b4k5">-</div><div class="kpi-sub">Coluna Orçado - futuro</div></div>
+
     <div class="kpi-card kk-red"><div class="kpi-label">Queima Média / Mês</div><div class="kpi-val c-red" id="b4k4">-</div><div class="kpi-sub">Realizado no período</div></div>
   </div>
 
@@ -553,9 +553,6 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 
 // ============================================================
 // ============================================================
-// ============================================================
-// ============================================================
-// ============================================================
 // DATA BLOCK - update with gerar_dados_dashboard.py
 // Gerado em: 07/04/2026  |  Arquivo: Relatorio Gerencial_Codecraft2026.xlsx
 // ============================================================
@@ -744,8 +741,7 @@ function filterRealizadoKeys(year, month) {
   });
 }
 function filterPrevistoKeys(year, month) {
-  if(year==='2025') return [];
-  return MESES_P.filter(k => month==='todos'||MES(k)===month);
+  return []; // sem previstos - usa apenas Data Financ
 }
 
 // ============================================================
@@ -1417,7 +1413,7 @@ function renderB4() {
   document.getElementById('b4k1').textContent=tRecInter>0?fmtR(tRecInter,2):'R$ 0,00';
   document.getElementById('b4k2').textContent=tDev2025>0?fmtR(tDev2025,2):'-';
   document.getElementById('b4k3').textContent='('+Math.round(tTot).toLocaleString('pt-BR')+')';
-  document.getElementById('b4k5').textContent=tPrev>0?fmtR(tPrev):'-';
+  // b4k5 removido (sem previsto)
   document.getElementById('b4k4').textContent='~R$ '+Math.round(tTot/nMeses).toLocaleString('pt-BR')+'/mês';
 
   // Grafico FIXO - sempre todo o periodo realizado (nao varia com filtro)
@@ -1513,8 +1509,8 @@ function renderB4() {
     const label = LABEL_MAP[mesLabel] || r.data_fin;
     rtb.innerHTML+=`<tr><td>${label}</td><td>${r.banco}</td><td style="font-size:10px;color:var(--muted)">${r.subgrupo}</td><td style="font-size:10px;color:var(--muted)">${r.descricao}</td><td class="mono pos" style="text-align:right">${r.val.toLocaleString('pt-BR',{minimumFractionDigits:2})}</td><td><span class="badge bg">Recebido</span></td></tr>`;
   });
-  if(!REC_INTER_DETAIL.length) rtb.innerHTML=`<tr><td colspan="6" style="color:var(--muted);text-align:center;padding:12px">Nenhuma receita TAXA DE ADMINISTRAÇÃO lançada</td></tr>`;
-  document.getElementById('b4-rec-tfoot').innerHTML=`<tr><td colspan="4"><strong>Total TAXA DE ADMINISTRAÇÃO (+)</strong></td><td class="mono pos" style="text-align:right"><strong>${totRec.toLocaleString('pt-BR',{minimumFractionDigits:2})}</strong></td><td></td></tr>`;
+  if(!REC_INTER_DETAIL.length) rtb.innerHTML=`<tr><td colspan="6" style="color:var(--muted);text-align:center;padding:12px">Nenhuma receita TAXA DE ADMINISTRACAO lancada</td></tr>`;
+  document.getElementById('b4-rec-tfoot').innerHTML=`<tr><td colspan="4"><strong>Total TAXA DE ADMINISTRACAO (+)</strong></td><td class="mono pos" style="text-align:right"><strong>${totRec.toLocaleString('pt-BR',{minimumFractionDigits:2})}</strong></td><td></td></tr>`;
 
 }
 
@@ -1583,14 +1579,13 @@ function openDetail(mesKey) {
 
 function makeTTHtml(mesKey) {
   const d = DB[mesKey];
-  const prev = DB_PREVISTO[mesKey];
-  if(!d && !prev) return '';
+  if(!d) return '';
   const lbl = LABEL_MAP[mesKey] || mesKey;
   const rec20 = REC20_2025[mesKey] || 0;
   const recI  = d ? d.rec_inter : 0;
   const desp  = d ? d.desp_total : (prev ? prev.desp_total : 0);
   const saldo = (rec20 + recI) - desp;
-  const tag = d ? '' : '<span style="font-size:9px;opacity:.6"> (previsto)</span>';
+  const tag = '';
   let h = `<div class="tt-month">${lbl}${tag}</div>`;
   if(rec20)  h += `<div class="tt-row"><span class="tt-label">20% devida</span><span class="tt-val tt-amb">R$ ${rec20.toLocaleString('pt-BR',{minimumFractionDigits:0})}</span></div>`;
   if(recI)   h += `<div class="tt-row"><span class="tt-label">Receita Inter</span><span class="tt-val tt-pos">R$ ${recI.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span></div>`;

@@ -328,7 +328,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
   <!-- FINAL: Despesas lado a lado -->
   <div class="grid g2" style="margin-top:0">
     <div class="card">
-      <div class="card-title">Despesas Realizadas por Mes - Centro de Custo</div>
+      <div class="card-title">Despesas Realizadas por Mês</div>
       <div class="card-sub">Filtrado pela seleção acima</div>
       <table class="dt">
         <thead><tr><th>Mês</th><th style="text-align:right">Tecnologia</th><th style="text-align:right">MKT</th><th style="text-align:right">Administrativo</th><th style="text-align:right">Social Media</th><th style="text-align:right">Operacional</th><th style="text-align:right">Community Mgr</th><th style="text-align:right">Transitório</th><th style="text-align:right">Total</th></tr></thead>
@@ -549,15 +549,12 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
   DADOS - SUBSTITUIR ESTE BLOCO AO ATUALIZAR O EXCEL
   Execute: python gerar_dados_dashboard.py  e cole o DB aqui
 ══════════════════════════════════════════════════════════ -->
-<div class="chart-tooltip" id="chart-tooltip"></div>
-<div id="b4-detail-panel" style="display:none;position:fixed;top:0;right:-400px;width:320px;height:100vh;background:#fff;border-left:1px solid #e5e7eb;padding:20px;z-index:1000;overflow-y:auto;transition:right .3s">
+<div id="b4-detail-panel" style="position:fixed;top:0;right:-400px;width:320px;height:100vh;background:#fff;border-left:1px solid #e5e7eb;padding:20px;z-index:1000;overflow-y:auto;transition:right .3s ease">
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-    <div id="b4-detail-title" style="font-weight:700;font-size:14px"></div>
-    <button onclick="closeDetail()" style="border:none;background:none;cursor:pointer;font-size:18px">x</button>
+    <div id="b4-detail-title" style="font-weight:700;font-size:14px;color:#374151"></div>
+    <button onclick="closeDetail()" style="border:none;background:none;cursor:pointer;font-size:20px;color:#6b7280">x</button>
   </div>
-  <div style="font-size:11px;color:#6b7280;margin-bottom:4px">RECEITA</div>
   <div id="b4-detail-rec" style="margin-bottom:16px"></div>
-  <div style="font-size:11px;color:#6b7280;margin-bottom:4px">DESPESAS</div>
   <div id="b4-detail-desp" style="margin-bottom:16px"></div>
   <div style="border-top:1px solid #e5e7eb;padding-top:12px">
     <div id="b4-detail-saldo" style="font-size:18px;font-weight:700"></div>
@@ -568,7 +565,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 
 // ============================================================
 // ============================================================
+// ============================================================
 // DATA BLOCK - update with gerar_dados_dashboard.py
+// Gerado em: 07/04/2026  |  Arquivo: Relatorio Gerencial_Codecraft2026.xlsx
 // ============================================================
 const DB = {
   "2025-02":{"cred":183.0,"saques":-79.0,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":0.0,"desp_total":0.0},
@@ -579,17 +578,44 @@ const DB = {
   "2025-07":{"cred":3730.5,"saques":-2309.6,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":34452.28,"desp_total":34452.28},
   "2025-08":{"cred":8197.0,"saques":-2877.8,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":26570.28,"desp_total":26570.28},
   "2025-09":{"cred":8561.0,"saques":-5463.8,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":26571.78,"desp_total":26571.78},
-  "2025-10":{"cred":5428.0,"saques":-6459.6,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":55519.57,"desp_total":55519.57},
-  "2025-11":{"cred":2941.0,"saques":-6670.8,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":29033.93,"desp_total":29033.93},
-  "2025-12":{"cred":2987.5,"saques":-960.4,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":23752.88,"desp_total":23752.88},
-  "2026-01":{"cred":6009.46,"saques":-6616.2,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":35031.24,"desp_total":35031.24},
-  "2026-02":{"cred":11608.21,"saques":-7337.0,"rec_inter":1201.89,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":52043.01,"desp_total":52043.01},
-  "2026-03":{"cred":15404.33,"saques":-16045.2,"rec_inter":2319.66,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":37403.16,"desp_total":37403.16},
-  "2026-04":{"cred":1148.72,"saques":-3835.87,"rec_inter":3080.87,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":19530.0,"desp_total":19530.0}
+  "2025-10":{"cred":5428.0,"saques":-6459.6,"rec_inter":0.0,"desp_pessoal":14700.0,"desp_mkt":13500.0,"desp_juridico":0.0,"desp_outros":27319.57,"desp_total":55519.57},
+  "2025-11":{"cred":2941.0,"saques":-6670.8,"rec_inter":0.0,"desp_pessoal":14700.0,"desp_mkt":13500.0,"desp_juridico":0.0,"desp_outros":833.93,"desp_total":29033.93},
+  "2025-12":{"cred":2987.5,"saques":-960.4,"rec_inter":0.0,"desp_pessoal":15500.0,"desp_mkt":3575.0,"desp_juridico":0.0,"desp_outros":4677.88,"desp_total":23752.88},
+  "2026-01":{"cred":6009.46,"saques":-6616.2,"rec_inter":0.0,"desp_pessoal":14700.0,"desp_mkt":8000.0,"desp_juridico":7200.0,"desp_outros":5131.24,"desp_total":35031.24},
+  "2026-02":{"cred":11608.21,"saques":-7337.0,"rec_inter":1201.89,"desp_pessoal":14700.0,"desp_mkt":22386.45,"desp_juridico":10800.0,"desp_outros":4156.56,"desp_total":52043.01},
+  "2026-03":{"cred":15404.33,"saques":-16045.2,"rec_inter":2319.66,"desp_pessoal":14700.0,"desp_mkt":11698.73,"desp_juridico":5400.0,"desp_outros":5604.43,"desp_total":37403.16},
+  "2026-04":{"cred":1148.72,"saques":-3835.87,"rec_inter":3080.87,"desp_pessoal":14700.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":4830.0,"desp_total":19530.0}
 };
 
-const REC_INTER_DETAIL = [{"data_fin": "2026-02-04", "banco": "BANCO INTER", "subgrupo": "RECEITA_GAMERS BRAWL", "descricao": "Pix recebido - Codecraft Smart Tech Ltda", "val": 1201.89, "status": "Recebido"}, {"data_fin": "2026-03-31", "banco": "BANCO INTER", "subgrupo": "RECEITA_GAMERS BRAWL", "descricao": "Pix recebido - Codecraft Smart Tech Ltda", "val": 2319.66, "status": "Recebido"}, {"data_fin": "2026-04-02", "banco": "BANCO INTER", "subgrupo": "RECEITA_GAMERS BRAWL", "descricao": "Pix recebido - Codecraft Smart Tech Ltda", "val": 3080.87, "status": "Recebido"}];
+// Receita Inter - somente TAXA DE ADMINISTRACAO (+)
+const REC_INTER_DETAIL = [
+  {
+    "data_fin": "2026-02-04",
+    "banco": "BANCO INTER",
+    "subgrupo": "RECEITA_GAMERS BRAWL",
+    "descricao": "",
+    "val": 1201.89,
+    "status": "Recebido"
+  },
+  {
+    "data_fin": "2026-03-31",
+    "banco": "BANCO INTER",
+    "subgrupo": "RECEITA_GAMERS BRAWL",
+    "descricao": "",
+    "val": 2319.66,
+    "status": "Recebido"
+  },
+  {
+    "data_fin": "2026-04-02",
+    "banco": "BANCO INTER",
+    "subgrupo": "RECEITA_GAMERS BRAWL",
+    "descricao": "",
+    "val": 3080.87,
+    "status": "Recebido"
+  }
+];
 
+// 20% devida por mes (20% do credito bruto MP de cada mes)
 const REC20_2025 = {
   "2025-02": 36.6,
   "2025-03": 325.1,
@@ -609,8 +635,12 @@ const REC20_2025 = {
 };
 const TOTAL_REC20_2025 = 16763.24;
 
-const DB_PREVISTO = {};
+// Despesas PREVISTAS - coluna Orcado
+const DB_PREVISTO = {
 
+};
+
+// DB_CAT: despesas por categoria (Inter + Cartao + Bruno)
 const DB_CAT = {
   "SERVICOS PRESTADOS PJ - INICIAL": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":18000.0, "2025-07":33600.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":25000.0, "2026-03":285.93},
   "SALARIOS E ORDENADOS ADM": {"2025-10":14700.0, "2025-11":14700.0, "2025-12":14700.0, "2026-01":14700.0, "2026-02":14700.0, "2026-03":14700.0, "2026-04":14700.0},
@@ -632,6 +662,7 @@ const DB_CAT = {
   "ESTORNO_DEVOLUCAO (-)": {"2025-11":38.0}
 };
 
+// Cores por categoria
 const CAT_COLORS = {
   "SALARIOS E ORDENADOS ADM": "#f59e0b",
   "SERVS. DE PUBLICIDADE E PROPAGANDA": "#8b5cf6",
@@ -647,12 +678,10 @@ const CAT_COLORS = {
   "REEMB DESPESAS GERAIS": "#65a30d",
   "SERVS. CERTIFICADO DIGITAL": "#b45309",
   "ESTORNO_DEVOLUCAO (-)": "#9ca3af",
-  "COMPRA DE ATIVO IMOBILIZADO": "#0284c7",
-  "SERVICOS PRESTADOS PJ - INICIAL": "#7c3aed",
-  "IMPOSTOS - INICIAL": "#dc2626",
-  "SERVS. DE RECRUTAMENTO E SELECAO - PJ": "#0891b2"
+  "COMPRA DE ATIVO IMOBILIZADO": "#0284c7"
 };
 
+// DB_CC: despesas por Centro de Custo e mes
 const DB_CC = {
   "TECNOLOGIA - DESENVOLVIMENTO": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":8000.0, "2025-07":20000.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":31700.0, "2025-11":6700.0, "2025-12":7241.32, "2026-01":7200.0, "2026-02":7217.15, "2026-03":7203.07, "2026-04":6700.0},
   "MKT - INFLUENCERS": {"2025-06":10000.0, "2025-10":13500.0, "2025-11":13500.0, "2025-12":2751.84, "2026-01":8000.0, "2026-02":22386.45, "2026-03":11698.73},
@@ -663,6 +692,7 @@ const DB_CC = {
   "TRANSITORIO": {"2025-11":38.0}
 };
 
+// Cores por Centro de Custo
 const CC_COLORS = {
   "TECNOLOGIA - DESENVOLVIMENTO": "#8b5cf6",
   "MKT - INFLUENCERS": "#f59e0b",
@@ -670,10 +700,8 @@ const CC_COLORS = {
   "SOCIAL MEDIA - DESIGN": "#ec4899",
   "OPERACIONAL": "#10b981",
   "COMMUNITY MANAGER": "#f97316",
-  "TRANSITORIO": "#9ca3af",
-  "SEM CC": "#64748b"
+  "TRANSITORIO": "#9ca3af"
 };
-
 const LABEL_MAP = {
   "2025-02":"Fev/25","2025-03":"Mar/25","2025-04":"Abr/25","2025-05":"Mai/25",
   "2025-06":"Jun/25","2025-07":"Jul/25","2025-08":"Ago/25","2025-09":"Set/25",
@@ -976,10 +1004,7 @@ function drawBar(id, labels, datasets, opts={}) {
         .map(([,v])=>v);
       totals.forEach((colMax,xi)=>{
         if(!colMax) return;
-        // Add other stacks height to position label above the full column
-        const otherTotal = otherStacks.reduce((a,arr)=>a+(arr[xi]||0),0);
-        const fullTotal = colMax + otherTotal;
-        const y0 = PAD.top + ch - (ch * (fullTotal - Math.min(minV,0)) / span);
+        const y0 = PAD.top + ch - (ch * (colMax - Math.min(minV,0)) / span);
         const label = colMax>=1000000?'R$'+(colMax/1000000).toFixed(1)+'M':colMax>=1000?'R$'+(colMax/1000).toFixed(0)+'K':'R$'+colMax.toFixed(0);
         const yLabel = Math.max(y0 - 2, PAD.top + 9);
         ctx.fillStyle = 'rgba(30,30,30,0.85)';
@@ -1305,7 +1330,7 @@ function renderB1() {
     {label:'Creditos', data:allB1Cred,   backgroundColor:COLORS.blueA, borderColor:COLORS.blue, borderWidth:1.5},
     {label:'Saques',   data:allB1Saques, backgroundColor:'rgba(239,68,68,0.2)', borderColor:COLORS.red, borderWidth:1.5},
     {label:'20% Adm.', data:allB1Pct20,  type:'line', borderColor:COLORS.amber, borderWidth:2},
-  ], {height:320, padTop:28, padBottom:46, padLeft:56, padRight:8, ticks:5, showValues:true});
+  ], {height:320, padTop:28, padBottom:46, padLeft:56, padRight:8, ticks:5});
 
   const tb=document.getElementById('b1-tbody'); tb.innerHTML='';
   labels.forEach((m,i)=>{
@@ -1476,7 +1501,7 @@ function renderB4() {
       const barW = Math.round((r.total/maxVal)*80);
       const shortCat = r.cat.length>28 ? r.cat.slice(0,27)+'...' : r.cat;
       catTb.innerHTML += `<tr title="${r.cat}">
-        <td style="font-size:10.5px;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${shortCat}</td>
+        <td style="font-size:10.5px;max-width:160px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${shortCat}</td>
         <td class="mono neg" style="text-align:right;white-space:nowrap">(${r.total.toLocaleString('pt-BR',{minimumFractionDigits:0})})</td>
         <td class="mono" style="text-align:right;color:var(--muted);font-size:10px">${pct}%</td>
         <td style="padding-right:4px"><div style="height:6px;border-radius:3px;background:${r.color};width:${barW}px;max-width:100px;margin-top:5px"></div></td>
@@ -1508,7 +1533,7 @@ function renderB4() {
 // ============================================================
 function closeDetail() {
   const p = document.getElementById('b4-detail-panel');
-  if(p) { p.style.right='-400px'; setTimeout(()=>p.style.display='none',300); }
+  if(p) p.style.right = '-400px';
 }
 
 function openDetail(mesKey) {
@@ -1562,7 +1587,7 @@ function openDetail(mesKey) {
   sEl.className = saldo>=0 ? 'dsaldo-pos' : 'dsaldo-neg';
   document.getElementById('b4-detail-pct').textContent = 'Receita cobre '+pctRD+' da despesa';
 
-  panel.style.right='0'; panel.style.display='block';
+  panel.style.right = '0';
 }
 
 function makeTTHtml(mesKey) {
@@ -1646,22 +1671,12 @@ function openDetailAccum() {
   sEl.className = saldo>=0 ? 'dsaldo-pos' : 'dsaldo-neg';
   document.getElementById('b4-detail-pct').textContent = 'Receita cobre ' + pctRD + ' da despesa';
 
-  panel.style.right='0'; panel.style.display='block';
+  panel.style.right = '0';
 };
 // -- INIT ---------------------------------------------------
 window.addEventListener('load', renderHome);
 
 </script>
-    <button onclick="closeDetail()" style="border:none;background:none;cursor:pointer;font-size:18px">×</button>
-  </div>
-  <div style="font-size:11px;color:#6b7280;margin-bottom:4px">RECEITA</div>
-  <div id="b4-detail-rec" style="margin-bottom:16px"></div>
-  <div style="font-size:11px;color:#6b7280;margin-bottom:4px">DESPESAS</div>
-  <div id="b4-detail-desp" style="margin-bottom:16px"></div>
-  <div style="border-top:1px solid #e5e7eb;padding-top:12px">
-    <div id="b4-detail-saldo" style="font-size:18px;font-weight:700"></div>
-    <div id="b4-detail-pct" style="font-size:11px;color:#6b7280;margin-top:4px"></div>
-  </div>
-</div>
+<div class="chart-tooltip" id="chart-tooltip"></div>
 </body>
 </html>

@@ -1031,3 +1031,65 @@ hint: the same ref. If you want to integrate the remote changes, use
 hint: 'git pull' before pushing again.
 hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 ERRO no Git push 
+========================================= 
+Inicio: 10/04/2026 16:36:29,59 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+  Excel : Relatorio Gerencial_Codecraft2026.xlsx
+  HTML  : index.html
+  Backup: _backups_dashboard/index.backup_20260410.html
+
+  Lendo Excel...
+  Realizados: 2025-02 a 2026-04 (15 meses)
+
+  Calculando dados...
+  Atualizando HTML...
+
+  ======================================================
+  HTML atualizado com sucesso!
+  ======================================================
+  Receita Inter (TAXA ADM):  R$ 6.602,42
+  20% devida total:          R$ 17.063,23
+  Despesa realizada:         R$ 403.688,35
+  Meses realizados:          15
+  Meses previstos:           0
+  ======================================================
+
+Pressione Enter para fechar...error: unable to unlink old 'log_atualizacao.txt': Invalid argument
+fatal: Could not reset index file to revision 'origin/main'.
+'t' n∆o Ç reconhecido como um comando interno
+ou externo, um programa oper†vel ou um arquivo em lotes.
+Everything up-to-date
+Sucesso! Dashboard atualizado. 
+========================================= 
+========================================= 
+Inicio: 10/04/2026 20:40:07,44 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+  Excel : Relatorio Gerencial_Codecraft2026.xlsx
+  HTML  : index.html
+  Backup: _backups_dashboard/index.backup_20260410.html
+
+  Lendo Excel...
+  Realizados: 2025-02 a 2026-04 (15 meses)
+
+  Calculando dados...
+  Atualizando HTML...
+
+  ======================================================
+  HTML atualizado com sucesso!
+  ======================================================
+  Receita Inter (TAXA ADM):  R$ 6.602,42
+  20% devida total:          R$ 17.063,23
+  Despesa realizada:         R$ 403.688,35
+  Meses realizados:          15
+  Meses previstos:           0
+  ======================================================
+
+Pressione Enter para fechar...

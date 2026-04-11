@@ -1552,32 +1552,33 @@ function openDetail(mesKey) {
   const recDiv = document.getElementById('b4-detail-rec');
   recDiv.innerHTML = '';
   if(recInter) {
-    recDiv.innerHTML += `<div class="drow"><div class="dbar" style="width:60px;background:var(--green-m)"></div><span class="dname">Receita Inter</span><span class="dval tt-pos">R$ ${recInter.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span></div>`;
+    recDiv.innerHTML += `<div class="drow"><span class="dname" style="font-size:11px">Receita Inter</span><span class="dval tt-pos" style="font-size:11px">R$ ${recInter.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span></div>`;
   }
   if(rec20) {
-    recDiv.innerHTML += `<div class="drow"><div class="dbar" style="width:${Math.round(rec20/Math.max(recTotal,1)*60)}px;background:#b0c4d8"></div><span class="dname">20% Devida 2025</span><span class="dval" style="color:var(--muted)">R$ ${rec20.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span></div>`;
+    recDiv.innerHTML += `<div class="drow"><span class="dname" style="font-size:11px">20% Devida 2025</span><span class="dval" style="font-size:11px;color:var(--muted)">R$ ${rec20.toLocaleString('pt-BR',{minimumFractionDigits:2})}</span></div>`;
   }
   if(!recInter && !rec20) {
-    recDiv.innerHTML = '<div style="font-size:11px;color:var(--muted);padding:6px 0">Sem receita neste mes</div>';
+    recDiv.innerHTML = '<div style="font-size:11px;color:var(--muted);padding:4px 0">Sem receita neste mes</div>';
   }
 
-  // Despesas
-  const cats = [
-    {k:'desp_pessoal',  l:'Pessoal',       c:'#f59e0b'},
-    {k:'desp_mkt',      l:'Marketing',      c:'#8b5cf6'},
-    {k:'desp_juridico', l:'Juridico',       c:'#ef4444'},
-    {k:'desp_outros',   l:'Outros',         c:'#9ca3af'},
-  ];
+  // Despesas por Centro de Custo (DB_CC)
   const despDiv = document.getElementById('b4-detail-desp');
   despDiv.innerHTML = '';
-  const maxDesp = Math.max(...cats.map(c=>d[c.k]||0), 1);
-  cats.forEach(cat=>{
-    const v = d[cat.k] || 0;
-    if(!v) return;
-    const barW = Math.max(Math.round((v/maxDesp)*80), 3);
-    const pct = ((v/d.desp_total)*100).toFixed(1);
-    despDiv.innerHTML += `<div class="drow"><div class="dbar" style="width:${barW}px;background:${cat.c}"></div><span class="dname">${cat.l}</span><span class="dval tt-neg">(${v.toLocaleString('pt-BR',{minimumFractionDigits:0})}) <span style="font-size:9px;color:var(--muted)">${pct}%</span></span></div>`;
+  const ccEntries = Object.entries(DB_CC)
+    .map(([cc, mdata]) => ({cc, val: mdata[mesKey]||0}))
+    .filter(x => x.val > 0)
+    .sort((a,b) => b.val - a.val);
+  const maxCC = ccEntries.length ? ccEntries[0].val : 1;
+  ccEntries.forEach(({cc, val}) => {
+    const barW = Math.max(Math.round((val/maxCC)*80), 3);
+    const pct = d.desp_total > 0 ? ((val/d.desp_total)*100).toFixed(1) : '0.0';
+    const cor = CC_COLORS[cc] || '#9ca3af';
+    const label = cc.length > 22 ? cc.slice(0,21)+'..' : cc;
+    despDiv.innerHTML += `<div class="drow"><div class="dbar" style="width:${barW}px;background:${cor};height:6px;border-radius:3px;margin-top:5px"></div><span class="dname" style="font-size:10px">${label}</span><span class="dval tt-neg" style="font-size:10px">(${val.toLocaleString('pt-BR',{minimumFractionDigits:0})}) <span style="font-size:9px;color:var(--muted)">${pct}%</span></span></div>`;
   });
+  if(!ccEntries.length) {
+    despDiv.innerHTML = '<div style="font-size:11px;color:var(--muted);padding:4px 0">Sem despesas neste mes</div>';
+  }
 
   // Saldo e %
   const saldo = recTotal - d.desp_total;

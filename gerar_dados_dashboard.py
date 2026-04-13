@@ -232,6 +232,51 @@ def main():
     dpp = {}; dpm = {}; dpj = {}; dpo = {}
     DB_PREV = {}
 
+    # -- Taxa ADM 20%% paga ao Inter (saida do MP) ----------
+    taxa_mp = df[
+        (df["banco_norm"] == "MERCADO PAGO") &
+        (df["cat_norm"] == "TAXA ADM - 20% (-)")
+    ].groupby("mes_fin")["Valor"].sum().abs()
+    DB_TAXA_PAGA_RAW = {m: round(float(v),2) for m,v in taxa_mp.items()}
+
+    # -- Outras taxas MP (CSRF, ISS, Estornos, Taxas plataforma etc) ----
+    outras_mp = df[
+        (df["banco_norm"] == "MERCADO PAGO") &
+        (df["Tipo"] == "Despesa") &
+        (~df["cat_norm"].str.contains("SAQUE GAMERS")) &
+        (~df["cat_norm"].str.contains("TAXA ADM"))
+    ].groupby("mes_fin")["Valor"].sum().abs()
+    DB_OUTRAS_TAXAS_RAW = {m: round(float(v),2) for m,v in outras_mp.items()}
+
+    # -- B2_ROWS: Capital & Investimento (BANCO INTER - APLICACAO) ------
+    inv_df   = df[df["banco_norm"].str.contains("APLICAC", na=False)]
+    aplic_df = df[(df["banco_norm"] == "BANCO INTER") & (df["Categoria"] == "APLIC FINANCEIRA (-)")]
+    resg_df  = df[(df["banco_norm"] == "BANCO INTER") & (df["Categoria"] == "RESGATE APLIC (+)")]
+    b2_meses = sorted(set(
+        list(inv_df["mes_fin"].dropna().unique()) +
+        list(aplic_df["mes_fin"].dropna().unique()) +
+        list(resg_df["mes_fin"].dropna().unique())
+    ))
+    mnames = {"01":"jan","02":"fev","03":"mar","04":"abr","05":"mai","06":"jun",
+              "07":"jul","08":"ago","09":"set","10":"out","11":"nov","12":"dez"}
+    b2_rows_list = []
+    for mes in b2_meses:
+        month  = mes[5:]
+        year   = mes[:4]
+        aplic  = round(float(aplic_df[aplic_df["mes_fin"]==mes]["Valor"].abs().sum()), 0)
+        resg   = round(float(resg_df[resg_df["mes_fin"]==mes]["Valor"].sum()), 0)
+        grp    = inv_df[inv_df["mes_fin"] == mes]
+        rend_b = round(float(grp[grp["Categoria"] == "RENDIMENTO INVEST. (+)"]["Valor"].sum()), 2)
+        irf    = round(float(grp[grp["Categoria"].str.contains("IRRF-IOF", na=False)]["Valor"].sum()), 2)
+        rend_liq = int(round(rend_b + irf, 0))
+        key   = mnames[month] + year[2:]
+        label = mnames[month].capitalize() + "/" + year[2:]
+        b2_rows_list.append(
+            "{key:'" + key + "', label:'" + label + "', year:'" + year + "', month:'" + month +
+            "', resgate:" + str(int(resg)) + ", rend:" + str(rend_liq) + ", aplicacao:" + str(int(aplic)) + "}"
+        )
+    B2_ROWS_JS = "const B2_ROWS = [\n  " + ",\n  ".join(b2_rows_list) + "\n];"
+
     # -- DB_CAT: despesas por categoria e mes -----------------
     DB_CAT_RAW = {}
     for _, row in desp_b4.iterrows():
@@ -363,6 +408,12 @@ def main():
         "const CC_COLORS = {",
         ",\n".join('  "%s": "%s"' % (k,v) for k,v in CC_COLORS.items()),
         "};",
+        "",
+        "// Taxa ADM 20%% efetivamente paga ao Inter via MP",
+        "const DB_TAXA_PAGA = {%s};" % ", ".join('"%s":%s' % (m, round(float(v),2)) for m,v in sorted(DB_TAXA_PAGA_RAW.items())),
+        "const DB_OUTRAS_TAXAS = {%s};" % ", ".join('"%s":%s' % (m, round(float(v),2)) for m,v in sorted(DB_OUTRAS_TAXAS_RAW.items())),
+        "",
+        B2_ROWS_JS,
         "",
     ])
 

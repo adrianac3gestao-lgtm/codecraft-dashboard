@@ -442,11 +442,11 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
       <div class="farrow">→</div>
       <div class="fbox" style="background:var(--amber-l);border-color:#fcd34d"><div class="fbox-t" style="color:var(--amber)">Operação</div><div class="fbox-v" style="color:var(--red-m)">(R$ 60K)</div><div class="fbox-s">Set-Out/25</div></div>
       <div class="farrow">→</div>
-      <div class="fbox" style="background:var(--green-l);border-color:#6ee7b7"><div class="fbox-t" style="color:var(--green)">CDI Inter</div><div class="fbox-v" style="color:var(--green)">R$ 490K</div><div class="fbox-s">Nov/2025</div></div>
+      <div class="fbox" style="background:var(--green-l);border-color:#6ee7b7"><div class="fbox-t" style="color:var(--green)">CDI Inter</div><div class="fbox-v" style="color:var(--green)" id="b2-aplic-display">R$ 490K</div><div class="fbox-s">Nov/2025</div></div>
       <div class="farrow">→</div>
-      <div class="fbox" style="background:var(--green-l);border-color:#6ee7b7"><div class="fbox-t" style="color:var(--green)">Resgates</div><div class="fbox-v" style="color:var(--green-m)">R$ 144K</div><div class="fbox-s">Dez/25-Mar/26</div></div>
+      <div class="fbox" style="background:var(--green-l);border-color:#6ee7b7"><div class="fbox-t" style="color:var(--green)">Resgates</div><div class="fbox-v" style="color:var(--green-m)" id="b2-resg-display">R$ 144K</div><div class="fbox-s" id="b2-resg-period">Dez/25-Mar/26</div></div>
       <div class="farrow">→</div>
-      <div class="fbox" style="background:var(--green-l);border-color:#6ee7b7"><div class="fbox-t" style="color:var(--green)">Saldo CDI</div><div class="fbox-v" style="color:var(--green)">~R$ 346K</div><div class="fbox-s">+ R$13,8K rend.</div></div>
+      <div class="fbox" style="background:var(--green-l);border-color:#6ee7b7"><div class="fbox-t" style="color:var(--green)">Saldo CDI</div><div class="fbox-v" style="color:var(--green)" id="b2-saldo-display">~R$ 346K</div><div class="fbox-s" id="b2-rend-display">+ R$13,8K rend.</div></div>
     </div>
     <div class="alert alert-v" style="margin-bottom:0"><strong>Nota:</strong> A natureza jurídica do aporte (cotas, mútuo, aumento de capital) está em definição. Recomendamos formalizar com assessoria jurídica.</div>
   </div>
@@ -484,7 +484,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
         <tr id="b2r-fev26"><td>Fev/26</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">51.000</td><td class="mono pos" style="text-align:right">1.857</td><td class="mono neg" style="text-align:right">(3.794)</td><td class="mono neg" style="text-align:right">(1.937)</td><td><span class="badge br">Atenção IR</span></td></tr>
         <tr id="b2r-mar26"><td>Mar/26</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">35.000</td><td class="mono pos" style="text-align:right">2.187</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">2.187</td><td><span class="badge bg">Resgatado</span></td></tr>
       </tbody>
-      <tfoot><tr><td><strong>TOTAL</strong></td><td class="mono neg" style="text-align:right"><strong>(490.000)</strong></td><td class="mono pos" style="text-align:right"><strong>144.200</strong></td><td class="mono pos" style="text-align:right"><strong>17.807</strong></td><td class="mono neg" style="text-align:right"><strong>(4.039)</strong></td><td class="mono pos" style="text-align:right"><strong>13.768</strong></td><td></td></tr></tfoot>
+      <tfoot><tr><td><strong>TOTAL</strong></td><td class="mono neg" style="text-align:right"><strong id="b2f-aplic">-</strong></td><td class="mono pos" style="text-align:right"><strong id="b2f-resg">-</strong></td><td class="mono pos" style="text-align:right"><strong id="b2f-rend">-</strong></td><td class="mono neg" style="text-align:right"><strong id="b2f-ir">-</strong></td><td class="mono pos" style="text-align:right"><strong id="b2f-liq">-</strong></td><td></td></tr></tfoot>
     </table>
   </div>
 </div>
@@ -567,6 +567,8 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 <div class="chart-tooltip" id="chart-tooltip"></div>
 <script>
 
+// ============================================================
+// ============================================================
 // ============================================================
 // ============================================================
 // ============================================================
@@ -713,12 +715,12 @@ const DB_TAXA_PAGA = {"2026-02":1201.89, "2026-03":2319.66};
 const DB_OUTRAS_TAXAS = {"2025-02":1.81, "2025-03":6.64, "2025-04":47.28, "2025-05":190.75, "2025-06":64.56, "2025-07":1071.08, "2025-08":81.0, "2025-09":103.85, "2025-10":58.71, "2025-11":44.23, "2025-12":121.75, "2026-01":118.81, "2026-02":32.18};
 
 const B2_ROWS = [
-  {key:'nov25', label:'Nov/25', year:'2025', month:'11', resgate:0, rend:2708, aplicacao:490000},
-  {key:'dez25', label:'Dez/25', year:'2025', month:'12', resgate:18000, rend:5767, aplicacao:0},
-  {key:'jan26', label:'Jan/26', year:'2026', month:'01', resgate:40200, rend:5044, aplicacao:0},
-  {key:'fev26', label:'Fev/26', year:'2026', month:'02', resgate:51000, rend:3686, aplicacao:0},
-  {key:'mar26', label:'Mar/26', year:'2026', month:'03', resgate:35000, rend:4178, aplicacao:0},
-  {key:'abr26', label:'Abr/26', year:'2026', month:'04', resgate:18000, rend:0, aplicacao:0}
+  {key:'nov25', label:'Nov/25', year:'2025', month:'11', aplicacao:490000, resgate:0, rend_b:2708, irf:0, rend:2708},
+  {key:'dez25', label:'Dez/25', year:'2025', month:'12', aplicacao:0, resgate:18000, rend_b:5831, irf:-64, rend:5767},
+  {key:'jan26', label:'Jan/26', year:'2026', month:'01', aplicacao:0, resgate:40200, rend_b:5225, irf:-181, rend:5044},
+  {key:'fev26', label:'Fev/26', year:'2026', month:'02', aplicacao:0, resgate:51000, rend_b:4044, irf:-358, rend:3686},
+  {key:'mar26', label:'Mar/26', year:'2026', month:'03', aplicacao:0, resgate:35000, rend_b:4505, irf:-4450, rend:55},
+  {key:'abr26', label:'Abr/26', year:'2026', month:'04', aplicacao:0, resgate:18000, rend_b:0, irf:0, rend:0}
 ];
 const LABEL_MAP = {
   "2025-02":"Fev/25","2025-03":"Mar/25","2025-04":"Abr/25","2025-05":"Mai/25",
@@ -1291,8 +1293,10 @@ function renderHome() {
     ? ultimos3.reduce((a,k)=>a+DB[k].desp_total,0) / ultimos3.length
     : 0;
 
-  // Runway: saldo CDI / queima media
-  const saldoCDI = 345800;
+  // Runway: saldo CDI calculado do B2_ROWS
+  const saldoCDI = B2_ROWS.reduce((a,r)=>a+(r.aplicacao||0),0)
+    - B2_ROWS.reduce((a,r)=>a+(r.resgate||0),0)
+    + B2_ROWS.reduce((a,r)=>a+(r.rend||0),0);
   const runway = queimaMedia > 0 ? Math.floor(saldoCDI / queimaMedia) : 0;
 
   // Breakeven: queima media / 20% = custodia necessaria por mes
@@ -1380,21 +1384,83 @@ function renderB2() {
     (fy==='todos' || r.year===fy) &&
     (fm==='todos' || r.month===fm)
   );
-  // Show/hide table rows
-  B2_ROWS.forEach(r=>{
-    const el=document.getElementById('b2r-'+r.key);
-    if(el) el.style.display=active.find(a=>a.key===r.key)?'':'none';
-  });
-  let tR=0,tL=0;
-  active.forEach(r=>{tR+=r.resgate;tL+=r.rend;});
-  document.getElementById('b2k3').textContent=fmtR(tR);
-  document.getElementById('b2k4').textContent=fmtN(tL);
 
-  const labels = active.map(r=>r.label);
-  const resgates = active.map(r=>r.resgate);
-  const rendimentos = active.map(r=>r.rend);
+  // ── Totais calculados ──────────────────────────────────────────────────────
+  let tAplic=0, tResg=0, tRendB=0, tIrf=0, tRendL=0;
+  B2_ROWS.forEach(r=>{ tAplic+=r.aplicacao||0; });
+  active.forEach(r=>{
+    tResg  += r.resgate||0;
+    tRendB += r.rend_b||0;
+    tIrf   += r.irf||0;
+    tRendL += r.rend||0;
+  });
+
+  // ── Cards b2k3 (Total Resgatado) e b2k4 (Rendimento Líquido) ──────────────
+  document.getElementById('b2k3').textContent = fmtR(tResg);
+  document.getElementById('b2k4').textContent = fmtN(tRendL);
+
+  // ── Saldo CDI no fluxo (sempre total - não filtra) ─────────────────────────
+  const totalResgAll = B2_ROWS.reduce((a,r)=>a+(r.resgate||0),0);
+  const totalRendAll = B2_ROWS.reduce((a,r)=>a+(r.rend||0),0);
+  const saldoCDI     = tAplic - totalResgAll + totalRendAll;
+  const fmtK = v => '~R$ '+Math.round(v/1000)+'K';
+  const el_saldo = document.getElementById('b2-saldo-display');
+  const el_rend  = document.getElementById('b2-rend-display');
+  const el_aplic = document.getElementById('b2-aplic-display');
+  const el_resg  = document.getElementById('b2-resg-display');
+  const el_resgP = document.getElementById('b2-resg-period');
+  if(el_saldo) el_saldo.textContent = fmtK(saldoCDI);
+  if(el_rend)  el_rend.textContent  = '+ '+fmtR(totalRendAll)+' rend.';
+  if(el_aplic) el_aplic.textContent = 'R$ '+Math.round(tAplic/1000)+'K';
+  if(el_resg)  el_resg.textContent  = 'R$ '+Math.round(totalResgAll/1000)+'K';
+  if(el_resgP){
+    const meses = B2_ROWS.filter(r=>r.resgate>0).map(r=>r.label);
+    if(meses.length>0) el_resgP.textContent = meses[0]+'-'+meses[meses.length-1];
+  }
+
+  // ── Extrato tbody - gera linhas dinamicamente ──────────────────────────────
+  const tbody = document.getElementById('b2-tbody');
+  if(tbody){
+    tbody.innerHTML='';
+    active.forEach(r=>{
+      const rb   = r.rend_b||0;
+      const ir   = r.irf||0;
+      const liq  = r.rend||0;
+      const aplic = r.aplicacao||0;
+      const resg  = r.resgate||0;
+      // Status badge
+      let badge='';
+      if(aplic>0)       badge='<span class="badge bv">Aplicado</span>';
+      else if(liq<0)    badge='<span class="badge br">Aten\u00e7\u00e3o IR</span>';
+      else if(resg>0)   badge='<span class="badge bg">Resgatado</span>';
+      else              badge='<span class="badge">-</span>';
+      const fmtCell = (v,cls)=>`<td class="mono ${cls}" style="text-align:right">${v===0?'-':v<0?'('+Math.abs(v).toLocaleString('pt-BR')+')':v.toLocaleString('pt-BR')}</td>`;
+      tbody.innerHTML += `<tr>
+        <td>${r.label}</td>
+        ${fmtCell(-aplic, aplic>0?'neg':'')}
+        ${fmtCell(resg,   resg>0?'pos':'')}
+        ${fmtCell(rb,     rb>0?'pos':'')}
+        ${fmtCell(ir,     ir<0?'neg':'')}
+        ${fmtCell(liq,    liq>0?'pos':liq<0?'neg':'')}
+        <td>${badge}</td>
+      </tr>`;
+    });
+  }
+
+  // ── Footer totais ──────────────────────────────────────────────────────────
+  const fEl = (id,v) => { const e=document.getElementById(id); if(e) e.textContent=v===0?'-':v<0?'('+Math.abs(v).toLocaleString('pt-BR')+')':v.toLocaleString('pt-BR'); };
+  fEl('b2f-aplic', -tAplic);
+  fEl('b2f-resg',   tResg);
+  fEl('b2f-rend',   tRendB);
+  fEl('b2f-ir',     tIrf);
+  fEl('b2f-liq',    tRendL);
+
+  // ── Gráfico ────────────────────────────────────────────────────────────────
+  const labels     = active.map(r=>r.label);
+  const resgates   = active.map(r=>r.resgate||0);
+  const rendimentos= active.map(r=>r.rend||0);
   drawBar('b2-chart1', labels, [
-    {label:'Resgates CDI',   data:resgates,   backgroundColor:COLORS.greenA+'44', borderColor:COLORS.green, borderWidth:1.5},
+    {label:'Resgates CDI',   data:resgates,    backgroundColor:COLORS.greenA+'44', borderColor:COLORS.green, borderWidth:1.5},
     {label:'Rendimento Liq.',data:rendimentos, type:'line', borderColor:COLORS.green, borderWidth:2},
   ], {height:185, legend:true});
 }

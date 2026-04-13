@@ -267,13 +267,16 @@ def main():
         resg   = round(float(resg_df[resg_df["mes_fin"]==mes]["Valor"].sum()), 0)
         grp    = inv_df[inv_df["mes_fin"] == mes]
         rend_b = round(float(grp[grp["Categoria"] == "RENDIMENTO INVEST. (+)"]["Valor"].sum()), 2)
-        irf    = round(float(grp[grp["Categoria"].str.contains("IRRF-IOF", na=False)]["Valor"].sum()), 2)
+        irf    = round(float(grp[grp["Categoria"].str.contains("IRRF-IOF|PREVISAO IR", na=False)]["Valor"].sum()), 2)
         rend_liq = int(round(rend_b + irf, 0))
         key   = mnames[month] + year[2:]
         label = mnames[month].capitalize() + "/" + year[2:]
+        rend_b_int = int(round(rend_b, 0))
+        irf_int    = int(round(irf, 0))
         b2_rows_list.append(
             "{key:'" + key + "', label:'" + label + "', year:'" + year + "', month:'" + month +
-            "', resgate:" + str(int(resg)) + ", rend:" + str(rend_liq) + ", aplicacao:" + str(int(aplic)) + "}"
+            "', aplicacao:" + str(int(aplic)) + ", resgate:" + str(int(resg)) +
+            ", rend_b:" + str(rend_b_int) + ", irf:" + str(irf_int) + ", rend:" + str(rend_liq) + "}"
         )
     B2_ROWS_JS = "const B2_ROWS = [\n  " + ",\n  ".join(b2_rows_list) + "\n];"
 

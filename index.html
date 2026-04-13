@@ -197,7 +197,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
   <div class="kpi-row col4" style="grid-template-columns:repeat(3,1fr) 1fr 1fr">
     <div class="kpi-card kk-green"><div class="kpi-label">Receita Inter - Realizada</div><div class="kpi-val c-green" id="h-rec">R$ 1.202</div><div class="kpi-sub">Taxa adm. Brawl - fev/26</div></div>
     <div class="kpi-card kk-red"><div class="kpi-label">Despesa Operacional</div><div class="kpi-val c-red" id="h-desp">-</div><div class="kpi-sub">Realizado acumulado</div></div>
-    <div class="kpi-card kk-green"><div class="kpi-label">Saldo CDI Aplicado</div><div class="kpi-val c-green">R$ 345.800</div><div class="kpi-sub">+ R$ 13.768 rendimento líquido</div></div>
+    <div class="kpi-card kk-green"><div class="kpi-label">Saldo CDI Aplicado</div><div class="kpi-val c-green" id="h-saldo-cdi">-</div><div class="kpi-sub" id="h-rend-liq">+ R$ 13.768 rendimento líquido</div></div>
     <div class="kpi-card kk-violet"><div class="kpi-label">Runway</div><div class="kpi-val c-violet" id="h-runway">-</div><div class="kpi-sub">Meses com saldo CDI atual</div></div>
     <div class="kpi-card kk-amber"><div class="kpi-label">Breakeven</div><div class="kpi-val c-amber" id="h-breakeven">-</div><div class="kpi-sub">Custódia/mês p/ cobrir despesas</div></div>
   </div>
@@ -431,7 +431,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
   <div class="kpi-row col4">
     <div class="kpi-card kk-violet"><div class="kpi-label">Aporte dos Sócios</div><div class="kpi-val c-violet">R$ 550.000</div><div class="kpi-sub">3 holdings · set/25</div></div>
     <div class="kpi-card kk-red"><div class="kpi-label">Aplicado em CDI</div><div class="kpi-val c-red">(490.000)</div><div class="kpi-sub">Nov/25 · R$ 60K consumido antes</div></div>
-    <div class="kpi-card kk-green"><div class="kpi-label">Total Resgatado</div><div class="kpi-val c-green" id="b2k3">R$ 144.200</div><div class="kpi-sub">Dez/25-Mar/26</div></div>
+    <div class="kpi-card kk-green"><div class="kpi-label">Total Resgatado</div><div class="kpi-val c-green" id="b2k3">R$ 144.200</div><div class="kpi-sub">Resgates realizados</div></div>
     <div class="kpi-card kk-green"><div class="kpi-label">Rendimento Líquido</div><div class="kpi-val c-green" id="b2k4">R$ 13.768</div><div class="kpi-sub">Após IR e IOF</div></div>
   </div>
   <div class="card" style="margin-bottom:10px">
@@ -573,9 +573,8 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 // ============================================================
 // ============================================================
 // ============================================================
-// ============================================================
 // DATA BLOCK - update with gerar_dados_dashboard.py
-// Gerado em: 13/04/2026  |  Arquivo: Relatorio Gerencial_Codecraft2026.xlsx
+// Gerado em: 13/04/2026  |  Arquivo: Relatorio_Gerencial_Codecraft2026.xlsx
 // ============================================================
 const DB = {
   "2025-02":{"cred":183.0,"saques":-79.0,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":0.0,"desp_total":0.0},
@@ -592,7 +591,7 @@ const DB = {
   "2026-01":{"cred":6009.46,"saques":-6616.2,"rec_inter":0.0,"desp_pessoal":14700.0,"desp_mkt":8000.0,"desp_juridico":7200.0,"desp_outros":5131.24,"desp_total":35031.24},
   "2026-02":{"cred":11608.21,"saques":-7337.0,"rec_inter":1201.89,"desp_pessoal":14700.0,"desp_mkt":22386.45,"desp_juridico":10800.0,"desp_outros":4156.56,"desp_total":52043.01},
   "2026-03":{"cred":15404.33,"saques":-16045.2,"rec_inter":2319.66,"desp_pessoal":14700.0,"desp_mkt":11698.73,"desp_juridico":5400.0,"desp_outros":5604.43,"desp_total":37403.16},
-  "2026-04":{"cred":3681.3,"saques":-2787.0,"rec_inter":3080.87,"desp_pessoal":14700.0,"desp_mkt":1690.21,"desp_juridico":0.0,"desp_outros":8549.24,"desp_total":24939.45}
+  "2026-04":{"cred":1148.72,"saques":-3835.87,"rec_inter":3080.87,"desp_pessoal":14700.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":4830.0,"desp_total":19530.0}
 };
 
 // Receita Inter - somente TAXA DE ADMINISTRACAO (+)
@@ -639,9 +638,9 @@ const REC20_2025 = {
   "2026-01": 1201.89,
   "2026-02": 2321.64,
   "2026-03": 3080.87,
-  "2026-04": 736.26
+  "2026-04": 229.74
 };
-const TOTAL_REC20_2025 = 17269.76;
+const TOTAL_REC20_2025 = 16763.24;
 
 // Despesas PREVISTAS - coluna Orcado
 const DB_PREVISTO = {
@@ -650,20 +649,20 @@ const DB_PREVISTO = {
 
 // DB_CAT: despesas por categoria (Inter + Cartao + Bruno)
 const DB_CAT = {
-  "SERVICOS PRESTADOS PJ - INICIAL": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":18000.0, "2025-07":33600.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":25000.0},
+  "SERVICOS PRESTADOS PJ - INICIAL": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":18000.0, "2025-07":33600.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":25000.0, "2026-03":285.93},
   "SALARIOS E ORDENADOS ADM": {"2025-10":14700.0, "2025-11":14700.0, "2025-12":14700.0, "2026-01":14700.0, "2026-02":14700.0, "2026-03":14700.0, "2026-04":14700.0},
-  "SERVS. DE PUBLICIDADE E PROPAGANDA": {"2025-10":13500.0, "2025-11":13500.0, "2025-12":3575.0, "2026-01":8000.0, "2026-02":22386.45, "2026-03":11698.73, "2026-04":1690.21},
+  "SERVS. DE PUBLICIDADE E PROPAGANDA": {"2025-10":13500.0, "2025-11":13500.0, "2025-12":3575.0, "2026-01":8000.0, "2026-02":22386.45, "2026-03":11698.73},
   "SERVS. ADVOCATICIOS": {"2026-01":7200.0, "2026-02":10800.0, "2026-03":5400.0},
   "SERVS. DE ASSESSORIA E CONSULTORIA": {"2025-12":3200.0, "2026-01":2200.0, "2026-02":2200.0, "2026-03":3200.0, "2026-04":3200.0},
   "IMPOSTOS - INICIAL": {"2025-04":12.14, "2025-05":30.95, "2025-06":18.02, "2025-07":852.28, "2025-08":1570.28, "2025-09":1571.78, "2025-10":1559.23},
-  "SISTEMAS OPERACIONAIS": {"2025-12":541.32, "2026-01":500.0, "2026-02":517.15, "2026-03":503.07, "2026-04":3340.1},
-  "SERVICO PRESTADOS POR TERCEIROS": {"2026-01":1800.0, "2026-03":285.93, "2026-04":1200.0},
+  "SERVICO PRESTADOS POR TERCEIROS": {"2026-01":1800.0, "2026-04":1200.0},
   "SERVS. DE CONTABILIDADE": {"2025-10":400.0, "2025-11":400.0, "2025-12":400.0, "2026-01":400.0, "2026-02":430.0, "2026-03":430.0, "2026-04":430.0},
-  "COMPRA DE ATIVO IMOBILIZADO": {"2025-12":289.8, "2026-02":289.8, "2026-03":289.8, "2026-04":289.8},
+  "SISTEMAS OPERACIONAIS": {"2025-12":541.32, "2026-01":500.0, "2026-02":517.15, "2026-03":503.07},
   "CSRF": {"2025-11":32.6, "2026-01":219.78, "2026-02":47.6, "2026-03":748.87},
+  "COMPRA DE ATIVO IMOBILIZADO": {"2025-12":289.8, "2026-02":289.8, "2026-03":289.8},
   "PREMIOS E GRATIFICACOES ADM": {"2025-12":800.0},
   "SERVS. ADMINISTRATIVOS": {"2026-02":647.98},
-  "ISS": {"2025-10":360.34, "2025-11":21.73, "2025-12":11.76, "2026-01":11.46, "2026-02":24.03, "2026-03":67.27, "2026-04":89.34},
+  "ISS": {"2025-10":360.34, "2025-11":21.73, "2025-12":11.76, "2026-01":11.46, "2026-02":24.03, "2026-03":67.27},
   "REEMB DESPESAS GERAIS": {"2025-11":341.6, "2026-03":79.49},
   "SERVS. DE RECRUTAMENTO E SELECAO - PJ": {"2025-06":399.0},
   "SERVS. CERTIFICADO DIGITAL": {"2025-12":235.0},
@@ -691,11 +690,11 @@ const CAT_COLORS = {
 
 // DB_CC: despesas por Centro de Custo e mes
 const DB_CC = {
-  "TECNOLOGIA - DESENVOLVIMENTO": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":8000.0, "2025-07":20000.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":31700.0, "2025-11":6700.0, "2025-12":7241.32, "2026-01":7200.0, "2026-02":7217.15, "2026-03":7203.07, "2026-04":10040.1},
-  "MKT - INFLUENCERS": {"2025-06":10000.0, "2025-10":13500.0, "2025-11":13500.0, "2025-12":2751.84, "2026-01":8000.0, "2026-02":22386.45, "2026-03":11698.73, "2026-04":1690.21},
-  "ADMINISTRATIVO": {"2025-10":400.0, "2025-11":741.6, "2025-12":5747.96, "2026-01":9800.0, "2026-02":14367.78, "2026-03":9319.8, "2026-04":3919.8},
+  "TECNOLOGIA - DESENVOLVIMENTO": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":8000.0, "2025-07":20000.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":31700.0, "2025-11":6700.0, "2025-12":7241.32, "2026-01":7200.0, "2026-02":7217.15, "2026-03":7203.07, "2026-04":6700.0},
+  "MKT - INFLUENCERS": {"2025-06":10000.0, "2025-10":13500.0, "2025-11":13500.0, "2025-12":2751.84, "2026-01":8000.0, "2026-02":22386.45, "2026-03":11698.73},
+  "ADMINISTRATIVO": {"2025-10":400.0, "2025-11":741.6, "2025-12":5747.96, "2026-01":9800.0, "2026-02":14367.78, "2026-03":9319.8, "2026-04":3630.0},
   "SOCIAL MEDIA - DESIGN": {"2025-10":5500.0, "2025-11":5500.0, "2025-12":5500.0, "2026-01":7300.0, "2026-02":5500.0, "2026-03":5500.0, "2026-04":6700.0},
-  "OPERACIONAL": {"2025-04":12.14, "2025-05":30.95, "2025-06":417.02, "2025-07":14452.28, "2025-08":1570.28, "2025-09":1571.78, "2025-10":1919.57, "2025-11":54.33, "2025-12":11.76, "2026-01":231.24, "2026-02":71.63, "2026-03":1181.56, "2026-04":89.34},
+  "OPERACIONAL": {"2025-04":12.14, "2025-05":30.95, "2025-06":417.02, "2025-07":14452.28, "2025-08":1570.28, "2025-09":1571.78, "2025-10":1919.57, "2025-11":54.33, "2025-12":11.76, "2026-01":231.24, "2026-02":71.63, "2026-03":1181.56},
   "COMMUNITY MANAGER": {"2025-10":2500.0, "2025-11":2500.0, "2025-12":2500.0, "2026-01":2500.0, "2026-02":2500.0, "2026-03":2500.0, "2026-04":2500.0},
   "TRANSITORIO": {"2025-11":38.0}
 };
@@ -712,7 +711,7 @@ const CC_COLORS = {
 };
 
 // Taxa ADM 20%% efetivamente paga ao Inter via MP
-const DB_TAXA_PAGA = {"2026-02":1201.89, "2026-03":2319.66, "2026-04":3080.87};
+const DB_TAXA_PAGA = {"2026-02":1201.89, "2026-03":2319.66};
 const DB_OUTRAS_TAXAS = {"2025-02":1.81, "2025-03":6.64, "2025-04":47.28, "2025-05":190.75, "2025-06":64.56, "2025-07":1071.08, "2025-08":81.0, "2025-09":103.85, "2025-10":58.71, "2025-11":44.23, "2025-12":121.75, "2026-01":118.81, "2026-02":32.18};
 
 const B2_ROWS = [
@@ -721,7 +720,7 @@ const B2_ROWS = [
   {key:'jan26', label:'Jan/26', year:'2026', month:'01', aplicacao:0, resgate:40200, rend_b:5225, irf:-181, rend:5044},
   {key:'fev26', label:'Fev/26', year:'2026', month:'02', aplicacao:0, resgate:51000, rend_b:4044, irf:-358, rend:3686},
   {key:'mar26', label:'Mar/26', year:'2026', month:'03', aplicacao:0, resgate:35000, rend_b:4505, irf:-4450, rend:55},
-  {key:'abr26', label:'Abr/26', year:'2026', month:'04', aplicacao:0, resgate:21500, rend_b:0, irf:0, rend:0}
+  {key:'abr26', label:'Abr/26', year:'2026', month:'04', aplicacao:0, resgate:18000, rend_b:0, irf:0, rend:0}
 ];
 const LABEL_MAP = {
   "2025-02":"Fev/25","2025-03":"Mar/25","2025-04":"Abr/25","2025-05":"Mai/25",
@@ -1287,8 +1286,8 @@ function renderHome() {
   const recTotal  = MESES_R.reduce((a,k)=>a+DB[k].rec_inter,0);
   const despTotal = MESES_R.reduce((a,k)=>a+DB[k].desp_total,0);
 
-  // Queima media mensal (ultimos 3 meses com despesa)
-  const mesesComDesp = MESES_R.filter(k=>DB[k].desp_total>0);
+  // Queima media: apenas meses de 2026
+  const mesesComDesp = MESES_R.filter(k=>DB[k].desp_total>0 && k.startsWith('2026'));
   const ultimos3 = mesesComDesp.slice(-3);
   const queimaMedia = ultimos3.length
     ? ultimos3.reduce((a,k)=>a+DB[k].desp_total,0) / ultimos3.length
@@ -1299,6 +1298,13 @@ function renderHome() {
     - B2_ROWS.reduce((a,r)=>a+(r.resgate||0),0)
     + B2_ROWS.reduce((a,r)=>a+(r.rend||0),0);
   const runway = queimaMedia > 0 ? Math.floor(saldoCDI / queimaMedia) : 0;
+
+  // Atualiza card Saldo CDI na home
+  if(document.getElementById('h-saldo-cdi'))
+    document.getElementById('h-saldo-cdi').textContent = fmtR(saldoCDI);
+  const rendLiqTotal = B2_ROWS.reduce((a,r)=>a+(r.rend||0),0);
+  if(document.getElementById('h-rend-liq'))
+    document.getElementById('h-rend-liq').textContent = '+ '+fmtR(rendLiqTotal)+' rendimento l\u00edquido';
 
   // Breakeven: queima media / 20% = custodia necessaria por mes
   const custodiaBreakeven = queimaMedia > 0 ? Math.round(queimaMedia / 0.20) : 0;

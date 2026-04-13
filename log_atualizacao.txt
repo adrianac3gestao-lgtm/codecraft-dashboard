@@ -1334,4 +1334,38 @@ Inicio: 13/04/2026  7:53:16,73
   Meses previstos:           0
   ======================================================
 
+Pressione Enter para fechar...warning: in the working copy of 'log_atualizacao.txt', LF will be replaced by CRLF the next time Git touches it
+[main 7ecfa34] atualizacao 13/04/2026
+ 2 files changed, 35 insertions(+)
+To https://github.com/adrianac3gestao-lgtm/codecraft-dashboard.git
+   cf6bf70..7ecfa34  main -> main
+Sucesso! Dashboard atualizado. 
+========================================= 
+========================================= 
+Inicio: 13/04/2026 12:17:28,05 
+
+==========================================================
+  CodeCraft - Atualizador de Dashboard
+==========================================================
+
+  Excel : Relatorio Gerencial_Codecraft2026.xlsx
+  HTML  : index.html
+  Backup: _backups_dashboard/index.backup_20260413.html
+
+  Lendo Excel...
+  Realizados: 2025-02 a 2026-04 (15 meses)
+
+  Calculando dados...
+  Atualizando HTML...
+
+  ======================================================
+  HTML atualizado com sucesso!
+  ======================================================
+  Receita Inter (TAXA ADM):  R$ 6.602,42
+  20% devida total:          R$ 17.269,76
+  Despesa realizada:         R$ 403.777,69
+  Meses realizados:          15
+  Meses previstos:           0
+  ======================================================
+
 Pressione Enter para fechar...

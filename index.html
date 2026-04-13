@@ -7,7 +7,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#f2f4f9;--white:#fff;--ink:#111827;--ink2:#374151;
+  --bg:#f2f4f9;--white:#fff;--ink:#4a5568;--ink2:#374151;
   --muted:#6b7280;--border:#e5e7eb;--light:#f9fafb;
   --blue:#1d4ed8;--blue-l:#eff6ff;--blue-m:#3b82f6;
   --green:#065f46;--green-l:#ecfdf5;--green-m:#10b981;
@@ -24,7 +24,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 .nav-brand span{color:#60a5fa}
 .nav-tag{font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-left:2px;white-space:nowrap}
 .nav-spacer{flex:1}
-.nav-info{font-size:10px;color:rgba(255,255,255,.38);text-align:right;line-height:1.4}
+.nav-info{font-size:13px;color:rgba(255,255,255,.92);text-align:right;line-height:1.6}
 .tabs{position:fixed;top:var(--nav-h);left:0;right:0;height:var(--tab-h);background:var(--white);border-bottom:2px solid var(--border);display:flex;align-items:stretch;padding:0 20px;gap:2px;z-index:99;overflow-x:auto}
 .tab{display:flex;align-items:center;gap:6px;padding:0 14px;border:none;background:transparent;font-family:'Barlow',sans-serif;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
 .tab:hover{color:var(--ink);background:var(--light)}
@@ -181,7 +181,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 <nav class="nav">
   <div class="nav-brand">Code<span>Craft</span><span class="nav-tag"> · Análise Financeira</span></div>
   <div class="nav-spacer"></div>
-  <div class="nav-info">Consultoria Financeira · Março 2026<br><span style="opacity:.55">Base: Relatorio_Gerencial_Codecraft2026.xlsx - Data Financ</span></div>
+  <div class="nav-info">C3 Gestão Financeira<br><span style="opacity:.70">Base: Relatorio_Gerencial_Codecraft2026.xlsx - Data Financ</span></div>
 </nav>
 
 <div class="tabs">
@@ -287,7 +287,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 
   <div class="kpi-row col5">
     <div class="kpi-card kk-green"><div class="kpi-label">Receita Realizada (Inter)</div><div class="kpi-val c-green" id="b4k1">-</div><div class="kpi-sub">Taxa adm. creditada no Inter</div></div>
-    <div class="kpi-card kk-amber"><div class="kpi-label">20% Devida 2025</div><div class="kpi-val c-amber" id="b4k2">-</div><div class="kpi-sub">A regularizar - não recebida</div></div>
+    <div class="kpi-card kk-amber"><div class="kpi-label">20% Taxa de Adm.</div><div class="kpi-val c-amber" id="b4k2">-</div><div class="kpi-sub">2025: A regularizar · não recebida</div></div>
     <div class="kpi-card kk-red"><div class="kpi-label">Despesa Realizada</div><div class="kpi-val c-red" id="b4k3">-</div><div class="kpi-sub">Período selecionado</div></div>
 
     <div class="kpi-card kk-red"><div class="kpi-label">Queima Média / Mês</div><div class="kpi-val c-red" id="b4k4">-</div><div class="kpi-sub">Realizado no período</div></div>
@@ -395,9 +395,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
     <div class="kpi-card kk-blue"><div class="kpi-label">Crédito Bruto</div><div class="kpi-val c-blue" id="b1k1">-</div><div class="kpi-sub">Entradas na custódia MP</div></div>
     <div class="kpi-card kk-red"><div class="kpi-label">Saques de Gamers</div><div class="kpi-val c-red" id="b1k2">-</div><div class="kpi-sub">Prêmios pagos</div></div>
     <div class="kpi-card kk-green"><div class="kpi-label">Saldo Custódia</div><div class="kpi-val c-green" id="b1k3">-</div><div class="kpi-sub">Crédito - Saques</div></div>
-    <div class="kpi-card kk-amber"><div class="kpi-label">20% Taxa Adm.</div><div class="kpi-val c-amber" id="b1k4">-</div><div class="kpi-sub">Ref. mês anterior · pago no mês seguinte</div></div>
+    <div class="kpi-card kk-amber"><div class="kpi-label">20% Taxa Adm.</div><div class="kpi-val c-amber" id="b1k4">-</div><div class="kpi-sub">Pago no mês seguinte</div></div>
     <div class="kpi-card kk-orange"><div class="kpi-label">Taxas e Impostos MP</div><div class="kpi-val c-orange" id="b1k6">-</div><div class="kpi-sub">CSRF · ISS · Taxas · Estornos · Ref. 2025</div></div>
-    <div class="kpi-card kk-violet"><div class="kpi-label">Saldo Real MP</div><div class="kpi-val c-violet" id="b1k5">-</div><div class="kpi-sub">Crédito − Saques − Taxa ADM − Taxas/Imp.</div></div>
+    <div class="kpi-card kk-violet"><div class="kpi-label">Saldo Real MP</div><div class="kpi-val c-violet" id="b1k5">-</div><div class="kpi-sub">Saldo acumulado total · Crédito − Saques − Taxas</div></div>
   </div>
   <div class="alert alert-b">
     <strong>Como funciona:</strong> O jogador deposita no MP antes do torneio. Ao final, o gamer saca o prêmio. <strong>20% do crédito bruto</strong> é a taxa da CodeCraft - transferida ao Banco Inter a partir de jan/2026.
@@ -571,8 +571,6 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 // ============================================================
 // ============================================================
 // ============================================================
-// ============================================================
-// ============================================================
 // DATA BLOCK - update with gerar_dados_dashboard.py
 // Gerado em: 13/04/2026  |  Arquivo: Relatorio Gerencial_Codecraft2026.xlsx
 // ============================================================
@@ -591,7 +589,7 @@ const DB = {
   "2026-01":{"cred":6009.46,"saques":-6616.2,"rec_inter":0.0,"desp_pessoal":14700.0,"desp_mkt":8000.0,"desp_juridico":7200.0,"desp_outros":5131.24,"desp_total":35031.24},
   "2026-02":{"cred":11608.21,"saques":-7337.0,"rec_inter":1201.89,"desp_pessoal":14700.0,"desp_mkt":22386.45,"desp_juridico":10800.0,"desp_outros":4156.56,"desp_total":52043.01},
   "2026-03":{"cred":15404.33,"saques":-16045.2,"rec_inter":2319.66,"desp_pessoal":14700.0,"desp_mkt":11698.73,"desp_juridico":5400.0,"desp_outros":5604.43,"desp_total":37403.16},
-  "2026-04":{"cred":2648.66,"saques":-2787.0,"rec_inter":3080.87,"desp_pessoal":14700.0,"desp_mkt":1690.21,"desp_juridico":0.0,"desp_outros":8459.9,"desp_total":24850.11}
+  "2026-04":{"cred":3681.3,"saques":-2787.0,"rec_inter":3080.87,"desp_pessoal":14700.0,"desp_mkt":1690.21,"desp_juridico":0.0,"desp_outros":8549.24,"desp_total":24939.45}
 };
 
 // Receita Inter - somente TAXA DE ADMINISTRACAO (+)
@@ -638,9 +636,9 @@ const REC20_2025 = {
   "2026-01": 1201.89,
   "2026-02": 2321.64,
   "2026-03": 3080.87,
-  "2026-04": 529.73
+  "2026-04": 736.26
 };
-const TOTAL_REC20_2025 = 17063.23;
+const TOTAL_REC20_2025 = 17269.76;
 
 // Despesas PREVISTAS - coluna Orcado
 const DB_PREVISTO = {
@@ -662,7 +660,7 @@ const DB_CAT = {
   "CSRF": {"2025-11":32.6, "2026-01":219.78, "2026-02":47.6, "2026-03":748.87},
   "PREMIOS E GRATIFICACOES ADM": {"2025-12":800.0},
   "SERVS. ADMINISTRATIVOS": {"2026-02":647.98},
-  "ISS": {"2025-10":360.34, "2025-11":21.73, "2025-12":11.76, "2026-01":11.46, "2026-02":24.03, "2026-03":67.27},
+  "ISS": {"2025-10":360.34, "2025-11":21.73, "2025-12":11.76, "2026-01":11.46, "2026-02":24.03, "2026-03":67.27, "2026-04":89.34},
   "REEMB DESPESAS GERAIS": {"2025-11":341.6, "2026-03":79.49},
   "SERVS. DE RECRUTAMENTO E SELECAO - PJ": {"2025-06":399.0},
   "SERVS. CERTIFICADO DIGITAL": {"2025-12":235.0},
@@ -694,7 +692,7 @@ const DB_CC = {
   "MKT - INFLUENCERS": {"2025-06":10000.0, "2025-10":13500.0, "2025-11":13500.0, "2025-12":2751.84, "2026-01":8000.0, "2026-02":22386.45, "2026-03":11698.73, "2026-04":1690.21},
   "ADMINISTRATIVO": {"2025-10":400.0, "2025-11":741.6, "2025-12":5747.96, "2026-01":9800.0, "2026-02":14367.78, "2026-03":9319.8, "2026-04":3919.8},
   "SOCIAL MEDIA - DESIGN": {"2025-10":5500.0, "2025-11":5500.0, "2025-12":5500.0, "2026-01":7300.0, "2026-02":5500.0, "2026-03":5500.0, "2026-04":6700.0},
-  "OPERACIONAL": {"2025-04":12.14, "2025-05":30.95, "2025-06":417.02, "2025-07":14452.28, "2025-08":1570.28, "2025-09":1571.78, "2025-10":1919.57, "2025-11":54.33, "2025-12":11.76, "2026-01":231.24, "2026-02":71.63, "2026-03":1181.56},
+  "OPERACIONAL": {"2025-04":12.14, "2025-05":30.95, "2025-06":417.02, "2025-07":14452.28, "2025-08":1570.28, "2025-09":1571.78, "2025-10":1919.57, "2025-11":54.33, "2025-12":11.76, "2026-01":231.24, "2026-02":71.63, "2026-03":1181.56, "2026-04":89.34},
   "COMMUNITY MANAGER": {"2025-10":2500.0, "2025-11":2500.0, "2025-12":2500.0, "2026-01":2500.0, "2026-02":2500.0, "2026-03":2500.0, "2026-04":2500.0},
   "TRANSITORIO": {"2025-11":38.0}
 };
@@ -1330,11 +1328,17 @@ function renderB1() {
   const tTaxaPaga = keys.reduce((a,k)=>a+(DB_TAXA_PAGA[k]||0),0);
   const tOutrasTaxas = keys.reduce((a,k)=>a+(DB_OUTRAS_TAXAS[k]||0),0);
   const tSaldoReal = tC - tS - tTaxaPaga - tOutrasTaxas;
+  // Saldo Real MP sempre acumulado total (independente do filtro)
+  const allKeys2 = MESES_R;
+  const saldoRealAll = allKeys2.reduce((a,k)=>a+DB[k].cred,0)
+    - allKeys2.reduce((a,k)=>a+Math.abs(DB[k].saques),0)
+    - allKeys2.reduce((a,k)=>a+(DB_TAXA_PAGA[k]||0),0)
+    - allKeys2.reduce((a,k)=>a+(DB_OUTRAS_TAXAS[k]||0),0);
   document.getElementById('b1k1').textContent=fmtR(tC);
   document.getElementById('b1k2').textContent='('+tS.toLocaleString('pt-BR')+')';
   document.getElementById('b1k3').textContent=fmtN(tSaldo);
   document.getElementById('b1k4').textContent=fmtR(t20);
-  if(document.getElementById('b1k5')) document.getElementById('b1k5').textContent=fmtN(tSaldoReal);
+  if(document.getElementById('b1k5')) document.getElementById('b1k5').textContent=fmtN(saldoRealAll);
   if(document.getElementById('b1k6')) document.getElementById('b1k6').textContent='('+tOutrasTaxas.toLocaleString('pt-BR',{minimumFractionDigits:2})+')';
 
   // Grafico FIXO - sempre todo o periodo (nao varia com filtro)

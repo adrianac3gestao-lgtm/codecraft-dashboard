@@ -180,6 +180,10 @@ def main():
                    (mp["cat_norm"].str.contains("SAQUE GAMERS", na=False))]
                 .groupby("mes_fin")["Valor"].sum().abs())
 
+    # -- Outras receitas MP (OUTRAS RECEITAS_TESTE JOGOS) ----------
+    outras_rec_m = (mp[mp["cat_norm"].str.contains("OUTRAS RECEITAS", na=False)]
+                   .groupby("mes_fin")["Valor"].sum())
+
     # -- Receita Inter: APENAS TAXA DE ADMINISTRACAO (+) ------
     rec_taxa = (df[(df["banco_norm"] == "BANCO INTER") &
                    (df["Tipo"] == "Receita") &
@@ -299,6 +303,24 @@ def main():
         if cc not in DB_CC_RAW: DB_CC_RAW[cc] = {}
         DB_CC_RAW[cc][mes] = rnd(DB_CC_RAW[cc].get(mes, 0) + val)
 
+    # -- DB_DET: lancamentos individuais (para tabela detalhamento) -
+    DB_DET_RAW = []
+    cols_det = ["Data Financ", "mes_fin", "Centro de Custo", "Categoria", "Nome", "Valor"]
+    for _, row in desp_b4.iterrows():
+        dt = row.get("Data Financ", "")
+        dt_str = dt.strftime("%d/%m/%y") if hasattr(dt, "strftime") else str(dt)[:10]
+        mes = str(row.get("mes_fin", ""))
+        year = mes[:4] if len(mes) >= 4 else ""
+        month = mes[5:7] if len(mes) >= 7 else ""
+        cc  = norm_cat(str(row.get("Centro de Custo", "") or ""))
+        cat = str(row.get("Categoria", "") or "")
+        fav = str(row.get("Nome", "") or "")[:30]
+        val = abs(float(row.get("Valor", 0) or 0))
+        DB_DET_RAW.append({
+            "date": dt_str, "year": year, "month": month,
+            "cc": cc, "cat": cat, "fav": fav, "val": val
+        })
+
     # -- Montar DB principal -----------------------------------
     print("\n  Calculando dados...")
     DB = {}
@@ -308,7 +330,7 @@ def main():
         j  = rnd(dj.get(mes, 0))
         o  = rnd(do.get(mes, 0))
         DB[mes] = {
-            "cred":          rnd(cred_m.get(mes, 0)),
+            "cred":          rnd(cred_m.get(mes, 0) + outras_rec_m.get(mes, 0)),
             "saques":        -rnd(saques_m.get(mes, 0)),
             "rec_inter":     rnd(rec_taxa.get(mes, 0)),
             "desp_pessoal":  p,
@@ -415,6 +437,8 @@ def main():
         "// Taxa ADM 20%% efetivamente paga ao Inter via MP",
         "const DB_TAXA_PAGA = {%s};" % ", ".join('"%s":%s' % (m, round(float(v),2)) for m,v in sorted(DB_TAXA_PAGA_RAW.items())),
         "const DB_OUTRAS_TAXAS = {%s};" % ", ".join('"%s":%s' % (m, round(float(v),2)) for m,v in sorted(DB_OUTRAS_TAXAS_RAW.items())),
+        "",
+        "const DB_DET = " + json.dumps(DB_DET_RAW, ensure_ascii=True) + ";",
         "",
         B2_ROWS_JS,
         "",

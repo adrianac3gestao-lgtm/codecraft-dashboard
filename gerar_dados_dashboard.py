@@ -179,6 +179,13 @@ def main():
                      (cust["cat_norm"].str.contains("SAQUE GAMERS", na=False))]
                 .groupby("mes_fin")["Valor"].sum().abs())
 
+    # -- Estornos de credito indevido (receita legada, fora do subgrupo
+    #    custodia mas que efetivamente entrou na conta) - soma ao credito
+    estorno_credito_m = (df[df["cat_norm"].str.contains("ESTORNO-CREDITO INDEVIDO", na=False)]
+                          .groupby("mes_fin")["Valor"].sum())
+    for mes, val in estorno_credito_m.items():
+        cred_m[mes] = cred_m.get(mes, 0) + val
+
     # -- Receita Inter: APENAS TAXA DE ADMINISTRACAO (+) ------
     rec_taxa = (df[(df["Tipo"] == "Receita") &
                    (df["cat_norm"].str.contains("TAXA DE ADMINISTRA"))]

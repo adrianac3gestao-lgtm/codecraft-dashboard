@@ -169,30 +169,23 @@ def main():
 
     print(f"  Realizados: {meses_reais[0]} a {ultimo_real} ({len(meses_reais)} meses)")
 
-    # -- Custodia MP: creditos e saques -----------------------
-    # Creditos = Receita MP com Subgrupo SALDO RECEITA
-    # Saques   = Despesa MP com Subgrupo SALDO RECEITA
-    mp = df[df["banco_norm"] == "MERCADO PAGO"]
-    cred_m  = (mp[(mp["Tipo"] == "Receita") &
-                  (mp["Subgrupo"].str.contains("SALDO RECEITA", na=False))]
+    # -- Custodia: por SUBGRUPO (independente do banco) --------
+    # Subgrupo SALDO RECEITA_CONTA CUSTODIA identifica a custodia
+    # (funciona com MP hoje e com Inter/outros no futuro)
+    cust = df[df["Subgrupo"].str.contains("SALDO RECEITA", na=False)]
+    cred_m  = (cust[cust["Tipo"] == "Receita"]
                .groupby("mes_fin")["Valor"].sum())
-    saques_m = (mp[(mp["Tipo"] == "Despesa") &
-                   (mp["cat_norm"].str.contains("SAQUE GAMERS", na=False))]
+    saques_m = (cust[(cust["Tipo"] == "Despesa") &
+                     (cust["cat_norm"].str.contains("SAQUE GAMERS", na=False))]
                 .groupby("mes_fin")["Valor"].sum().abs())
 
-    # -- Outras receitas MP (OUTRAS RECEITAS_TESTE JOGOS) ----------
-    outras_rec_m = (mp[mp["cat_norm"].str.contains("OUTRAS RECEITAS", na=False)]
-                   .groupby("mes_fin")["Valor"].sum())
-
     # -- Receita Inter: APENAS TAXA DE ADMINISTRACAO (+) ------
-    rec_taxa = (df[(df["banco_norm"] == "BANCO INTER") &
-                   (df["Tipo"] == "Receita") &
+    rec_taxa = (df[(df["Tipo"] == "Receita") &
                    (df["cat_norm"].str.contains("TAXA DE ADMINISTRA"))]
                 .groupby("mes_fin")["Valor"].sum())
 
     rec_detail = []
-    for _, r in df[(df["banco_norm"] == "BANCO INTER") &
-                   (df["Tipo"] == "Receita") &
+    for _, r in df[(df["Tipo"] == "Receita") &
                    (df["cat_norm"].str.contains("TAXA DE ADMINISTRA"))].iterrows():
         desc_col = "Descricao" if "Descricao" in df.columns else ("Descricao" if "Descricao" in df.columns else "")
         desc = str(r.get(desc_col, "")) if desc_col else ""
@@ -217,10 +210,15 @@ def main():
     # -- Despesas B4: Inter + Cartao + Bruno (so Despesas) ----
     # Bruno: apenas Despesas (excluir Receita INVESTIMENTO BRUNO = ficticio)
     # Inter e Cartao: excluir subgrupos de CDI/investimento
+    # Por SUBGRUPO: entra qualquer banco novo (Safra, XP...) automaticamente.
+    # Exclui subgrupos de investimento, custodia (SALDO RECEITA) e
+    # a conta MERCADO PAGO (taxas da plataforma ficam so na aba Custodia;
+    # quando MP deixar de existir, este filtro fica inerte).
     desp_b4 = df[
         (df["Tipo"] == "Despesa") &
-        (df["banco_norm"].isin(["BANCO INTER", "CARTO DE CREDITO INTER", "BRUNO NIRO"])) &
         (~df["Subgrupo"].isin(EXCL_SUBGRUPOS)) &
+        (~df["Subgrupo"].str.contains("SALDO RECEITA", na=False)) &
+        (df["banco_norm"] != "MERCADO PAGO") &
         (df["mes_fin"].isin(meses_reais))
     ].copy()
 
@@ -238,24 +236,33 @@ def main():
 
     # -- Taxa ADM 20%% paga ao Inter (saida do MP) ----------
     taxa_mp = df[
-        (df["banco_norm"] == "MERCADO PAGO") &
         (df["cat_norm"] == "TAXA ADM - 20% (-)")
     ].groupby("mes_fin")["Valor"].sum().abs()
     DB_TAXA_PAGA_RAW = {m: round(float(v),2) for m,v in taxa_mp.items()}
 
     # -- Outras taxas MP (CSRF, ISS, Estornos, Taxas plataforma etc) ----
+    # Taxas dentro do subgrupo custodia (qualquer banco) +
+    # legado MP fora do subgrupo (CSRF/ISS/estornos historicos)
     outras_mp = df[
-        (df["banco_norm"] == "MERCADO PAGO") &
         (df["Tipo"] == "Despesa") &
         (~df["cat_norm"].str.contains("SAQUE GAMERS")) &
-        (~df["cat_norm"].str.contains("TAXA ADM"))
+        (~df["cat_norm"].str.contains("TAXA ADM")) &
+        (
+            (df["Subgrupo"].str.contains("SALDO RECEITA", na=False)) |
+            (df["banco_norm"] == "MERCADO PAGO")
+        )
     ].groupby("mes_fin")["Valor"].sum().abs()
+
+    # -- Saldo REAL da conta Mercado Pago (soma direta, igual aba Saldo Bancario) --
+    # Bate exatamente com o saldo real do banco, sem depender de categoria/subgrupo.
+    SALDO_MP_REAL = round(float(df[df["banco_norm"] == "MERCADO PAGO"]["Valor"].sum()), 2)
     DB_OUTRAS_TAXAS_RAW = {m: round(float(v),2) for m,v in outras_mp.items()}
 
     # -- B2_ROWS: Capital & Investimento (BANCO INTER - APLICACAO) ------
-    inv_df   = df[df["banco_norm"].str.contains("APLICAC", na=False)]
-    aplic_df = df[(df["banco_norm"] == "BANCO INTER") & (df["Categoria"] == "APLIC FINANCEIRA (-)")]
-    resg_df  = df[(df["banco_norm"] == "BANCO INTER") & (df["Categoria"] == "RESGATE APLIC (+)")]
+    # Por CATEGORIA (independente do banco - funciona com Inter hoje, XP amanha)
+    inv_df   = df[df["Categoria"].astype(str).str.contains("RENDIMENTO INVEST|IRRF-IOF|PREVISAO IR", na=False)]
+    aplic_df = df[df["Categoria"] == "APLIC FINANCEIRA (-)"]
+    resg_df  = df[df["Categoria"] == "RESGATE APLIC (+)"]
     b2_meses = sorted(set(
         list(inv_df["mes_fin"].dropna().unique()) +
         list(aplic_df["mes_fin"].dropna().unique()) +
@@ -273,6 +280,8 @@ def main():
         rend_b = round(float(grp[grp["Categoria"] == "RENDIMENTO INVEST. (+)"]["Valor"].sum()), 2)
         irf    = round(float(grp[grp["Categoria"].str.contains("IRRF-IOF|PREVISAO IR", na=False)]["Valor"].sum()), 2)
         rend_liq = int(round(rend_b + irf, 0))
+        # Flag: mes com PREVISAO IR (provisao rotativa, nao IR definitivo)
+        tem_prov = len(grp[grp["Categoria"].astype(str).str.contains("PREVISAO IR", na=False)]) > 0
         key   = mnames[month] + year[2:]
         label = mnames[month].capitalize() + "/" + year[2:]
         rend_b_int = int(round(rend_b, 0))
@@ -280,7 +289,7 @@ def main():
         b2_rows_list.append(
             "{key:'" + key + "', label:'" + label + "', year:'" + year + "', month:'" + month +
             "', aplicacao:" + str(int(aplic)) + ", resgate:" + str(int(resg)) +
-            ", rend_b:" + str(rend_b_int) + ", irf:" + str(irf_int) + ", rend:" + str(rend_liq) + "}"
+            ", rend_b:" + str(rend_b_int) + ", irf:" + str(irf_int) + ", rend:" + str(rend_liq) + (", prov:1" if tem_prov else "") + "}"
         )
     B2_ROWS_JS = "const B2_ROWS = [\n  " + ",\n  ".join(b2_rows_list) + "\n];"
 
@@ -330,7 +339,7 @@ def main():
         j  = rnd(dj.get(mes, 0))
         o  = rnd(do.get(mes, 0))
         DB[mes] = {
-            "cred":          rnd(cred_m.get(mes, 0) + outras_rec_m.get(mes, 0)),
+            "cred":          rnd(cred_m.get(mes, 0)),
             "saques":        -rnd(saques_m.get(mes, 0)),
             "rec_inter":     rnd(rec_taxa.get(mes, 0)),
             "desp_pessoal":  p,
@@ -437,6 +446,7 @@ def main():
         "// Taxa ADM 20%% efetivamente paga ao Inter via MP",
         "const DB_TAXA_PAGA = {%s};" % ", ".join('"%s":%s' % (m, round(float(v),2)) for m,v in sorted(DB_TAXA_PAGA_RAW.items())),
         "const DB_OUTRAS_TAXAS = {%s};" % ", ".join('"%s":%s' % (m, round(float(v),2)) for m,v in sorted(DB_OUTRAS_TAXAS_RAW.items())),
+        "const SALDO_MP_REAL = %s;" % SALDO_MP_REAL,
         "",
         "const DB_DET = " + json.dumps(DB_DET_RAW, ensure_ascii=True) + ";",
         "",

@@ -104,7 +104,7 @@ CC_COLORS = {
 }
 
 # Subgrupos a excluir (movimentacoes financeiras, nao operacionais)
-EXCL_SUBGRUPOS = ["INVESTIMENTO CDI", "CONTA INVESTIMENTO", "ADIANTAMENTO APORTE"]
+EXCL_SUBGRUPOS = ["INVESTIMENTO CDI", "CONTA INVESTIMENTO", "ADIANTAMENTO APORTE", "RECEITAS FINANCEIRAS"]
 
 # ============================================================
 #  FUNCAO PRINCIPAL
@@ -178,6 +178,19 @@ def main():
     saques_m = (cust[(cust["Tipo"] == "Despesa") &
                      (cust["cat_norm"].str.contains("SAQUE GAMERS", na=False))]
                 .groupby("mes_fin")["Valor"].sum().abs())
+
+    # -- Custodia por BANCO (para grafico de transicao MP -> Inter) --
+    BANCOS_CUST = ["MERCADO PAGO", "BANCO INTER"]
+    DB_CUST_BANCO_RAW = {}
+    for nome_banco in BANCOS_CUST:
+        sub_b = cust[(cust["banco_norm"] == nome_banco) & (cust["Tipo"] == "Receita")]
+        serie_b = sub_b.groupby("mes_fin")["Valor"].sum()
+        DB_CUST_BANCO_RAW[nome_banco] = {m: round(float(v), 2) for m, v in serie_b.items()}
+
+    # -- Tarifa Bancaria (nova taxa por transacao, so existe no Inter) --
+    tarifa_m = (df[df["cat_norm"].str.contains("TARIFA BANCARIA", na=False)]
+                .groupby("mes_fin")["Valor"].sum().abs())
+    DB_TARIFA_RAW = {m: round(float(v), 2) for m, v in tarifa_m.items()}
 
     # -- Estornos de credito indevido (receita legada, fora do subgrupo
     #    custodia mas que efetivamente entrou na conta) - soma ao credito
@@ -299,6 +312,28 @@ def main():
             ", rend_b:" + str(rend_b_int) + ", irf:" + str(irf_int) + ", rend:" + str(rend_liq) + (", prov:1" if tem_prov else "") + "}"
         )
     B2_ROWS_JS = "const B2_ROWS = [\n  " + ",\n  ".join(b2_rows_list) + "\n];"
+
+    # -- Saldo CDI por BANCO (Inter -> Safra) - para grafico de transicao --
+    BANCOS_CDI = {
+        "INTER": {"op": "BANCO INTER", "aplic_acc": "BANCO INTER - APLICACAO"},
+        "SAFRA": {"op": "SAFRA", "aplic_acc": "SAFRA - APLICACAO"},
+    }
+    DB_CDI_BANCO_RAW = {}
+    for nome_b, contas in BANCOS_CDI.items():
+        aplic_b = df[(df["banco_norm"] == contas["op"]) & (df["Categoria"] == "APLIC FINANCEIRA (-)")]
+        resg_b  = df[(df["banco_norm"] == contas["op"]) & (df["Categoria"] == "RESGATE APLIC (+)")]
+        rend_b  = df[(df["banco_norm"] == contas["aplic_acc"]) & (df["Categoria"] == "RENDIMENTO INVEST. (+)")]
+        irf_b   = df[(df["banco_norm"] == contas["aplic_acc"]) & (df["Categoria"].astype(str).str.contains("IRRF-IOF|PREVISAO IR", na=False))]
+        saldo_acum = 0.0
+        serie_b = {}
+        for mes in b2_meses:
+            a  = float(aplic_b[aplic_b["mes_fin"] == mes]["Valor"].abs().sum())
+            r  = float(resg_b[resg_b["mes_fin"] == mes]["Valor"].sum())
+            rb = float(rend_b[rend_b["mes_fin"] == mes]["Valor"].sum())
+            ir = float(irf_b[irf_b["mes_fin"] == mes]["Valor"].sum())
+            saldo_acum += a - r + rb + ir
+            serie_b[mes] = round(saldo_acum, 2)
+        DB_CDI_BANCO_RAW[nome_b] = serie_b
 
     # -- DB_CAT: despesas por categoria e mes -----------------
     DB_CAT_RAW = {}
@@ -454,6 +489,9 @@ def main():
         "const DB_TAXA_PAGA = {%s};" % ", ".join('"%s":%s' % (m, round(float(v),2)) for m,v in sorted(DB_TAXA_PAGA_RAW.items())),
         "const DB_OUTRAS_TAXAS = {%s};" % ", ".join('"%s":%s' % (m, round(float(v),2)) for m,v in sorted(DB_OUTRAS_TAXAS_RAW.items())),
         "const SALDO_MP_REAL = %s;" % SALDO_MP_REAL,
+        "const DB_CUST_BANCO = " + json.dumps(DB_CUST_BANCO_RAW, ensure_ascii=True) + ";",
+        "const DB_TARIFA = " + json.dumps(DB_TARIFA_RAW, ensure_ascii=True) + ";",
+        "const DB_CDI_BANCO = " + json.dumps(DB_CDI_BANCO_RAW, ensure_ascii=True) + ";",
         "",
         "const DB_DET = " + json.dumps(DB_DET_RAW, ensure_ascii=True) + ";",
         "",

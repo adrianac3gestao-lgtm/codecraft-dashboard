@@ -28,7 +28,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 .tabs{position:fixed;top:var(--nav-h);left:0;right:0;height:var(--tab-h);background:var(--white);border-bottom:2px solid var(--border);display:flex;align-items:stretch;padding:0 20px;gap:2px;z-index:99;overflow-x:auto}
 .tab{display:flex;align-items:center;gap:6px;padding:0 14px;border:none;background:transparent;font-family:'Barlow',sans-serif;font-size:12px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;transition:all .15s}
 .tab:hover{color:var(--ink);background:var(--light)}
-.tab.active{color:var(--blue);border-bottom-color:var(--blue);font-weight:600}
+.tab.active{color:#fff;background:var(--blue);border-bottom-color:var(--blue);font-weight:700;font-size:13px;border-radius:6px 6px 0 0}
 .tab-icon{font-size:13px}
 .tab-badge{font-size:8px;font-weight:700;padding:1px 5px;border-radius:8px;background:var(--amber-l);color:var(--amber)}
 .page{display:none;padding-top:108px;padding-bottom:28px;padding-left:18px;padding-right:18px}
@@ -55,13 +55,13 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 .kpi-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2.5px}
 .kk-blue::before{background:var(--blue-m)}.kk-green::before{background:var(--green-m)}
 .kk-amber::before{background:var(--amber-m)}.kk-red::before{background:var(--red-m)}
-.kk-violet::before{background:var(--violet-m)}.kk-orange{border-top:3px solid #ea580c}.kk-orange::before{background:#ea580c}.kk-sky{border-top:3px solid #0284c7}.kk-sky::before{background:#0284c7}.kk-slate::before{background:var(--slate)}
+.kk-violet::before{background:var(--violet-m)}.kk-orange{border-top:3px solid #ea580c}.kk-orange::before{background:#ea580c}.kk-sky{border-top:3px solid #0284c7}.kk-sky::before{background:#0284c7}.kk-amber2{border-top:3px solid #d97706}.kk-amber2::before{background:#d97706}.kk-slate::before{background:var(--slate)}
 .kk-muted::before{background:var(--muted)}
 .kpi-label{font-size:9px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
 .kpi-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;line-height:1;margin-bottom:3px}
 .kpi-sub{font-size:10px;color:var(--muted);margin-top:2px}
 .c-blue{color:var(--blue-m)}.c-green{color:var(--green-m)}.c-amber{color:var(--amber-m)}
-.c-red{color:var(--red-m)}.c-violet{color:var(--violet-m)}.c-orange{color:#ea580c}.c-sky{color:#0284c7}.c-ink{color:var(--ink)}.c-slate{color:var(--slate)}
+.c-red{color:var(--red-m)}.c-violet{color:var(--violet-m)}.c-orange{color:#ea580c}.c-sky{color:#0284c7}.c-amber2{color:#d97706}.c-ink{color:var(--ink)}.c-slate{color:var(--slate)}
 /* GRID */
 .grid{display:grid;gap:10px;margin-bottom:10px}
 .g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr 1fr}
@@ -170,15 +170,30 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 .dval{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;white-space:nowrap}
 .dsaldo-pos{color:var(--green-m)}.dsaldo-neg{color:var(--red-m)}
 @media(max-width:900px){
-  .kpi-row.col4,.kpi-row.col5{grid-template-columns:1fr 1fr}
+  .kpi-row.col4,.kpi-row.col5,.kpi-row.col6,.kpi-row.col7{grid-template-columns:1fr 1fr}
   .g2,.g3,.g-6040,.g-4060,.year-split{grid-template-columns:1fr}
   .year-split{grid-template-columns:1fr}
   .ov-grid{grid-template-columns:1fr 1fr}
+}
+.print-btn{position:fixed;top:calc(var(--nav-h) + 6px);right:20px;z-index:200;background:var(--blue);color:#fff;border:none;border-radius:50px;padding:6px 14px;font-family:'Barlow',sans-serif;font-size:11px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,.18);display:flex;align-items:center;gap:6px;transition:transform .15s}
+.print-btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.22)}
+@media print{
+  nav,.tabs,.print-btn,.filter-bar{display:none !important}
+  .page{display:none !important;padding-top:0 !important}
+  .page.active{display:block !important}
+  body{background:#fff}
+  .card,.kpi-card{box-shadow:none !important;border:1px solid #ddd !important}
+  #print-title{display:block !important}
+  canvas{max-width:100% !important;width:100% !important;height:auto !important}
 }
 </style>
 </head>
 <body>
 
+<div id="print-title" style="display:none">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-weight:800;font-size:20px;color:#111827">C3 Gestão Financeira — CodeCraft Análise Financeira</div>
+  <div id="print-title-page" style="font-family:'Barlow',sans-serif;font-size:13px;color:#6b7280;margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid #ddd">Página: Visão Geral</div>
+</div>
 <nav class="nav">
   <div class="nav-brand">Code<span>Craft</span><span class="nav-tag"> · Análise Financeira</span></div>
   <div class="nav-spacer"></div>
@@ -188,6 +203,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 <div class="tabs">
   <button class="tab active" onclick="showPage('home',this)"><span class="tab-icon">⊞</span> Visão Geral</button>
   <button class="tab" onclick="showPage('b4',this)"><span class="tab-icon">🏢</span> Resultado Operacional <span class="tab-badge">PRINCIPAL</span></button>
+  <button class="tab" onclick="showPage('b5',this)"><span class="tab-icon">📅</span> Orçado (Despesas)</button>
   <button class="tab" onclick="showPage('b1',this)"><span class="tab-icon">🎮</span> Custódia de Jogadores</button>
   <button class="tab" onclick="showPage('b2',this)"><span class="tab-icon">📈</span> Capital &amp; Investimento</button>
   <button class="tab" onclick="showPage('b3',this)"><span class="tab-icon">🤝</span> Conta Corrente Sócio</button>
@@ -195,12 +211,13 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 
 <!-- ═══ HOME ═══ -->
 <div class="page active" id="page-home">
-  <div class="kpi-row col4" style="grid-template-columns:repeat(3,1fr) 1fr 1fr">
-    <div class="kpi-card kk-green"><div class="kpi-label">Receita Operacional - Realizada</div><div class="kpi-val c-green" id="h-rec">R$ 1.202</div><div class="kpi-sub">Taxa adm. Brawl - fev/26</div></div>
-    <div class="kpi-card kk-red"><div class="kpi-label">Despesa Operacional</div><div class="kpi-val c-red" id="h-desp">-</div><div class="kpi-sub">Realizado acumulado</div></div>
+  <div class="kpi-row col4" style="grid-template-columns:repeat(6,1fr)">
+    <div class="kpi-card kk-green"><div class="kpi-label">Receita Operacional - Realizada</div><div class="kpi-val c-green" id="h-rec">-</div><div class="kpi-sub" id="h-rec-sub">Taxa de Adm. 20% · valor recebido (acumulado)</div></div>
+    <div class="kpi-card kk-red"><div class="kpi-label">Despesa Operacional</div><div class="kpi-val c-red" id="h-desp">-</div><div class="kpi-sub">Total acumulado desde fev/25</div></div>
+    <div class="kpi-card kk-amber2"><div class="kpi-label">Média Mensal</div><div class="kpi-val c-amber2" id="h-media3">-</div><div class="kpi-sub">Últimos 3 meses</div></div>
     <div class="kpi-card kk-green"><div class="kpi-label">Saldo CDI Aplicado</div><div class="kpi-val c-green" id="h-saldo-cdi">-</div><div class="kpi-sub" id="h-rend-liq">+ R$ 13.768 rendimento líquido</div></div>
-    <div class="kpi-card kk-violet"><div class="kpi-label">Runway</div><div class="kpi-val c-violet" id="h-runway">-</div><div class="kpi-sub">Meses com saldo CDI atual</div></div>
-    <div class="kpi-card kk-amber"><div class="kpi-label">Breakeven</div><div class="kpi-val c-amber" id="h-breakeven">-</div><div class="kpi-sub">Custódia/mês p/ cobrir despesas</div></div>
+    <div class="kpi-card kk-violet"><div class="kpi-label">Runway</div><div class="kpi-val c-violet" id="h-runway">-</div><div class="kpi-sub">Saldo CDI ÷ Despesa Média</div></div>
+    <div class="kpi-card kk-amber"><div class="kpi-label">Breakeven Operacional</div><div class="kpi-val c-amber" id="h-breakeven">-</div><div class="kpi-sub" id="h-breakeven-sub">Despesa média ÷ 20% = receita de gamers necess.</div></div>
   </div>
   <div class="ov-grid">
     <a class="ov-card" onclick="showPage('b4',document.querySelectorAll('.tab')[1]);return false" style="border-top:3px solid var(--amber-m)">
@@ -230,9 +247,9 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
   </div>
   <div class="grid g-6040">
     <div class="card">
-      <div class="card-title">Receita Operacional × Despesa - Todo o Período</div>
+      <div class="card-title" style="display:flex;justify-content:space-between;align-items:baseline"><span>Receita Operacional × Despesa - Todo o Período</span><span style="font-size:9px;font-weight:500;color:var(--muted);opacity:.7">Clique numa barra para detalhar →</span></div>
       <div class="card-sub">Receita = somente TAXA DE ADMINISTRAÇÃO · Cinza = 20% devida 2025 (não recebida) · Vermelho = despesa realizada</div>
-      <div style="overflow-x:auto"><canvas id="h-chartOp" height="160" style="min-width:900px"></canvas></div>
+      <canvas id="h-chartOp" height="160"></canvas>
     </div>
     <div class="card">
       <div class="card-title">Crescimento da Custódia - Mercado Pago</div>
@@ -241,17 +258,14 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
         <div class="li"><div class="ld" style="background:#3b82f6;height:3px;width:20px;border-radius:2px;margin-top:4px"></div>Créditos</div>
         <div class="li"><div class="ld" style="background:#ef4444;height:3px;width:20px;border-radius:2px;margin-top:4px"></div>Saques Gamers</div>
       </div>
-      <div style="overflow-x:auto"><canvas id="h-chartCred" height="160" style="min-width:900px"></canvas></div>
+      <canvas id="h-chartCred" height="160"></canvas>
     </div>
   </div>
   <div class="insight-list">
     <div class="insight"><div class="i-dot" style="background:var(--red-m)"></div><strong>Dívida com sócio não registrada:</strong> R$ 172.614 pagos por Bruno Niro (abr-out/25) devem ser formalizados via contrato de mútuo - consultar a contabilidade.</div>
-    <div class="insight"><div class="i-dot" style="background:var(--amber-m)"></div><strong>20% de 2025 a regularizar:</strong> R$ 9.929 referentes à taxa adm. de fev-dez/25 ainda não foram transferidos ao Banco Inter.</div>
     <div class="insight"><div class="i-dot" style="background:var(--violet-m)"></div><strong>Capital dos sócios não é receita:</strong> R$ 550K das holdings → CDI sustentam o caixa. Natureza jurídica pendente de formalização.</div>
-    <div class="insight"><div class="i-dot" style="background:var(--green-m)"></div><strong>Custódia cresceu 80×:</strong> De R$ 183 (fev/25) para R$ 14.660 (mar/26). Breakeven operacional exige ~R$ 157K/mês em créditos.</div>
   </div>
 </div>
-
 <!-- ═══ RESULTADO OPERACIONAL (B4) ═══ -->
 <div class="page" id="page-b4">
   <div style="height:8px"></div>
@@ -286,17 +300,18 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
     </div>
   </div>
 
-  <div class="kpi-row col5">
-    <div class="kpi-card kk-green"><div class="kpi-label">Receita Realizada (Operacional)</div><div class="kpi-val c-green" id="b4k1">-</div><div class="kpi-sub">Taxa de adm. · 20% da custódia do mês anterior</div></div>
-    <div class="kpi-card kk-amber"><div class="kpi-label">20% Taxa de Adm.</div><div class="kpi-val c-amber" id="b4k2">-</div><div class="kpi-sub">20% da custódia do mês anterior</div></div>
+  <div class="kpi-row col6" style="grid-template-columns:repeat(5,1fr)">
+    <div class="kpi-card kk-amber"><div class="kpi-label">Taxa Adm. — Devida (20%)</div><div class="kpi-val c-amber" id="b4k2">-</div><div class="kpi-sub">20% da custódia do mês anterior</div></div>
+    <div class="kpi-card kk-green"><div class="kpi-label">Taxa Adm. — Já Paga</div><div class="kpi-val c-green" id="b4k1">-</div><div class="kpi-sub">Valor efetivamente recebido</div></div>
     <div class="kpi-card kk-red"><div class="kpi-label">Despesa Realizada</div><div class="kpi-val c-red" id="b4k3">-</div><div class="kpi-sub">Período selecionado</div></div>
 
-    <div class="kpi-card kk-red"><div class="kpi-label">Queima Média / Mês</div><div class="kpi-val c-red" id="b4k4">-</div><div class="kpi-sub">Realizado no período</div></div>
+    <div class="kpi-card kk-red"><div class="kpi-label">Queima Média / Mês</div><div class="kpi-val c-red" id="b4k4">-</div><div class="kpi-sub">Média do período selecionado</div></div>
+    <div class="kpi-card kk-amber2"><div class="kpi-label">Despesa Média</div><div class="kpi-val c-amber2" id="b4k5-media3">-</div><div class="kpi-sub">Últimos 3 meses (fixo)</div></div>
   </div>
 
   <!-- LINHA 1: Gráfico largura total -->
   <div class="card" style="margin-bottom:10px">
-    <div class="card-title">Receita × Despesa - Todo o Período</div>
+    <div class="card-title" style="display:flex;justify-content:space-between;align-items:baseline"><span>Receita × Despesa - Todo o Período</span><span style="font-size:9px;font-weight:500;color:var(--muted);opacity:.7">Clique numa barra para detalhar →</span></div>
     <canvas id="b4-chartAll" height="220"></canvas>
     <canvas id="b4-chart2025" style="display:none" height="1"></canvas>
     <canvas id="b4-chart2026" style="display:none" height="1"></canvas>
@@ -309,15 +324,12 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
       <div class="card-sub">TAXA DE ADMINISTRAÇÃO (+) · Data Financ realizada</div>
       <div class="card-scroll" style="flex:1">
         <table class="dt" style="margin-bottom:8px">
-          <thead><tr><th>Data Financ</th><th>Banco</th><th>Subgrupo</th><th>Descrição</th><th style="text-align:right">R$</th><th>Status</th></tr></thead>
+          <thead><tr><th style="width:90px">Data Financ</th><th style="width:110px">Banco</th><th>Subgrupo</th><th style="text-align:right;font-size:15px;width:110px">R$</th><th style="width:90px">Status</th></tr></thead>
           <tbody id="b4-rec-tbody"></tbody>
           <tfoot id="b4-rec-tfoot"></tfoot>
         </table>
       </div>
-      <div class="alert alert-a" style="margin-bottom:0;margin-top:8px;flex-shrink:0">
-        <strong>20% devida 2025:</strong> R$ 9.929 (fev-dez/25) ainda nao transferidos ao Inter.
       </div>
-    </div>
     <div class="card" style="height:300px;display:flex;flex-direction:column">
       <div class="card-title">Composição das Despesas</div>
       <div class="card-sub" id="b4-pie-sub">Período filtrado</div>
@@ -360,8 +372,13 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
   <div class="card" style="margin-top:16px">
     <div class="card-title">Detalhamento de Lançamentos</div>
     <div class="card-sub" id="b4-det-period">Filtrado pela seleção acima</div>
-    <input id="b4-det-filter" type="text" placeholder="Filtrar por favorecido, categoria, centro de custo..." oninput="renderB4()" style="width:100%;max-width:420px;margin:6px 0 10px;padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;outline:none">
-    <div style="max-height:300px;overflow-y:auto">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px">
+      <select id="b4-det-cc" onchange="renderB4()" style="padding:7px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;outline:none;background:#fff"><option value="">Centro de Custo: Todos</option></select>
+      <select id="b4-det-cat" onchange="renderB4()" style="padding:7px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;outline:none;background:#fff"><option value="">Categoria: Todas</option></select>
+      <select id="b4-det-fav" onchange="renderB4()" style="padding:7px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;outline:none;background:#fff"><option value="">Favorecido: Todos</option></select>
+      <input id="b4-det-filter" type="text" placeholder="Ou digite p/ busca livre..." oninput="renderB4()" style="flex:1;min-width:180px;padding:7px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:12px;font-family:inherit;outline:none">
+    </div>
+    <div style="max-height:240px;overflow-y:auto">
       <table class="dt" id="b4-det-table">
         <thead style="position:sticky;top:0;background:var(--white);z-index:1">
           <tr>
@@ -373,6 +390,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
           </tr>
         </thead>
         <tbody id="b4-det-tbody"></tbody>
+        <tfoot style="position:sticky;bottom:0;background:var(--white)"><tr><td colspan="4"><strong>TOTAL</strong></td><td class="mono neg" style="text-align:right"><strong id="b4-det-total">-</strong></td></tr></tfoot>
       </table>
     </div>
   </div>
@@ -380,10 +398,7 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 
 <!-- ═══ CUSTÓDIA (B1) ═══ -->
 <div class="page" id="page-b1">
-  <div class="sec-hd">
-    <span class="sec-icon">🎮</span>
-    <div><div class="sec-title">Custódia de Jogadores - Mercado Pago</div><div class="sec-desc">Conta intermediária · créditos de torneio · saques de gamers · taxa 20% da CodeCraft</div></div>
-  </div><div style="height:8px"></div>
+  <div style="height:8px"></div>
   <div style="background:var(--blue-m);color:#fff;padding:8px 16px;border-radius:8px 8px 0 0;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;display:flex;align-items:center;gap:8px">
     <span>🎮</span> Filtros - Custódia de Jogadores
   </div>
@@ -413,22 +428,20 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
       </div>
     </div>
   </div>
-  <div class="kpi-row col7">
+  <div class="kpi-row col5" style="grid-template-columns:repeat(5,1fr)">
     <div class="kpi-card kk-blue"><div class="kpi-label">Crédito Bruto</div><div class="kpi-val c-blue" id="b1k1">-</div><div class="kpi-sub">Entradas na custódia (MP + Inter)</div></div>
     <div class="kpi-card kk-red"><div class="kpi-label">Saques de Gamers</div><div class="kpi-val c-red" id="b1k2">-</div><div class="kpi-sub">Prêmios pagos</div></div>
     <div class="kpi-card kk-green"><div class="kpi-label">Saldo Custódia</div><div class="kpi-val c-green" id="b1k3">-</div><div class="kpi-sub">Crédito - Saques</div></div>
     <div class="kpi-card kk-amber"><div class="kpi-label">20% Taxa Adm.</div><div class="kpi-val c-amber" id="b1k4">-</div><div class="kpi-sub" style="margin-top:2px">Devido &nbsp;<span style="opacity:.6;font-size:10px">|</span>&nbsp; Pago: <span id="b1k4-pago" style="color:var(--green);font-weight:600">-</span></div></div>
-    <div class="kpi-card kk-sky"><div class="kpi-label">Tarifa Bancária (Inter)</div><div class="kpi-val c-sky" id="b1k7">-</div><div class="kpi-sub">Nova a partir da migração · não existia no MP</div></div>
-    <div class="kpi-card kk-orange"><div class="kpi-label">Taxas e Impostos MP</div><div class="kpi-val c-orange" id="b1k6">-</div><div class="kpi-sub">CSRF · ISS · Taxas · Estornos · Ref. 2025</div></div>
-    <div class="kpi-card kk-violet"><div class="kpi-label">Saldo Real MP</div><div class="kpi-val c-violet" id="b1k5">-</div><div class="kpi-sub">Saldo real da conta MP (fev/25 → hoje)</div></div>
+    <div class="kpi-card kk-sky"><div class="kpi-label">Taxa Rate Plataforma</div><div class="kpi-val c-sky" id="b1k7">-</div><div class="kpi-sub">Mesma taxa de 2025 (MP) · voltou a existir no Inter</div></div>
   </div>
   <div class="alert alert-b">
-    <strong>Como funciona:</strong> O jogador deposita no MP antes do torneio. Ao final, o gamer saca o prêmio. <strong>20% do crédito bruto</strong> é a taxa da CodeCraft - transferida ao Banco Inter a partir de jan/2026.
+    <strong>Como funciona:</strong> O jogador deposita na conta de custódia antes do torneio. Ao final, o gamer saca o prêmio. <strong>20% do crédito bruto</strong> é a taxa da CodeCraft, repassada ao banco operacional. Detalhes na tabela abaixo.
   </div>
-  <div class="card" style="height:220px;display:flex;flex-direction:column">
+  <div class="card" style="height:240px;display:flex;flex-direction:column">
     <div class="card-title">Transição de Banco — Custódia MP → Inter</div>
     <div class="card-sub">Crédito mensal por banco · acompanhe a migração dos gamers para o Inter</div>
-    <canvas id="b1-chartBanco" height="140" style="flex:1"></canvas>
+    <canvas id="b1-chartBanco" height="160" style="flex:1"></canvas>
   </div>
 
   <div class="grid g-6040" style="margin-top:14px">
@@ -453,85 +466,78 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 
 <!-- ═══ CAPITAL & INVESTIMENTO (B2) ═══ -->
 <div class="page" id="page-b2">
-  <div class="sec-hd">
-    <span class="sec-icon">📈</span>
-    <div><div class="sec-title">Capital &amp; Investimento - CDI</div><div class="sec-desc">Aporte das 3 holdings set/25 · Aplicação CDI (Inter → Safra a partir de jul/26) · Resgates mensais para sustentação do caixa</div></div>
-  </div>
-  <div class="kpi-row col4">
-    <div class="kpi-card kk-violet"><div class="kpi-label">Aporte dos Sócios</div><div class="kpi-val c-violet">R$ 550.000</div><div class="kpi-sub">3 holdings · set/25</div></div>
-    <div class="kpi-card kk-red"><div class="kpi-label">Aplicado em CDI</div><div class="kpi-val c-red">(490.000)</div><div class="kpi-sub">Nov/25 · R$ 60K consumido antes</div></div>
+  
+  <div class="kpi-row col4" style="grid-template-columns:repeat(4,1fr)">    <div class="kpi-card kk-violet"><div class="kpi-label">Aporte dos Sócios</div><div class="kpi-val c-violet">R$ 550.000</div><div class="kpi-sub">3 holdings · set/25</div></div>
+    <div class="kpi-card kk-red"><div class="kpi-label">Aplicado em CDI</div><div class="kpi-val c-red">(490.000)</div><div class="kpi-sub">R$ 60K consumido antes</div></div>
     <div class="kpi-card kk-green"><div class="kpi-label">Total Resgatado</div><div class="kpi-val c-green" id="b2k3">R$ 144.200</div><div class="kpi-sub">Resgates realizados</div></div>
     <div class="kpi-card kk-green"><div class="kpi-label">Rendimento Líquido</div><div class="kpi-val c-green" id="b2k4">R$ 13.768</div><div class="kpi-sub">Após IR e IOF</div></div>
   </div>
-  <div class="card" style="margin-bottom:10px">
-    <div class="card-title">Fluxo de Origem - Do Aporte ao Saldo Atual</div>
-    <div class="card-sub" style="margin-bottom:10px">Rastreamento do capital desde a entrada até a aplicação</div>
-    <div class="flow">
-      <div class="fbox" style="background:var(--violet-l);border-color:#c4b5fd"><div class="fbox-t" style="color:var(--violet)">3 Holdings</div><div class="fbox-v" style="color:var(--violet)">R$ 550K</div><div class="fbox-s">Set/2025</div></div>
-      <div class="farrow">→</div>
-      <div class="fbox" style="background:var(--amber-l);border-color:#fcd34d"><div class="fbox-t" style="color:var(--amber)">Operação</div><div class="fbox-v" style="color:var(--red-m)">(R$ 60K)</div><div class="fbox-s">Set-Out/25</div></div>
-      <div class="farrow">→</div>
-      <div class="fbox" style="background:var(--green-l);border-color:#6ee7b7"><div class="fbox-t" style="color:var(--green)">CDI Aplicado</div><div class="fbox-v" style="color:var(--green)" id="b2-aplic-display">R$ 490K</div><div class="fbox-s">Nov/2025</div></div>
-      <div class="farrow">→</div>
-      <div class="fbox" style="background:var(--green-l);border-color:#6ee7b7"><div class="fbox-t" style="color:var(--green)">Resgates</div><div class="fbox-v" style="color:var(--green-m)" id="b2-resg-display">R$ 144K</div><div class="fbox-s" id="b2-resg-period">Dez/25-Mar/26</div></div>
-      <div class="farrow">→</div>
-      <div class="fbox" style="background:var(--green-l);border-color:#6ee7b7"><div class="fbox-t" style="color:var(--green)">Saldo CDI</div><div class="fbox-v" style="color:var(--green)" id="b2-saldo-display">~R$ 346K</div><div class="fbox-s" id="b2-rend-display">+ R$13,8K rend.</div></div>
+  <div class="grid" style="grid-template-columns:1.5fr 0.75fr 0.75fr;gap:12px">
+    <div class="card" style="display:flex;flex-direction:column">
+      <div class="card-title">Fluxo de Origem - Do Aporte ao Saldo Atual</div>
+      <div class="card-sub" style="margin-bottom:10px">Rastreamento do capital desde a entrada até a aplicação</div>
+      <div class="flow">
+        <div class="fbox" style="background:var(--violet-l);border-color:#c4b5fd"><div class="fbox-t" style="color:var(--violet)">3 Holdings</div><div class="fbox-v" style="color:var(--violet)">R$ 550K</div><div class="fbox-s">Set/2025</div></div>
+        <div class="farrow">→</div>
+        <div class="fbox" style="background:var(--amber-l);border-color:#fcd34d"><div class="fbox-t" style="color:var(--amber)">Operação</div><div class="fbox-v" style="color:var(--red-m)">(R$ 60K)</div><div class="fbox-s">Set-Out/25</div></div>
+        <div class="farrow">→</div>
+        <div class="fbox" style="background:var(--green-l);border-color:#6ee7b7"><div class="fbox-t" style="color:var(--green)">CDI Aplicado</div><div class="fbox-v" style="color:var(--green)" id="b2-aplic-display">R$ 490K</div><div class="fbox-s" id="b2-aplic-period">Nov/2025</div></div>
+        <div class="farrow">→</div>
+        <div class="fbox" style="background:var(--green-l);border-color:#6ee7b7"><div class="fbox-t" style="color:var(--green)">Resgates</div><div class="fbox-v" style="color:var(--green-m)" id="b2-resg-display">R$ 144K</div><div class="fbox-s" id="b2-resg-period">Dez/25-Mar/26</div></div>
+        <div class="farrow">→</div>
+        <div class="fbox" style="background:var(--green-l);border-color:#6ee7b7"><div class="fbox-t" style="color:var(--green)">Saldo CDI</div><div class="fbox-v" style="color:var(--green)" id="b2-saldo-display">~R$ 346K</div><div class="fbox-s" id="b2-rend-display">+ R$13,8K rend.</div></div>
+      </div>
+      <div class="alert alert-a" style="margin-bottom:6px;margin-top:10px"><strong>⚠ Atenção:</strong> do valor "Resgates" acima, R$ 100.000 foram reaplicados no Banco Safra no mesmo mês (não saiu de caixa) — veja detalhe no Extrato CDI.</div>
+      <div class="alert alert-v" style="margin-bottom:0"><strong>Nota:</strong> A natureza jurídica do aporte (cotas, mútuo, aumento de capital) está em definição. Recomendamos formalizar com assessoria jurídica.</div>
     </div>
-    <div class="alert alert-v" style="margin-bottom:0"><strong>Nota:</strong> A natureza jurídica do aporte (cotas, mútuo, aumento de capital) está em definição. Recomendamos formalizar com assessoria jurídica.</div>
+    <div class="card">
+      <div class="card-title">Aporte por Holding (R$)</div>
+      <div class="card-sub">Capital que originou o CDI</div>
+      <div style="margin-top:6px">
+        <div class="srow"><span class="sname">Equiprime Holding Ltda</span><span class="sval c-violet">R$ 360.000</span></div>
+        <div class="srow"><span class="sname">Waimea Serv. e Participações</span><span class="sval c-violet">R$ 100.000</span></div>
+        <div class="srow"><span class="sname">Zeit Holding Ltda</span><span class="sval c-violet">R$ 90.000</span></div>
+        <div class="srow" style="border-top:1.5px solid var(--border);font-weight:700"><span class="sname">Total Aportado</span><span class="sval c-violet">R$ 550.000</span></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Aporte por Holding (%)</div>
+      <div class="card-sub">Participação de cada sócio</div>
+      <canvas id="b2-chartPie" height="160"></canvas>
+    </div>
   </div>
-  <div class="card" style="margin-bottom:10px">
-    <div class="card-title">Transição de Banco — Saldo CDI</div>
-    <div class="card-sub">Aplicação migrou do Banco Inter para o Banco Safra em jul/2026</div>
-    <canvas id="b2-chartBanco" height="150"></canvas>
-  </div>
-  <div class="grid g2">
+  <div class="grid g2" style="margin-top:12px;margin-bottom:10px">
+    <div class="card">
+      <div class="card-title">Transição de Banco — Saldo CDI</div>
+      <div class="card-sub">Aplicação migrou do Banco Inter para o Banco Safra</div>
+      <canvas id="b2-chartBanco" height="150"></canvas>
+    </div>
     <div class="card">
       <div class="card-title">Resgates e Rendimento Mensal CDI</div>
       <div class="card-sub">Filtro por período ativo</div>
-      <canvas id="b2-chart1" height="185"></canvas>
-    </div>
-    <div class="card">
-      <div class="card-title">Composição do Aporte - 3 Holdings (Set/25)</div>
-      <div class="card-sub">Capital que originou o CDI</div>
-      <div style="margin-bottom:8px">
-        <div class="srow"><span class="sname">Equiprime Holding Ltda</span><span class="sval c-violet">R$ 360.000</span><span class="spct">65,5%</span></div>
-        <div class="srow"><span class="sname">Waimea Serv. e Participações</span><span class="sval c-violet">R$ 100.000</span><span class="spct">18,2%</span></div>
-        <div class="srow"><span class="sname">Zeit Holding Ltda</span><span class="sval c-violet">R$ 90.000</span><span class="spct">16,4%</span></div>
-        <div class="srow" style="border-top:1.5px solid var(--border);font-weight:700"><span class="sname">Total Aportado</span><span class="sval c-violet">R$ 550.000</span><span class="spct">100%</span></div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:5px">
-        <div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:2px"><span>Equiprime 65,5%</span><span>R$ 360.000</span></div><div class="bar-track"><div class="bar-fill" style="width:65.5%;background:var(--violet-m)"></div></div></div>
-        <div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:2px"><span>Waimea 18,2%</span><span>R$ 100.000</span></div><div class="bar-track"><div class="bar-fill" style="width:18.2%;background:#a78bfa"></div></div></div>
-        <div><div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);margin-bottom:2px"><span>Zeit 16,4%</span><span>R$ 90.000</span></div><div class="bar-track"><div class="bar-fill" style="width:16.4%;background:#c4b5fd"></div></div></div>
-      </div>
+      <canvas id="b2-chart1" height="150"></canvas>
     </div>
   </div>
   <div class="card">
     <div class="card-title">Extrato CDI - Detalhamento</div>
     <div class="card-sub">Filtrado pelo período acima</div>
+    <div style="max-height:280px;overflow-y:auto">
     <table class="dt">
-      <thead><tr><th>Período</th><th style="text-align:right">Aplicação</th><th style="text-align:right">Resgate</th><th style="text-align:right">Rend. Bruto</th><th style="text-align:right">IR/IOF</th><th style="text-align:right">Líquido</th><th>Status</th></tr></thead>
-      <tbody id="b2-tbody">
-        <tr id="b2r-nov25"><td>Nov/25</td><td class="mono neg" style="text-align:right">(490.000)</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">2.708</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">2.708</td><td><span class="badge bv">Aplicado</span></td></tr>
-        <tr id="b2r-dez25"><td>Dez/25</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">18.000</td><td class="mono pos" style="text-align:right">5.831</td><td class="mono neg" style="text-align:right">(64)</td><td class="mono pos" style="text-align:right">5.767</td><td><span class="badge bg">Resgatado</span></td></tr>
-        <tr id="b2r-jan26"><td>Jan/26</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">40.200</td><td class="mono pos" style="text-align:right">5.224</td><td class="mono neg" style="text-align:right">(181)</td><td class="mono pos" style="text-align:right">5.044</td><td><span class="badge bg">Resgatado</span></td></tr>
-        <tr id="b2r-fev26"><td>Fev/26</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">51.000</td><td class="mono pos" style="text-align:right">1.857</td><td class="mono neg" style="text-align:right">(3.794)</td><td class="mono neg" style="text-align:right">(1.937)</td><td><span class="badge br">Atenção IR</span></td></tr>
-        <tr id="b2r-mar26"><td>Mar/26</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">35.000</td><td class="mono pos" style="text-align:right">2.187</td><td class="mono" style="text-align:right">-</td><td class="mono pos" style="text-align:right">2.187</td><td><span class="badge bg">Resgatado</span></td></tr>
-      </tbody>
-      <tfoot><tr><td><strong>TOTAL</strong></td><td class="mono neg" style="text-align:right"><strong id="b2f-aplic">-</strong></td><td class="mono pos" style="text-align:right"><strong id="b2f-resg">-</strong></td><td class="mono pos" style="text-align:right"><strong id="b2f-rend">-</strong></td><td class="mono neg" style="text-align:right"><strong id="b2f-ir">-</strong></td><td class="mono pos" style="text-align:right"><strong id="b2f-liq">-</strong></td><td></td></tr></tfoot>
+      <thead><tr><th>Período</th><th style="text-align:right">Aplicação</th><th style="text-align:right">Resgate</th><th style="text-align:right">Rend. Bruto</th><th style="text-align:right">IR/IOF</th><th style="text-align:right">Líquido</th><th style="text-align:right">Saldo</th><th>Status</th></tr></thead>
+      <tbody id="b2-tbody"></tbody>
+      <tfoot><tr><td><strong>TOTAL</strong></td><td class="mono neg" style="text-align:right"><strong id="b2f-aplic">-</strong></td><td class="mono pos" style="text-align:right"><strong id="b2f-resg">-</strong></td><td class="mono pos" style="text-align:right"><strong id="b2f-rend">-</strong></td><td class="mono neg" style="text-align:right"><strong id="b2f-ir">-</strong></td><td class="mono pos" style="text-align:right"><strong id="b2f-liq">-</strong></td><td class="mono pos" style="text-align:right"><strong id="b2f-saldo">-</strong></td><td></td></tr></tfoot>
     </table>
+    </div>
+    <div class="card-sub" style="margin-top:8px;font-style:italic">*O total de Aplicação inclui R$ 100.000 reaplicados no Safra (mesmo valor do resgate de jul/26 no Inter) — não é capital novo.</div>
   </div>
 </div>
 
 <!-- ═══ CONTA CORRENTE SÓCIO (B3) ═══ -->
 <div class="page" id="page-b3">
-  <div class="sec-hd">
-    <span class="sec-icon">🤝</span>
-    <div><div class="sec-title">Conta Corrente Sócio - Bruno Niro</div><div class="sec-desc">Despesas pagas pelo sócio com recursos próprios · Dívida real a formalizar</div></div>
-    <span class="sec-badge" style="background:var(--red-l);color:var(--red)">REQUER AÇÃO CONTÁBIL</span>
+  <div style="display:flex;justify-content:flex-end;margin-bottom:8px">
+    <span class="sec-badge" style="background:var(--red-l);color:var(--red)">⚠ REQUER AÇÃO CONTÁBIL</span>
   </div>
-  <div class="kpi-row col4">
-    <div class="kpi-card kk-red"><div class="kpi-label">Despesas Pagas pelo Sócio</div><div class="kpi-val c-red" id="b3k1">-</div><div class="kpi-sub">Recursos próprios de Bruno</div></div>
+  <div class="kpi-row col4" style="grid-template-columns:repeat(4,1fr)">    <div class="kpi-card kk-red"><div class="kpi-label">Despesas Pagas pelo Sócio</div><div class="kpi-val c-red" id="b3k1">-</div><div class="kpi-sub">Recursos próprios de Bruno</div></div>
     <div class="kpi-card kk-amber"><div class="kpi-label">Regularização Dez/25</div><div class="kpi-val c-amber">⚠ 172.614</div><div class="kpi-sub">Lançamento fictício identificado</div></div>
     <div class="kpi-card kk-muted"><div class="kpi-label">Saldo Contábil</div><div class="kpi-val c-ink">Zero</div><div class="kpi-sub">Conta zerada artificialmente</div></div>
     <div class="kpi-card kk-red"><div class="kpi-label">Dívida Real da Empresa</div><div class="kpi-val c-red" id="b3k4">-</div><div class="kpi-sub">A formalizar com a contabilidade</div></div>
@@ -599,6 +605,54 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
   </div>
 </div>
 <div class="chart-tooltip" id="chart-tooltip"></div>
+<!-- ═══ ORÇADO (B5) ═══ -->
+<div class="page" id="page-b5">
+  <div class="sec-hd">
+    <span class="sec-icon">📅</span>
+    <div><div class="sec-title">Orçado de Despesas Operacionais</div><div class="sec-desc">Projeção de caixa com base em despesas já contratadas (não inclui receitas futuras)</div></div>
+  </div>
+  <div class="alert alert-a" style="margin-bottom:12px">
+    <strong>⚠ Atenção:</strong> Projecão com base nas despesas já contratadas (Vencimento futuro lançado no Excel) vs. saldo disponível hoje (CDI + Conta Corrente Safra). Não inclui novas receitas de custódia nem o saldo do Banco Inter.
+  </div>
+  <div class="kpi-row col3">
+    <div class="kpi-card kk-violet"><div class="kpi-label">Saldo Disponível Hoje</div><div class="kpi-val c-violet" id="b5-saldo-ini">-</div><div class="kpi-sub">CDI + Conta Corrente Safra</div></div>
+    <div class="kpi-card kk-red"><div class="kpi-label">Despesa Orçada Total</div><div class="kpi-val c-red" id="b5-desp-total">-</div><div class="kpi-sub">Já contratada · próximos meses</div></div>
+    <div class="kpi-card kk-red"><div class="kpi-label">Saldo Final Projetado</div><div class="kpi-val c-red" id="b5-saldo-fim">-</div><div class="kpi-sub" id="b5-saldo-fim-mes">Último mês orçado</div></div>
+  </div>
+  <div class="card" style="margin-bottom:10px">
+    <div class="card-title">Despesas Orçadas por Mês</div>
+    <div class="card-sub">Baseado em Vencimento futuro já lançado (sem Data Financ ainda)</div>
+    <canvas id="b5-chart1" height="180"></canvas>
+  </div>
+  <div class="grid g2">
+    <div class="card">
+      <div class="card-title">Conta Corrente Projetada</div>
+      <div class="card-sub">Saldo inicial → despesas do mês → saldo final → vira inicial do próximo</div>
+      <div style="max-height:280px;overflow-y:auto">
+      <table class="dt">
+        <thead style="position:sticky;top:0;background:var(--white)"><tr><th>Mês</th><th style="text-align:right">Saldo Inicial</th><th style="text-align:right">Despesa Orçada</th><th style="text-align:right">Saldo Final</th></tr></thead>
+        <tbody id="b5-tbody"></tbody>
+      </table>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Detalhamento das Despesas Orçadas</div>
+      <div class="card-sub" id="b5-det-period">44 lançamentos já contratados</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px">
+        <select id="b5-det-mes" onchange="renderB5()" style="padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:11px;font-family:inherit;outline:none;background:#fff"><option value="">Mês: Todos</option></select>
+        <select id="b5-det-cc" onchange="renderB5()" style="padding:6px 10px;border:1.5px solid var(--border);border-radius:8px;font-size:11px;font-family:inherit;outline:none;background:#fff"><option value="">Centro de Custo: Todos</option></select>
+      </div>
+      <div style="max-height:240px;overflow-y:auto">
+      <table class="dt">
+        <thead style="position:sticky;top:0;background:var(--white)"><tr><th>Venc.</th><th>Centro de Custo</th><th>Categoria</th><th>Favorecido</th><th style="text-align:right">Valor</th></tr></thead>
+        <tbody id="b5-det-tbody"></tbody>
+      </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="print-btn" onclick="window.print()">🖨️ Imprimir / PDF</button>
 <script>
 
 // ============================================================
@@ -617,8 +671,39 @@ body{background:var(--bg);color:var(--ink);font-family:'Barlow',sans-serif;font-
 // ============================================================
 // ============================================================
 // ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
+// ============================================================
 // DATA BLOCK - update with gerar_dados_dashboard.py
-// Gerado em: 27/08/2026  |  Arquivo: Relatorio_Gerencial_Codecraft2026.xlsx
+// Gerado em: 01/09/2026  |  Arquivo: Relatorio_Gerencial_Codecraft2026.xlsx
 // ============================================================
 const DB = {
   "2025-02":{"cred":183.0,"saques":-79.0,"rec_inter":0.0,"desp_pessoal":0.0,"desp_mkt":0.0,"desp_juridico":0.0,"desp_outros":0.0,"desp_total":0.0},
@@ -639,7 +724,7 @@ const DB = {
   "2026-05":{"cred":8429.8,"saques":-9831.0,"rec_inter":2028.49,"desp_pessoal":14427.27,"desp_mkt":45054.26,"desp_juridico":12200.0,"desp_outros":6451.16,"desp_total":78132.69},
   "2026-06":{"cred":3933.22,"saques":-3308.0,"rec_inter":1684.08,"desp_pessoal":16700.0,"desp_mkt":45232.11,"desp_juridico":0.0,"desp_outros":17418.17,"desp_total":79350.28},
   "2026-07":{"cred":6810.91,"saques":-9983.0,"rec_inter":0.0,"desp_pessoal":16700.0,"desp_mkt":45183.84,"desp_juridico":0.0,"desp_outros":14655.24,"desp_total":76539.08},
-  "2026-08":{"cred":9214.45,"saques":-10094.4,"rec_inter":0.0,"desp_pessoal":16700.0,"desp_mkt":41168.7,"desp_juridico":0.0,"desp_outros":10713.32,"desp_total":68582.02}
+  "2026-08":{"cred":12273.45,"saques":-13076.2,"rec_inter":0.0,"desp_pessoal":16700.0,"desp_mkt":41168.7,"desp_juridico":0.0,"desp_outros":10713.32,"desp_total":68582.02}
 };
 
 // Receita Inter - somente TAXA DE ADMINISTRACAO (+)
@@ -706,9 +791,9 @@ const REC20_2025 = {
   "2026-05": 1685.96,
   "2026-06": 786.64,
   "2026-07": 1362.18,
-  "2026-08": 1842.89
+  "2026-08": 2454.69
 };
-const TOTAL_REC20_2025 = 24352.62;
+const TOTAL_REC20_2025 = 24964.42;
 
 // Despesas PREVISTAS - coluna Orcado
 const DB_PREVISTO = {
@@ -734,8 +819,7 @@ const DB_CAT = {
   "ISS": {"2025-10":360.34, "2025-11":21.73, "2025-12":11.76, "2026-01":11.46, "2026-02":24.03, "2026-03":67.27, "2026-04":89.34, "2026-05":58.82, "2026-06":48.83, "2026-07":22.29, "2026-08":39.38},
   "SERVS. DE RECRUTAMENTO E SELECAO - PJ": {"2025-06":399.0},
   "SERVS. CERTIFICADO DIGITAL": {"2025-12":235.0},
-  "ESTORNO_DEVOLUCAO (-)": {"2025-11":38.0, "2026-08":90.0},
-  "TARIFA BANCARIA": {"2026-08":62.02}
+  "ESTORNO_DEVOLUCAO (-)": {"2025-11":38.0, "2026-08":90.0}
 };
 
 // Cores por categoria
@@ -759,11 +843,11 @@ const CAT_COLORS = {
 
 // DB_CC: despesas por Centro de Custo e mes
 const DB_CC = {
-  "TECNOLOGIA - DESENVOLVIMENTO": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":8000.0, "2025-07":20000.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":31700.0, "2025-11":6700.0, "2025-12":7241.32, "2026-01":7200.0, "2026-02":7217.15, "2026-03":7203.07, "2026-04":10040.1, "2026-05":46538.28, "2026-06":45856.36, "2026-07":45874.15, "2026-08":45028.84},
+  "TECNOLOGIA - DESENVOLVIMENTO": {"2025-04":20000.0, "2025-05":20000.0, "2025-06":8000.0, "2025-07":20000.0, "2025-08":25000.0, "2025-09":25000.0, "2025-10":31700.0, "2025-11":6700.0, "2025-12":7241.32, "2026-01":7200.0, "2026-02":7217.15, "2026-03":7203.07, "2026-04":10040.1, "2026-05":48583.73, "2026-06":50856.36, "2026-07":50874.15, "2026-08":50028.84},
   "MKT - INFLUENCERS": {"2025-06":10000.0, "2025-10":13500.0, "2025-11":13500.0, "2025-12":2751.84, "2026-01":8000.0, "2026-02":22386.45, "2026-03":11698.73, "2026-04":1690.21, "2026-05":3387.6, "2026-06":3565.45, "2026-07":3517.18, "2026-08":335.37},
   "ADMINISTRATIVO": {"2025-10":400.0, "2025-11":741.6, "2025-12":5747.96, "2026-01":9800.0, "2026-02":14367.78, "2026-03":9319.8, "2026-04":3919.8, "2026-05":17228.5, "2026-06":5038.17, "2026-07":5055.47, "2026-08":5084.17},
   "SOCIAL MEDIA - DESIGN": {"2025-10":5500.0, "2025-11":5500.0, "2025-12":5500.0, "2026-01":7300.0, "2026-02":5500.0, "2026-03":5500.0, "2026-04":6700.0, "2026-05":6300.0, "2026-06":6700.0, "2026-07":6430.24, "2026-08":5500.0},
-  "OPERACIONAL": {"2025-04":12.14, "2025-05":30.95, "2025-06":417.02, "2025-07":14452.28, "2025-08":1570.28, "2025-09":1571.78, "2025-10":1919.57, "2025-11":54.33, "2025-12":11.76, "2026-01":231.24, "2026-02":71.63, "2026-03":1181.56, "2026-04":1389.53, "2026-05":2680.82, "2026-06":16192.81, "2026-07":13162.04, "2026-08":10608.17},
+  "OPERACIONAL": {"2025-04":12.14, "2025-05":30.95, "2025-06":417.02, "2025-07":14452.28, "2025-08":1570.28, "2025-09":1571.78, "2025-10":1919.57, "2025-11":54.33, "2025-12":11.76, "2026-01":231.24, "2026-02":71.63, "2026-03":1181.56, "2026-04":1389.53, "2026-05":635.37, "2026-06":11192.81, "2026-07":8162.04, "2026-08":5546.15},
   "COMMUNITY MANAGER": {"2025-10":2500.0, "2025-11":2500.0, "2025-12":2500.0, "2026-01":2500.0, "2026-02":2500.0, "2026-03":2500.0, "2026-04":2500.0, "2026-05":2500.0, "2026-06":2500.0, "2026-07":2500.0, "2026-08":2500.0},
   "TRANSITORIO": {"2025-11":38.0, "2026-08":90.0}
 };
@@ -781,13 +865,16 @@ const CC_COLORS = {
 
 // Taxa ADM 20%% efetivamente paga ao Inter via MP
 const DB_TAXA_PAGA = {"2026-02":1201.89, "2026-03":2319.66, "2026-04":3080.87, "2026-05":2028.49, "2026-06":1684.08};
-const DB_OUTRAS_TAXAS = {"2025-02":1.81, "2025-03":6.64, "2025-04":47.28, "2025-05":190.75, "2025-06":64.56, "2025-07":1071.08, "2025-08":81.0, "2025-09":103.85, "2025-10":58.71, "2025-11":44.23, "2025-12":121.75, "2026-01":118.81, "2026-02":32.18, "2026-04":19.8, "2026-05":9.41, "2026-06":89.1};
+const DB_OUTRAS_TAXAS = {"2025-02":1.81, "2025-03":6.64, "2025-04":47.28, "2025-05":190.75, "2025-06":64.56, "2025-07":1071.08, "2025-08":81.0, "2025-09":103.85, "2025-10":58.71, "2025-11":44.23, "2025-12":121.75, "2026-01":118.81, "2026-02":32.18, "2026-04":19.8, "2026-05":9.41, "2026-06":89.1, "2026-08":106.33};
 const SALDO_MP_REAL = 851.94;
-const DB_CUST_BANCO = {"MERCADO PAGO": {"2025-02": 183.0, "2025-03": 1625.5, "2025-04": 3767.5, "2025-05": 7738.0, "2025-06": 4486.5, "2025-07": 3730.5, "2025-08": 8197.0, "2025-09": 8561.0, "2025-10": 5428.0, "2025-11": 2941.0, "2025-12": 2987.5, "2026-01": 6009.46, "2026-02": 11608.21, "2026-03": 15384.53, "2026-04": 10162.24, "2026-05": 8420.39, "2026-06": 3844.12, "2026-07": 6790.91, "2026-08": 252.45}, "BANCO INTER": {"2026-07": 20.0, "2026-08": 8962.0}};
-const DB_TARIFA = {"2026-08": 62.02};
+const DB_CUST_BANCO = {"MERCADO PAGO": {"2025-02": 183.0, "2025-03": 665.5, "2025-04": 3767.5, "2025-05": 7738.0, "2025-06": 4481.5, "2025-07": 3730.5, "2025-08": 8197.0, "2025-09": 8556.0, "2025-10": 5423.0, "2025-11": 2941.0, "2025-12": 2987.5, "2026-01": 6009.46, "2026-02": 11608.21, "2026-03": 15384.53, "2026-04": 10162.24, "2026-05": 8420.39, "2026-06": 3844.12, "2026-07": 6790.91, "2026-08": 252.45}, "BANCO INTER": {"2026-08": 11951.0}};
+const DB_TARIFA = {"2025-02": 1.81, "2025-03": 6.64, "2025-04": 37.18, "2025-05": 76.47, "2025-06": 44.36, "2025-07": 36.81, "2025-08": 81.0, "2025-09": 84.76, "2025-10": 53.66, "2025-11": 29.13, "2025-12": 29.75, "2026-08": 106.33};
 const DB_CDI_BANCO = {"INTER": {"2025-11": 492707.74, "2025-12": 480474.96, "2026-01": 445318.81, "2026-02": 398004.98, "2026-03": 367182.74, "2026-04": 349231.77, "2026-05": 275502.08, "2026-06": 199887.83, "2026-07": -0.0, "2026-08": -0.0}, "SAFRA": {"2025-11": 0.0, "2025-12": 0.0, "2026-01": 0.0, "2026-02": 0.0, "2026-03": 0.0, "2026-04": 0.0, "2026-05": 0.0, "2026-06": 0.0, "2026-07": 100000.0, "2026-08": 51642.79}};
+const DB_ORCADO = {"2026-09": 47839.47, "2026-10": 43172.79, "2026-11": 42882.99, "2026-12": 43117.99};
+const SALDO_SAFRA_CC = 225.55;
 
-const DB_DET = [{"date": "11/04/25", "year": "2025", "month": "04", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 20000.0}, {"date": "30/04/25", "year": "2025", "month": "04", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 12.14}, {"date": "27/05/25", "year": "2025", "month": "05", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 20000.0}, {"date": "31/05/25", "year": "2025", "month": "05", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 30.95}, {"date": "02/06/25", "year": "2025", "month": "06", "cc": "MKT - INFLUENCERS", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "PILULA DOURADA PUBLICIDADE, PR", "val": 10000.0}, {"date": "02/06/25", "year": "2025", "month": "06", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "FLOW GAMES PRODUCAO E DESENVOL", "val": 8000.0}, {"date": "22/06/25", "year": "2025", "month": "06", "cc": "OPERACIONAL", "cat": "SERVS. DE RECRUTAMENTO E SELECAO - PJ", "fav": "TRAMPOS.CO TECNOLOGIA LTDA", "val": 399.0}, {"date": "30/06/25", "year": "2025", "month": "06", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 18.02}, {"date": "01/07/25", "year": "2025", "month": "07", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 20000.0}, {"date": "10/07/25", "year": "2025", "month": "07", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 632.4}, {"date": "10/07/25", "year": "2025", "month": "07", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 204.0}, {"date": "10/07/25", "year": "2025", "month": "07", "cc": "OPERACIONAL", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "GAUDENCIO SOCIEDADE DE ADVOGAD", "val": 13600.0}, {"date": "31/07/25", "year": "2025", "month": "07", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 15.88}, {"date": "04/08/25", "year": "2025", "month": "08", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 375.0}, {"date": "04/08/25", "year": "2025", "month": "08", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "RMS&Z DESIGN DE PRODUTOS DIGIT", "val": 25000.0}, {"date": "04/08/25", "year": "2025", "month": "08", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 1162.5}, {"date": "31/08/25", "year": "2025", "month": "08", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 32.78}, {"date": "30/09/25", "year": "2025", "month": "09", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "RMS&Z DESIGN DE PRODUTOS DIGIT", "val": 25000.0}, {"date": "30/09/25", "year": "2025", "month": "09", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 1162.5}, {"date": "30/09/25", "year": "2025", "month": "09", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 375.0}, {"date": "30/09/25", "year": "2025", "month": "09", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 34.28}, {"date": "06/10/25", "year": "2025", "month": "10", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "KENNZY LTDA", "val": 10000.0}, {"date": "06/10/25", "year": "2025", "month": "10", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "06/10/25", "year": "2025", "month": "10", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "06/10/25", "year": "2025", "month": "10", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "06/10/25", "year": "2025", "month": "10", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "DANIEL MORSOLIN MARCON", "val": 3500.0}, {"date": "06/10/25", "year": "2025", "month": "10", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 3000.0}, {"date": "14/10/25", "year": "2025", "month": "10", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 375.0}, {"date": "14/10/25", "year": "2025", "month": "10", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 1162.5}, {"date": "14/10/25", "year": "2025", "month": "10", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "RMS&Z DESIGN DE PRODUTOS DIGIT", "val": 25000.0}, {"date": "22/10/25", "year": "2025", "month": "10", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 400.0}, {"date": "30/10/25", "year": "2025", "month": "10", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 21.73}, {"date": "31/10/25", "year": "2025", "month": "10", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 285.07}, {"date": "31/10/25", "year": "2025", "month": "10", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 38.62}, {"date": "31/10/25", "year": "2025", "month": "10", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 36.65}, {"date": "05/11/25", "year": "2025", "month": "11", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "KENNZY LTDA", "val": 10000.0}, {"date": "05/11/25", "year": "2025", "month": "11", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 3000.0}, {"date": "05/11/25", "year": "2025", "month": "11", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 400.0}, {"date": "05/11/25", "year": "2025", "month": "11", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/11/25", "year": "2025", "month": "11", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "DANIEL MORSOLIN MARCON", "val": 3500.0}, {"date": "05/11/25", "year": "2025", "month": "11", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/11/25", "year": "2025", "month": "11", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "10/11/25", "year": "2025", "month": "11", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 21.73}, {"date": "24/11/25", "year": "2025", "month": "11", "cc": "ADMINISTRATIVO", "cat": "REEMB DESPESAS GERAIS", "fav": "FELIPE GONCALVES BOLONHANI", "val": 341.6}, {"date": "24/11/25", "year": "2025", "month": "11", "cc": "TRANSITORIO", "cat": "ESTORNO_DEVOLU\u00c7\u00c3O (-)", "fav": "FELIPE GONCALVES BOLONHANI", "val": 38.0}, {"date": "25/11/25", "year": "2025", "month": "11", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 32.6}, {"date": "03/12/25", "year": "2025", "month": "12", "cc": "ADMINISTRATIVO", "cat": "SERVS. CERTIFICADO DIGITAL", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 235.0}, {"date": "03/12/25", "year": "2025", "month": "12", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 62.78}, {"date": "05/12/25", "year": "2025", "month": "12", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/12/25", "year": "2025", "month": "12", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "05/12/25", "year": "2025", "month": "12", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 3000.0}, {"date": "05/12/25", "year": "2025", "month": "12", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 400.0}, {"date": "05/12/25", "year": "2025", "month": "12", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/12/25", "year": "2025", "month": "12", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "09/12/25", "year": "2025", "month": "12", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "10/12/25", "year": "2025", "month": "12", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 11.76}, {"date": "19/12/25", "year": "2025", "month": "12", "cc": "ADMINISTRATIVO", "cat": "PR\u00caMIOS E GRATIFICA\u00c7\u00d5ES ADM", "fav": "Pagaleve Instituicao De Pagame", "val": 800.0}, {"date": "24/12/25", "year": "2025", "month": "12", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 2689.06}, {"date": "25/12/25", "year": "2025", "month": "12", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 523.01}, {"date": "27/12/25", "year": "2025", "month": "12", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 18.31}, {"date": "31/12/25", "year": "2025", "month": "12", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 823.16}, {"date": "05/01/26", "year": "2026", "month": "01", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/01/26", "year": "2026", "month": "01", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 2200.0}, {"date": "05/01/26", "year": "2026", "month": "01", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/01/26", "year": "2026", "month": "01", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/01/26", "year": "2026", "month": "01", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 3000.0}, {"date": "05/01/26", "year": "2026", "month": "01", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 29.92}, {"date": "05/01/26", "year": "2026", "month": "01", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 400.0}, {"date": "06/01/26", "year": "2026", "month": "01", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "Minerva Producao de Videos E M", "val": 8000.0}, {"date": "09/01/26", "year": "2026", "month": "01", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 11.46}, {"date": "16/01/26", "year": "2026", "month": "01", "cc": "ADMINISTRATIVO", "cat": "SERVS. ADVOCATICIOS", "fav": "GAUDENCIO SOCIEDADE DE ADVOGAD", "val": 7200.0}, {"date": "23/01/26", "year": "2026", "month": "01", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 17.2}, {"date": "26/01/26", "year": "2026", "month": "01", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "APIBRASIL SITES E SOFTWARES LT", "val": 500.0}, {"date": "30/01/26", "year": "2026", "month": "01", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 172.66}, {"date": "30/01/26", "year": "2026", "month": "01", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "Trs Multimidia E Producoes", "val": 1800.0}, {"date": "05/02/26", "year": "2026", "month": "02", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 3000.0}, {"date": "05/02/26", "year": "2026", "month": "02", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/02/26", "year": "2026", "month": "02", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FLOW GAMES PRODUCAO E DESENVOL", "val": 8000.0}, {"date": "05/02/26", "year": "2026", "month": "02", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PILULA DOURADA PUBLICIDADE, PR", "val": 2000.0}, {"date": "05/02/26", "year": "2026", "month": "02", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/02/26", "year": "2026", "month": "02", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 2200.0}, {"date": "05/02/26", "year": "2026", "month": "02", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "06/02/26", "year": "2026", "month": "02", "cc": "ADMINISTRATIVO", "cat": "REEMB DESPESAS GERAIS", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 647.98}, {"date": "06/02/26", "year": "2026", "month": "02", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "Minerva Producao de Videos E M", "val": 8000.0}, {"date": "06/02/26", "year": "2026", "month": "02", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "10/02/26", "year": "2026", "month": "02", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "10/02/26", "year": "2026", "month": "02", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 3050.82}, {"date": "10/02/26", "year": "2026", "month": "02", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 499.66}, {"date": "10/02/26", "year": "2026", "month": "02", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 17.49}, {"date": "10/02/26", "year": "2026", "month": "02", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 105.04}, {"date": "10/02/26", "year": "2026", "month": "02", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 1230.59}, {"date": "10/02/26", "year": "2026", "month": "02", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 24.03}, {"date": "11/02/26", "year": "2026", "month": "02", "cc": "ADMINISTRATIVO", "cat": "SERVS. ADVOCATICIOS", "fav": "GAUDENCIO SOCIEDADE DE ADVOGAD", "val": 10800.0}, {"date": "25/02/26", "year": "2026", "month": "02", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 47.6}, {"date": "03/03/26", "year": "2026", "month": "03", "cc": "OPERACIONAL", "cat": "REEMB DESPESAS GERAIS", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 79.49}, {"date": "05/03/26", "year": "2026", "month": "03", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "05/03/26", "year": "2026", "month": "03", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/03/26", "year": "2026", "month": "03", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/03/26", "year": "2026", "month": "03", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/03/26", "year": "2026", "month": "03", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "05/03/26", "year": "2026", "month": "03", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 3000.0}, {"date": "06/03/26", "year": "2026", "month": "03", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "Minerva Producao de Videos E M", "val": 8000.0}, {"date": "10/03/26", "year": "2026", "month": "03", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 486.06}, {"date": "10/03/26", "year": "2026", "month": "03", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 3282.91}, {"date": "10/03/26", "year": "2026", "month": "03", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 17.01}, {"date": "10/03/26", "year": "2026", "month": "03", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "10/03/26", "year": "2026", "month": "03", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 67.27}, {"date": "10/03/26", "year": "2026", "month": "03", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 415.82}, {"date": "13/03/26", "year": "2026", "month": "03", "cc": "ADMINISTRATIVO", "cat": "SERVS. ADVOCATICIOS", "fav": "GAUDENCIO SOCIEDADE DE ADVOGAD", "val": 5400.0}, {"date": "17/03/26", "year": "2026", "month": "03", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "Ups Do Brasil Remessas Express", "val": 285.93}, {"date": "20/03/26", "year": "2026", "month": "03", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 664.2}, {"date": "25/03/26", "year": "2026", "month": "03", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 84.67}, {"date": "02/04/26", "year": "2026", "month": "04", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "RAFAEL DOS SANTOS DO ROSARIO", "val": 1200.0}, {"date": "02/04/26", "year": "2026", "month": "04", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "02/04/26", "year": "2026", "month": "04", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "02/04/26", "year": "2026", "month": "04", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "02/04/26", "year": "2026", "month": "04", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "02/04/26", "year": "2026", "month": "04", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "02/04/26", "year": "2026", "month": "04", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 3000.0}, {"date": "10/04/26", "year": "2026", "month": "04", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 89.34}, {"date": "09/04/26", "year": "2026", "month": "04", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 1690.21}, {"date": "09/04/26", "year": "2026", "month": "04", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "The SSL Store", "val": 95.66}, {"date": "09/04/26", "year": "2026", "month": "04", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 17.29}, {"date": "09/04/26", "year": "2026", "month": "04", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 493.96}, {"date": "09/04/26", "year": "2026", "month": "04", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "09/04/26", "year": "2026", "month": "04", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "The SSL Store", "val": 2733.19}, {"date": "20/04/26", "year": "2026", "month": "04", "cc": "OPERACIONAL", "cat": "INSS", "fav": "RECEITA FEDERAL", "val": 502.51}, {"date": "24/04/26", "year": "2026", "month": "04", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 112.46}, {"date": "30/04/26", "year": "2026", "month": "04", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 685.22}, {"date": "05/05/26", "year": "2026", "month": "05", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "05/05/26", "year": "2026", "month": "05", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "05/05/26", "year": "2026", "month": "05", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/05/26", "year": "2026", "month": "05", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "RAFAEL DOS SANTOS DO ROSARIO", "val": 800.0}, {"date": "05/05/26", "year": "2026", "month": "05", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/05/26", "year": "2026", "month": "05", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/05/26", "year": "2026", "month": "05", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 681.82}, {"date": "06/05/26", "year": "2026", "month": "05", "cc": "ADMINISTRATIVO", "cat": "SERVS. ADVOCATICIOS", "fav": "GAUDENCIO SOCIEDADE DE ADVOGAD", "val": 12200.0}, {"date": "08/05/26", "year": "2026", "month": "05", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "AMAZON", "val": 422.7}, {"date": "08/05/26", "year": "2026", "month": "05", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 473.24}, {"date": "08/05/26", "year": "2026", "month": "05", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "08/05/26", "year": "2026", "month": "05", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 3387.6}, {"date": "08/05/26", "year": "2026", "month": "05", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 16.56}, {"date": "11/05/26", "year": "2026", "month": "05", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 58.82}, {"date": "08/05/26", "year": "2026", "month": "05", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "GOOGLE", "val": 686.0}, {"date": "20/05/26", "year": "2026", "month": "05", "cc": "OPERACIONAL", "cat": "INSS", "fav": "RECEITA FEDERAL", "val": 502.51}, {"date": "25/05/26", "year": "2026", "month": "05", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 74.04}, {"date": "26/05/26", "year": "2026", "month": "05", "cc": "OPERACIONAL", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RENATA RONA GARIB", "val": 2045.45}, {"date": "26/05/26", "year": "2026", "month": "05", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 41666.66}, {"date": "05/06/26", "year": "2026", "month": "06", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/06/26", "year": "2026", "month": "06", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "05/06/26", "year": "2026", "month": "06", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "05/06/26", "year": "2026", "month": "06", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "RAFAEL DOS SANTOS DO ROSARIO", "val": 1200.0}, {"date": "05/06/26", "year": "2026", "month": "06", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/06/26", "year": "2026", "month": "06", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "AMAZON AWS SERVICOS BR", "val": 432.37}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "BANCO INTER", "val": 16.56}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 3282.93}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 473.14}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "LINKEDIN", "val": 150.0}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 48.83}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "GOOGLE WORKSPACE", "val": 686.0}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 132.52}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "15/06/26", "year": "2026", "month": "06", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 41666.66}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "Coldzera Cs E-sports Ltda", "val": 10000.0}, {"date": "11/06/26", "year": "2026", "month": "06", "cc": "OPERACIONAL", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RENATA RONA GARIB", "val": 5000.0}, {"date": "19/06/26", "year": "2026", "month": "06", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 61.47}, {"date": "19/06/26", "year": "2026", "month": "06", "cc": "OPERACIONAL", "cat": "INSS", "fav": "RECEITA FEDERAL", "val": 502.51}, {"date": "30/06/26", "year": "2026", "month": "06", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "GA COMERCIAL LTDA", "val": 580.0}, {"date": "06/07/26", "year": "2026", "month": "07", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "06/07/26", "year": "2026", "month": "07", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "06/07/26", "year": "2026", "month": "07", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "06/07/26", "year": "2026", "month": "07", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "06/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "Veriff Brazil Ltda", "val": 98.51}, {"date": "07/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "GA COMERCIAL LTDA", "val": 580.0}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 22.29}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "AMAZON AWS SERVICOS BR", "val": 420.27}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 17.16}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "GOOGLE WORKSPACE", "val": 715.4}, {"date": "06/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RENATA RONA GARIB", "val": 5000.0}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 3517.18}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "ADIANT. FORNECEDORES", "val": 4666.68}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 490.33}, {"date": "14/07/26", "year": "2026", "month": "07", "cc": "SOCIAL MEDIA - DESIGN", "cat": "REEMB DESPESAS GERAIS", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 630.24}, {"date": "14/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "Veriff Brazil Ltda", "val": 246.03}, {"date": "14/07/26", "year": "2026", "month": "07", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 41666.66}, {"date": "20/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 1025.52}, {"date": "15/07/26", "year": "2026", "month": "07", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "RAFAEL DOS SANTOS DO ROSARIO", "val": 300.0}, {"date": "24/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 23.06}, {"date": "31/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "ESTARTAR REGISTRO DE MARCAS LT", "val": 1000.0}, {"date": "31/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 499.95}, {"date": "03/08/26", "year": "2026", "month": "08", "cc": "TRANSITORIO", "cat": "ESTORNO_DEVOLU\u00c7\u00c3O (-)", "fav": "FELIPE GONCALVES BOLONHANI", "val": 30.0}, {"date": "05/08/26", "year": "2026", "month": "08", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "05/08/26", "year": "2026", "month": "08", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/08/26", "year": "2026", "month": "08", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/08/26", "year": "2026", "month": "08", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "05/08/26", "year": "2026", "month": "08", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/08/26", "year": "2026", "month": "08", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 20000.0}, {"date": "05/08/26", "year": "2026", "month": "08", "cc": "TRANSITORIO", "cat": "ESTORNO_DEVOLU\u00c7\u00c3O (-)", "fav": "FELIPE GONCALVES BOLONHANI", "val": 20.0}, {"date": "06/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RENATA RONA GARIB", "val": 5000.0}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 39.38}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "GOOGLE WORKSPACE", "val": 784.0}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 16.76}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 478.75}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 335.37}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "ADIANT. FORNECEDORES", "val": 4666.66}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "AMAZON AWS SERVICOS BR", "val": 380.37}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "12/08/26", "year": "2026", "month": "08", "cc": "TRANSITORIO", "cat": "ESTORNO_DEVOLU\u00c7\u00c3O (-)", "fav": "FELIPE GONCALVES BOLONHANI", "val": 20.0}, {"date": "12/08/26", "year": "2026", "month": "08", "cc": "TRANSITORIO", "cat": "ESTORNO_DEVOLU\u00c7\u00c3O (-)", "fav": "FELIPE GONCALVES BOLONHANI", "val": 20.0}, {"date": "12/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "13/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.72}, {"date": "13/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "13/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.14}, {"date": "13/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "13/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "13/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "13/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "13/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.81}, {"date": "13/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "13/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "14/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "14/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.14}, {"date": "14/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "14/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.23}, {"date": "14/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "14/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "14/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "14/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "14/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "14/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "15/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.14}, {"date": "15/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "15/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.32}, {"date": "15/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "15/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "15/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "15/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.81}, {"date": "15/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "15/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.81}, {"date": "15/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.14}, {"date": "15/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.9}, {"date": "16/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.14}, {"date": "16/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "16/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.23}, {"date": "16/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "16/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "16/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "16/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "16/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "16/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.32}, {"date": "16/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "16/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "16/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "16/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.14}, {"date": "16/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.63}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.14}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "17/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.14}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.45}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.41}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.23}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.45}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "18/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "19/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "19/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "19/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "19/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "19/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "19/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "19/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "19/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "19/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "19/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "19/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "19/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "19/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.54}, {"date": "19/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "19/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.45}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.32}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "INSS", "fav": "RECEITA FEDERAL", "val": 502.51}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.63}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.16}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.14}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.72}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.23}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.23}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.32}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 20833.33}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.14}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 1.08}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.45}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "Veriff Brazil Ltda", "val": 254.96}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.41}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.23}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.23}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "22/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.14}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.14}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "23/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.72}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.23}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.14}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "24/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.32}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 82.64}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.14}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.23}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.1}, {"date": "26/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "26/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "26/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "26/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "26/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "26/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.27}, {"date": "26/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.72}, {"date": "26/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.23}, {"date": "26/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.18}, {"date": "26/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.23}, {"date": "26/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.72}, {"date": "26/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "TARIFA BANC\u00c1RIA", "fav": "BANCO INTER", "val": 0.36}];
+const DB_DET = [{"date": "11/04/25", "year": "2025", "month": "04", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 20000.0}, {"date": "30/04/25", "year": "2025", "month": "04", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 12.14}, {"date": "27/05/25", "year": "2025", "month": "05", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 20000.0}, {"date": "31/05/25", "year": "2025", "month": "05", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 30.95}, {"date": "02/06/25", "year": "2025", "month": "06", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "FLOW GAMES PRODUCAO E DESENVOL", "val": 8000.0}, {"date": "02/06/25", "year": "2025", "month": "06", "cc": "MKT - INFLUENCERS", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "PILULA DOURADA PUBLICIDADE, PR", "val": 10000.0}, {"date": "22/06/25", "year": "2025", "month": "06", "cc": "OPERACIONAL", "cat": "SERVS. DE RECRUTAMENTO E SELECAO - PJ", "fav": "TRAMPOS.CO TECNOLOGIA LTDA", "val": 399.0}, {"date": "30/06/25", "year": "2025", "month": "06", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 18.02}, {"date": "01/07/25", "year": "2025", "month": "07", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 20000.0}, {"date": "10/07/25", "year": "2025", "month": "07", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 204.0}, {"date": "10/07/25", "year": "2025", "month": "07", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 632.4}, {"date": "10/07/25", "year": "2025", "month": "07", "cc": "OPERACIONAL", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "GAUDENCIO SOCIEDADE DE ADVOGAD", "val": 13600.0}, {"date": "31/07/25", "year": "2025", "month": "07", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 15.88}, {"date": "04/08/25", "year": "2025", "month": "08", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "RMS&Z DESIGN DE PRODUTOS DIGIT", "val": 25000.0}, {"date": "04/08/25", "year": "2025", "month": "08", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 1162.5}, {"date": "04/08/25", "year": "2025", "month": "08", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 375.0}, {"date": "31/08/25", "year": "2025", "month": "08", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 32.78}, {"date": "30/09/25", "year": "2025", "month": "09", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 1162.5}, {"date": "30/09/25", "year": "2025", "month": "09", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 34.28}, {"date": "30/09/25", "year": "2025", "month": "09", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "RMS&Z DESIGN DE PRODUTOS DIGIT", "val": 25000.0}, {"date": "30/09/25", "year": "2025", "month": "09", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 375.0}, {"date": "06/10/25", "year": "2025", "month": "10", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "06/10/25", "year": "2025", "month": "10", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "DANIEL MORSOLIN MARCON", "val": 3500.0}, {"date": "06/10/25", "year": "2025", "month": "10", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "06/10/25", "year": "2025", "month": "10", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "06/10/25", "year": "2025", "month": "10", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 3000.0}, {"date": "06/10/25", "year": "2025", "month": "10", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "KENNZY LTDA", "val": 10000.0}, {"date": "14/10/25", "year": "2025", "month": "10", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 1162.5}, {"date": "14/10/25", "year": "2025", "month": "10", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "RECEITA FEDERAL", "val": 375.0}, {"date": "14/10/25", "year": "2025", "month": "10", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVI\u00c7OS PRESTADOS PJ - INICIAL", "fav": "RMS&Z DESIGN DE PRODUTOS DIGIT", "val": 25000.0}, {"date": "22/10/25", "year": "2025", "month": "10", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 400.0}, {"date": "30/10/25", "year": "2025", "month": "10", "cc": "OPERACIONAL", "cat": "IMPOSTOS - INICIAL", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 21.73}, {"date": "31/10/25", "year": "2025", "month": "10", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 36.65}, {"date": "31/10/25", "year": "2025", "month": "10", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 38.62}, {"date": "31/10/25", "year": "2025", "month": "10", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 285.07}, {"date": "05/11/25", "year": "2025", "month": "11", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/11/25", "year": "2025", "month": "11", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 400.0}, {"date": "05/11/25", "year": "2025", "month": "11", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "DANIEL MORSOLIN MARCON", "val": 3500.0}, {"date": "05/11/25", "year": "2025", "month": "11", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/11/25", "year": "2025", "month": "11", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "KENNZY LTDA", "val": 10000.0}, {"date": "05/11/25", "year": "2025", "month": "11", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/11/25", "year": "2025", "month": "11", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 3000.0}, {"date": "10/11/25", "year": "2025", "month": "11", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 21.73}, {"date": "24/11/25", "year": "2025", "month": "11", "cc": "ADMINISTRATIVO", "cat": "REEMB DESPESAS GERAIS", "fav": "FELIPE GONCALVES BOLONHANI", "val": 341.6}, {"date": "24/11/25", "year": "2025", "month": "11", "cc": "TRANSITORIO", "cat": "ESTORNO_DEVOLU\u00c7\u00c3O (-)", "fav": "FELIPE GONCALVES BOLONHANI", "val": 38.0}, {"date": "25/11/25", "year": "2025", "month": "11", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 32.6}, {"date": "03/12/25", "year": "2025", "month": "12", "cc": "ADMINISTRATIVO", "cat": "SERVS. CERTIFICADO DIGITAL", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 235.0}, {"date": "03/12/25", "year": "2025", "month": "12", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 62.78}, {"date": "05/12/25", "year": "2025", "month": "12", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/12/25", "year": "2025", "month": "12", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 400.0}, {"date": "05/12/25", "year": "2025", "month": "12", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/12/25", "year": "2025", "month": "12", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/12/25", "year": "2025", "month": "12", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 3000.0}, {"date": "05/12/25", "year": "2025", "month": "12", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "09/12/25", "year": "2025", "month": "12", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "10/12/25", "year": "2025", "month": "12", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 11.76}, {"date": "19/12/25", "year": "2025", "month": "12", "cc": "ADMINISTRATIVO", "cat": "PR\u00caMIOS E GRATIFICA\u00c7\u00d5ES ADM", "fav": "Pagaleve Instituicao De Pagame", "val": 800.0}, {"date": "24/12/25", "year": "2025", "month": "12", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 2689.06}, {"date": "25/12/25", "year": "2025", "month": "12", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 523.01}, {"date": "27/12/25", "year": "2025", "month": "12", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 18.31}, {"date": "31/12/25", "year": "2025", "month": "12", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 823.16}, {"date": "05/01/26", "year": "2026", "month": "01", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/01/26", "year": "2026", "month": "01", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 400.0}, {"date": "05/01/26", "year": "2026", "month": "01", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/01/26", "year": "2026", "month": "01", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 2200.0}, {"date": "05/01/26", "year": "2026", "month": "01", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 3000.0}, {"date": "05/01/26", "year": "2026", "month": "01", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 29.92}, {"date": "05/01/26", "year": "2026", "month": "01", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "06/01/26", "year": "2026", "month": "01", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "Minerva Producao de Videos E M", "val": 8000.0}, {"date": "09/01/26", "year": "2026", "month": "01", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 11.46}, {"date": "16/01/26", "year": "2026", "month": "01", "cc": "ADMINISTRATIVO", "cat": "SERVS. ADVOCATICIOS", "fav": "GAUDENCIO SOCIEDADE DE ADVOGAD", "val": 7200.0}, {"date": "23/01/26", "year": "2026", "month": "01", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 17.2}, {"date": "26/01/26", "year": "2026", "month": "01", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "APIBRASIL SITES E SOFTWARES LT", "val": 500.0}, {"date": "30/01/26", "year": "2026", "month": "01", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 172.66}, {"date": "30/01/26", "year": "2026", "month": "01", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "Trs Multimidia E Producoes", "val": 1800.0}, {"date": "05/02/26", "year": "2026", "month": "02", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 2200.0}, {"date": "05/02/26", "year": "2026", "month": "02", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 3000.0}, {"date": "05/02/26", "year": "2026", "month": "02", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/02/26", "year": "2026", "month": "02", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/02/26", "year": "2026", "month": "02", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "05/02/26", "year": "2026", "month": "02", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PILULA DOURADA PUBLICIDADE, PR", "val": 2000.0}, {"date": "05/02/26", "year": "2026", "month": "02", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FLOW GAMES PRODUCAO E DESENVOL", "val": 8000.0}, {"date": "06/02/26", "year": "2026", "month": "02", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "Minerva Producao de Videos E M", "val": 8000.0}, {"date": "06/02/26", "year": "2026", "month": "02", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "06/02/26", "year": "2026", "month": "02", "cc": "ADMINISTRATIVO", "cat": "REEMB DESPESAS GERAIS", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 647.98}, {"date": "10/02/26", "year": "2026", "month": "02", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 24.03}, {"date": "10/02/26", "year": "2026", "month": "02", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 499.66}, {"date": "10/02/26", "year": "2026", "month": "02", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 17.49}, {"date": "10/02/26", "year": "2026", "month": "02", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "10/02/26", "year": "2026", "month": "02", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 105.04}, {"date": "10/02/26", "year": "2026", "month": "02", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 1230.59}, {"date": "10/02/26", "year": "2026", "month": "02", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 3050.82}, {"date": "11/02/26", "year": "2026", "month": "02", "cc": "ADMINISTRATIVO", "cat": "SERVS. ADVOCATICIOS", "fav": "GAUDENCIO SOCIEDADE DE ADVOGAD", "val": 10800.0}, {"date": "25/02/26", "year": "2026", "month": "02", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 47.6}, {"date": "03/03/26", "year": "2026", "month": "03", "cc": "OPERACIONAL", "cat": "REEMB DESPESAS GERAIS", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 79.49}, {"date": "05/03/26", "year": "2026", "month": "03", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "05/03/26", "year": "2026", "month": "03", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 3000.0}, {"date": "05/03/26", "year": "2026", "month": "03", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/03/26", "year": "2026", "month": "03", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/03/26", "year": "2026", "month": "03", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "05/03/26", "year": "2026", "month": "03", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "06/03/26", "year": "2026", "month": "03", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "Minerva Producao de Videos E M", "val": 8000.0}, {"date": "10/03/26", "year": "2026", "month": "03", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 415.82}, {"date": "10/03/26", "year": "2026", "month": "03", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 3282.91}, {"date": "10/03/26", "year": "2026", "month": "03", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "10/03/26", "year": "2026", "month": "03", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 17.01}, {"date": "10/03/26", "year": "2026", "month": "03", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 67.27}, {"date": "10/03/26", "year": "2026", "month": "03", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 486.06}, {"date": "13/03/26", "year": "2026", "month": "03", "cc": "ADMINISTRATIVO", "cat": "SERVS. ADVOCATICIOS", "fav": "GAUDENCIO SOCIEDADE DE ADVOGAD", "val": 5400.0}, {"date": "17/03/26", "year": "2026", "month": "03", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "Ups Do Brasil Remessas Express", "val": 285.93}, {"date": "20/03/26", "year": "2026", "month": "03", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 664.2}, {"date": "25/03/26", "year": "2026", "month": "03", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 84.67}, {"date": "02/04/26", "year": "2026", "month": "04", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "RAFAEL DOS SANTOS DO ROSARIO", "val": 1200.0}, {"date": "02/04/26", "year": "2026", "month": "04", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "02/04/26", "year": "2026", "month": "04", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "02/04/26", "year": "2026", "month": "04", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 3000.0}, {"date": "02/04/26", "year": "2026", "month": "04", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "02/04/26", "year": "2026", "month": "04", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "02/04/26", "year": "2026", "month": "04", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "09/04/26", "year": "2026", "month": "04", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "The SSL Store", "val": 2733.19}, {"date": "09/04/26", "year": "2026", "month": "04", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 1690.21}, {"date": "09/04/26", "year": "2026", "month": "04", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "09/04/26", "year": "2026", "month": "04", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 493.96}, {"date": "09/04/26", "year": "2026", "month": "04", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 17.29}, {"date": "10/04/26", "year": "2026", "month": "04", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 89.34}, {"date": "09/04/26", "year": "2026", "month": "04", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "The SSL Store", "val": 95.66}, {"date": "20/04/26", "year": "2026", "month": "04", "cc": "OPERACIONAL", "cat": "INSS", "fav": "RECEITA FEDERAL", "val": 502.51}, {"date": "24/04/26", "year": "2026", "month": "04", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 112.46}, {"date": "30/04/26", "year": "2026", "month": "04", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 685.22}, {"date": "05/05/26", "year": "2026", "month": "05", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/05/26", "year": "2026", "month": "05", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/05/26", "year": "2026", "month": "05", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/05/26", "year": "2026", "month": "05", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "05/05/26", "year": "2026", "month": "05", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "05/05/26", "year": "2026", "month": "05", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "RAFAEL DOS SANTOS DO ROSARIO", "val": 800.0}, {"date": "05/05/26", "year": "2026", "month": "05", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "SAULO SILVESTRE DOS SANTOS", "val": 681.82}, {"date": "06/05/26", "year": "2026", "month": "05", "cc": "ADMINISTRATIVO", "cat": "SERVS. ADVOCATICIOS", "fav": "GAUDENCIO SOCIEDADE DE ADVOGAD", "val": 12200.0}, {"date": "08/05/26", "year": "2026", "month": "05", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 3387.6}, {"date": "08/05/26", "year": "2026", "month": "05", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "11/05/26", "year": "2026", "month": "05", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 58.82}, {"date": "08/05/26", "year": "2026", "month": "05", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 16.56}, {"date": "08/05/26", "year": "2026", "month": "05", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "GOOGLE", "val": 686.0}, {"date": "08/05/26", "year": "2026", "month": "05", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 473.24}, {"date": "08/05/26", "year": "2026", "month": "05", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "AMAZON", "val": 422.7}, {"date": "20/05/26", "year": "2026", "month": "05", "cc": "OPERACIONAL", "cat": "INSS", "fav": "RECEITA FEDERAL", "val": 502.51}, {"date": "25/05/26", "year": "2026", "month": "05", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 74.04}, {"date": "26/05/26", "year": "2026", "month": "05", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RENATA RONA GARIB", "val": 2045.45}, {"date": "26/05/26", "year": "2026", "month": "05", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 41666.66}, {"date": "05/06/26", "year": "2026", "month": "06", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/06/26", "year": "2026", "month": "06", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "05/06/26", "year": "2026", "month": "06", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "05/06/26", "year": "2026", "month": "06", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/06/26", "year": "2026", "month": "06", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "RAFAEL DOS SANTOS DO ROSARIO", "val": 1200.0}, {"date": "05/06/26", "year": "2026", "month": "06", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 132.52}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "BANCO INTER", "val": 16.56}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "AMAZON AWS SERVICOS BR", "val": 432.37}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "LINKEDIN", "val": 150.0}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 3282.93}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "GOOGLE WORKSPACE", "val": 686.0}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 473.14}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 48.83}, {"date": "15/06/26", "year": "2026", "month": "06", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 41666.66}, {"date": "10/06/26", "year": "2026", "month": "06", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "Coldzera Cs E-sports Ltda", "val": 10000.0}, {"date": "11/06/26", "year": "2026", "month": "06", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RENATA RONA GARIB", "val": 5000.0}, {"date": "19/06/26", "year": "2026", "month": "06", "cc": "OPERACIONAL", "cat": "INSS", "fav": "RECEITA FEDERAL", "val": 502.51}, {"date": "19/06/26", "year": "2026", "month": "06", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 61.47}, {"date": "30/06/26", "year": "2026", "month": "06", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "GA COMERCIAL LTDA", "val": 580.0}, {"date": "06/07/26", "year": "2026", "month": "07", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "06/07/26", "year": "2026", "month": "07", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "06/07/26", "year": "2026", "month": "07", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "06/07/26", "year": "2026", "month": "07", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "07/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "GA COMERCIAL LTDA", "val": 580.0}, {"date": "06/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "Veriff Brazil Ltda", "val": 98.51}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "AMAZON AWS SERVICOS BR", "val": 420.27}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 22.29}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 17.16}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "GOOGLE WORKSPACE", "val": 715.4}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "ADIANT. FORNECEDORES", "val": 4666.68}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 3517.18}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 490.33}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "08/07/26", "year": "2026", "month": "07", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "06/07/26", "year": "2026", "month": "07", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RENATA RONA GARIB", "val": 5000.0}, {"date": "14/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "Veriff Brazil Ltda", "val": 246.03}, {"date": "14/07/26", "year": "2026", "month": "07", "cc": "SOCIAL MEDIA - DESIGN", "cat": "REEMB DESPESAS GERAIS", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 630.24}, {"date": "14/07/26", "year": "2026", "month": "07", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 41666.66}, {"date": "20/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 1025.52}, {"date": "15/07/26", "year": "2026", "month": "07", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "RAFAEL DOS SANTOS DO ROSARIO", "val": 300.0}, {"date": "24/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 23.06}, {"date": "31/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 499.95}, {"date": "31/07/26", "year": "2026", "month": "07", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "ESTARTAR REGISTRO DE MARCAS LT", "val": 1000.0}, {"date": "03/08/26", "year": "2026", "month": "08", "cc": "TRANSITORIO", "cat": "ESTORNO_DEVOLU\u00c7\u00c3O (-)", "fav": "FELIPE GONCALVES BOLONHANI", "val": 30.0}, {"date": "05/08/26", "year": "2026", "month": "08", "cc": "TRANSITORIO", "cat": "ESTORNO_DEVOLU\u00c7\u00c3O (-)", "fav": "FELIPE GONCALVES BOLONHANI", "val": 20.0}, {"date": "05/08/26", "year": "2026", "month": "08", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/08/26", "year": "2026", "month": "08", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/08/26", "year": "2026", "month": "08", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "05/08/26", "year": "2026", "month": "08", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/08/26", "year": "2026", "month": "08", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "05/08/26", "year": "2026", "month": "08", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 20000.0}, {"date": "06/08/26", "year": "2026", "month": "08", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RENATA RONA GARIB", "val": 5000.0}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 478.75}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 16.76}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "GOOGLE WORKSPACE", "val": 784.0}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "ADIANT. FORNECEDORES", "val": 4666.66}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 39.38}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 335.37}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "ADMINISTRATIVO", "cat": "SISTEMAS OPERACIONAIS", "fav": "AMAZON AWS SERVICOS BR", "val": 380.37}, {"date": "10/08/26", "year": "2026", "month": "08", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "12/08/26", "year": "2026", "month": "08", "cc": "TRANSITORIO", "cat": "ESTORNO_DEVOLU\u00c7\u00c3O (-)", "fav": "FELIPE GONCALVES BOLONHANI", "val": 20.0}, {"date": "12/08/26", "year": "2026", "month": "08", "cc": "TRANSITORIO", "cat": "ESTORNO_DEVOLU\u00c7\u00c3O (-)", "fav": "FELIPE GONCALVES BOLONHANI", "val": 20.0}, {"date": "20/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "INSS", "fav": "RECEITA FEDERAL", "val": 502.51}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "Veriff Brazil Ltda", "val": 254.96}, {"date": "21/08/26", "year": "2026", "month": "08", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 20833.33}, {"date": "25/08/26", "year": "2026", "month": "08", "cc": "OPERACIONAL", "cat": "CSRF", "fav": "RECEITA FEDERAL", "val": 82.64}];
+const DB_ORCADO_DET = [{"date": "05/09/26", "mes": "2026-09", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "05/09/26", "mes": "2026-09", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RENATA RONA GARIB", "val": 5000.0}, {"date": "05/09/26", "mes": "2026-09", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/09/26", "mes": "2026-09", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/09/26", "mes": "2026-09", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/09/26", "mes": "2026-09", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "10/09/26", "mes": "2026-09", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "10/09/26", "mes": "2026-09", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 499.66}, {"date": "10/09/26", "mes": "2026-09", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 20833.33}, {"date": "10/09/26", "mes": "2026-09", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 1200.0}, {"date": "10/09/26", "mes": "2026-09", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 20.0}, {"date": "10/09/26", "mes": "2026-09", "cc": "OPERACIONAL", "cat": "SERVI\u00c7O PRESTADOS POR TERCEIROS", "fav": "ADIANT. FORNECEDORES", "val": 4666.68}, {"date": "05/10/26", "mes": "2026-10", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/10/26", "mes": "2026-10", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "05/10/26", "mes": "2026-10", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RENATA RONA GARIB", "val": 5000.0}, {"date": "05/10/26", "mes": "2026-10", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/10/26", "mes": "2026-10", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "05/10/26", "mes": "2026-10", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "10/10/26", "mes": "2026-10", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 1200.0}, {"date": "10/10/26", "mes": "2026-10", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 20833.33}, {"date": "10/10/26", "mes": "2026-10", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 20.0}, {"date": "10/10/26", "mes": "2026-10", "cc": "ADMINISTRATIVO", "cat": "COMPRA DE ATIVO IMOBILIZADO", "fav": "AGP TECNOLOGIA EM INFORMATICA ", "val": 289.8}, {"date": "10/10/26", "mes": "2026-10", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 499.66}, {"date": "05/11/26", "mes": "2026-11", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RENATA RONA GARIB", "val": 5000.0}, {"date": "05/11/26", "mes": "2026-11", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "05/11/26", "mes": "2026-11", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/11/26", "mes": "2026-11", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/11/26", "mes": "2026-11", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "05/11/26", "mes": "2026-11", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "10/11/26", "mes": "2026-11", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 20.0}, {"date": "10/11/26", "mes": "2026-11", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 1200.0}, {"date": "10/11/26", "mes": "2026-11", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 20833.33}, {"date": "10/11/26", "mes": "2026-11", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 499.66}, {"date": "02/12/26", "mes": "2026-12", "cc": "ADMINISTRATIVO", "cat": "SERVS. CERTIFICADO DIGITAL", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 235.0}, {"date": "05/12/26", "mes": "2026-12", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE CONTABILIDADE", "fav": "ALBUQUERQUE CONTABILIDADE & GE", "val": 430.0}, {"date": "05/12/26", "mes": "2026-12", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RENATA RONA GARIB", "val": 5000.0}, {"date": "05/12/26", "mes": "2026-12", "cc": "COMMUNITY MANAGER", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "RODRIGO DE SOUZA BARBOSA DA SI", "val": 2500.0}, {"date": "05/12/26", "mes": "2026-12", "cc": "SOCIAL MEDIA - DESIGN", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LARA DE OLIVEIRA BISAGGIO", "val": 5500.0}, {"date": "05/12/26", "mes": "2026-12", "cc": "ADMINISTRATIVO", "cat": "SERVS. DE ASSESSORIA E CONSULTORIA", "fav": "C3 GESTAO ADMINISTRATIVA E FIN", "val": 3200.0}, {"date": "05/12/26", "mes": "2026-12", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SAL\u00c1RIOS E ORDENADOS ADM", "fav": "LUCAS GABRIEL MONTEIRO DE OLIV", "val": 3700.0}, {"date": "10/12/26", "mes": "2026-12", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SISTEMAS OPERACIONAIS", "fav": "SOWORK", "val": 499.66}, {"date": "10/12/26", "mes": "2026-12", "cc": "OPERACIONAL", "cat": "ISS", "fav": "PREFEITURA DE S\u00c3O PAULO", "val": 20.0}, {"date": "10/12/26", "mes": "2026-12", "cc": "TECNOLOGIA - DESENVOLVIMENTO", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "PAIN GAMING ESPORTES ELETRONIC", "val": 20833.33}, {"date": "10/12/26", "mes": "2026-12", "cc": "MKT - INFLUENCERS", "cat": "SERVS. DE PUBLICIDADE E PROPAGANDA", "fav": "FACEBOOK", "val": 1200.0}];
 
 const B2_ROWS = [
   {key:'nov25', label:'Nov/25', year:'2025', month:'11', aplicacao:490000, resgate:0, rend_b:2708, irf:0, rend:2708},
@@ -829,8 +916,11 @@ function showPage(id, tabEl) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
   if (tabEl) tabEl.classList.add('active');
+  const PAGE_NAMES = {home:'Visão Geral', b4:'Resultado Operacional', b1:'Custódia de Jogadores', b2:'Capital & Investimento', b3:'Conta Corrente Sócio', b5:'Orçado'};
+  const ptEl = document.getElementById('print-title-page');
+  if(ptEl) ptEl.textContent = 'P\u00e1gina: ' + (PAGE_NAMES[id]||id);
   window.scrollTo({top:0, behavior:'instant'});
-  ({home:renderHome,b1:renderB1,b2:renderB2,b3:renderB3,b4:renderB4})[id]?.();
+  ({home:renderHome,b1:renderB1,b2:renderB2,b3:renderB3,b4:renderB4,b5:renderB5})[id]?.();
 }
 
 function setFilter(bloco, type, val, btn) {
@@ -1080,7 +1170,7 @@ function drawBar(id, labels, datasets, opts={}) {
   // Value labels on top of each bar column (only for static charts with showValues)
   // showValues: all stacks | showValueStack: only specific stack key
   if(opts.showValues || opts.showValueStack) {
-    ctx.font = 'bold 8.5px system-ui,sans-serif';
+    ctx.font = 'bold '+(opts.valueFontSize||8.5)+'px system-ui,sans-serif';
     ctx.textAlign = 'center';
     // Group by stack
     const stackTotals = {};
@@ -1109,7 +1199,9 @@ function drawBar(id, labels, datasets, opts={}) {
         ctx.fillStyle = 'rgba(30,30,30,0.85)';
         const tw = ctx.measureText(label).width;
         const xc = PAD.left + xi*slotW + slotW/2;
-        ctx.fillRect(xc - tw/2 - 2, yLabel - 8, tw + 4, 10);
+        const fs2 = opts.valueFontSize||8.5;
+        const boxH = fs2+1.5;
+        ctx.fillRect(xc - tw/2 - 2, yLabel - boxH + 2, tw + 4, boxH);
         ctx.fillStyle = '#fff';
         ctx.fillText(label, xc, yLabel);
       });
@@ -1118,13 +1210,18 @@ function drawBar(id, labels, datasets, opts={}) {
 
   // X labels
   ctx.fillStyle = COLORS.ink;
-  ctx.font = '8.5px system-ui,sans-serif';
+  ctx.font = (opts.xLabelFontSize||8.5)+'px system-ui,sans-serif';
   ctx.textAlign = 'center';
   const hitRegs = [];
+  const rotateLbls = opts.rotateLabels !== false;
   labels.forEach((lbl,xi)=>{
     const x = PAD.left + xi*slotW + slotW/2;
-    ctx.save(); ctx.translate(x, h-PAD.bottom+14); ctx.rotate(-0.6);
-    ctx.fillText(lbl, 0, 0); ctx.restore();
+    if(rotateLbls){
+      ctx.save(); ctx.translate(x, h-PAD.bottom+14); ctx.rotate(-0.6);
+      ctx.fillText(lbl, 0, 0); ctx.restore();
+    } else {
+      ctx.fillText(lbl, x, h-PAD.bottom+16);
+    }
     // Register hit region for this slot
     hitRegs.push({x: PAD.left + xi*slotW, w: slotW, xi, label: lbl});
   });
@@ -1159,7 +1256,7 @@ function drawLine(id, labels, datasets, opts={}) {
   if(!c) return;
   const {ctx, w, h} = c;
 
-  const PAD = {top:16, right:10, bottom:44, left:52};
+  const PAD = {top: opts.legend!==false ? 26 : 16, right:10, bottom:44, left:52};
   const cw = w - PAD.left - PAD.right;
   const ch = h - PAD.top - PAD.bottom;
 
@@ -1229,11 +1326,13 @@ function drawLine(id, labels, datasets, opts={}) {
         const x = PAD.left + xi*slotW;
         const yp = PAD.top + ch - (ch*(v-mnV)/spn);
         const label = v>=1000000?'R$'+(v/1000000).toFixed(1)+'M':v>=1000?'R$'+(v/1000).toFixed(0)+'K':'R$'+v.toFixed(0);
-        ctx.font='bold 8.5px system-ui,sans-serif'; ctx.textAlign='center';
+        const fs = opts.valueFontSize||8.5;
+        ctx.font='bold '+fs+'px system-ui,sans-serif'; ctx.textAlign='center';
         const yL = Math.max(yp-3, PAD.top+9);
         const tw = ctx.measureText(label).width;
         ctx.fillStyle='rgba(30,30,30,0.85)';
-        ctx.fillRect(x-tw/2-2,yL-8,tw+4,10);
+        const boxH = fs+1.5;
+        ctx.fillRect(x-tw/2-2,yL-boxH+2,tw+4,boxH);
         ctx.fillStyle='#fff';
         ctx.fillText(label,x,yL);
       });
@@ -1247,6 +1346,21 @@ function drawLine(id, labels, datasets, opts={}) {
     ctx.save(); ctx.translate(x, h-PAD.bottom+14); ctx.rotate(-0.6);
     ctx.fillText(lbl,0,0); ctx.restore();
   });
+
+  // Legend
+  if(opts.legend !== false){
+    let lx = PAD.left;
+    const ly = 10;
+    datasets.forEach(ds=>{
+      ctx.fillStyle = ds.borderColor||ds.backgroundColor||COLORS.blue;
+      ctx.fillRect(lx, ly-6, 10, 8);
+      ctx.fillStyle = COLORS.ink;
+      ctx.font = '9px system-ui,sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(ds.label||'', lx+13, ly+1);
+      lx += ctx.measureText(ds.label||'').width + 28;
+    });
+  }
 }
 
 // -- HORIZONTAL BAR -----------------------------------------
@@ -1389,22 +1503,29 @@ function renderHome() {
   const custodiaBreakeven = queimaMedia > 0 ? Math.round(queimaMedia / 0.20) : 0;
 
   document.getElementById('h-rec').textContent = fmtR(recTotal,2);
+  if(document.getElementById('h-rec-sub')){
+    document.getElementById('h-rec-sub').textContent = 'Taxa de Adm. 20% · valor recebido (acumulado)';
+  }
   document.getElementById('h-desp').textContent = fmtR(despTotal);
+  if(document.getElementById('h-media3')) document.getElementById('h-media3').textContent = fmtR(Math.round(queimaMedia));
   if(document.getElementById('h-runway'))
     document.getElementById('h-runway').textContent = runway + ' meses';
   if(document.getElementById('h-breakeven'))
     document.getElementById('h-breakeven').textContent = fmtR(custodiaBreakeven) + '/mes';
+  if(document.getElementById('h-breakeven-sub')){
+    document.getElementById('h-breakeven-sub').textContent = 'Despesa média ÷ 20% = receita de gamers necess.';
+  }
 
   const labels = MESES_R.map(k=>LABEL_MAP[k]);
 
   drawBar('h-chartOp', labels, [
-    {label:'20% devida 2025',  data:MESES_R.map(k=>REC20_2025[k]||0),   backgroundColor:COLORS.gray+'44', borderColor:COLORS.grayB, borderWidth:1, stack:'r'},
-    {label:'Receita Inter',    data:MESES_R.map(k=>DB[k].rec_inter),     backgroundColor:COLORS.greenA,   borderColor:COLORS.green, borderWidth:1, stack:'r'},
-    {label:'Despesa realizada',data:MESES_R.map(k=>DB[k].desp_total),    backgroundColor:COLORS.redA,     borderColor:COLORS.red,   borderWidth:1, stack:'d', showValue:true},
+    {label:'Despesa realizada',data:MESES_R.map(k=>DB[k].desp_total),    backgroundColor:COLORS.redA,     borderColor:COLORS.red,   borderWidth:1, stack:'d'},
+    {label:'20% devida 2025',  data:MESES_R.map(k=>REC20_2025[k]||0),   type:'line', borderColor:COLORS.grayB, borderWidth:1.5},
+    {label:'Receita Inter',    data:MESES_R.map(k=>DB[k].rec_inter),     type:'line', borderColor:COLORS.green, borderWidth:2},
   ], {
-    height:180, legend:false, showValueStack:'d',
+    height:180, legend:true, showValueStack:'d', padRight:26,
     onHover: (e, reg) => showTT(e, makeTTHtml(MESES_R[reg.xi])),
-    onClick: (e, reg) => {}
+    onClick: (e, reg) => { const k=MESES_R[reg.xi]; if(DB[k]) openDetail(k); }
   });
 
   // Creditos com valores, Saques sem valores
@@ -1440,7 +1561,7 @@ function renderB1() {
   if(document.getElementById('b1k5')) document.getElementById('b1k5').textContent=fmtN(typeof SALDO_MP_REAL!=='undefined'?SALDO_MP_REAL:saldoRealAll);
   if(document.getElementById('b1k4-pago')) document.getElementById('b1k4-pago').textContent=fmtR(tTaxaPaga);
   if(document.getElementById('b1k6')) document.getElementById('b1k6').textContent='('+allKeys2.reduce((a,k)=>a+(DB_OUTRAS_TAXAS[k]||0),0).toLocaleString('pt-BR',{minimumFractionDigits:2})+')';
-  if(document.getElementById('b1k7')) document.getElementById('b1k7').textContent='('+allKeys2.reduce((a,k)=>a+(typeof DB_TARIFA!=='undefined'?(DB_TARIFA[k]||0):0),0).toLocaleString('pt-BR',{minimumFractionDigits:2})+')';
+  if(document.getElementById('b1k7')) document.getElementById('b1k7').textContent='('+keys.reduce((a,k)=>a+(typeof DB_TARIFA!=='undefined'?(DB_TARIFA[k]||0):0),0).toLocaleString('pt-BR',{minimumFractionDigits:2})+')';
 
   // Grafico Transicao de Banco - Custodia MP vs Inter (fixo, todo o periodo)
   if(typeof DB_CUST_BANCO!=='undefined' && document.getElementById('b1-chartBanco')){
@@ -1449,7 +1570,7 @@ function renderB1() {
     drawLine('b1-chartBanco', MESES_R.map(k=>LABEL_MAP[k]), [
       {label:'Mercado Pago', data:mpSerie,    borderColor:COLORS.blue,  fill:false, borderWidth:2},
       {label:'Banco Inter',  data:interSerie, borderColor:COLORS.green, fill:false, borderWidth:2},
-    ], {height:140, legend:true});
+    ], {height:160, legend:true, showValues:true, valueFontSize:10.5});
   }
 
   // Grafico FIXO - sempre todo o periodo (nao varia com filtro)
@@ -1515,20 +1636,37 @@ function renderB2() {
     const meses = B2_ROWS.filter(r=>r.resgate>0).map(r=>r.label);
     if(meses.length>0) el_resgP.textContent = meses[0]+'-'+meses[meses.length-1];
   }
+  const el_aplicP = document.getElementById('b2-aplic-period');
+  if(el_aplicP){
+    const mesesAplic = B2_ROWS.filter(r=>r.aplicacao>0).map(r=>r.label);
+    el_aplicP.textContent = mesesAplic.length>1
+      ? mesesAplic[0]+' + '+mesesAplic[mesesAplic.length-1]
+      : (mesesAplic[0]||'-');
+  }
 
   // ── Extrato tbody - gera linhas dinamicamente ──────────────────────────────
   const tbody = document.getElementById('b2-tbody');
   if(tbody){
     tbody.innerHTML='';
+    // Saldo acumulado calculado sobre TODO o historico (nao so o filtro ativo),
+    // para o saldo de cada linha ser sempre correto independente do filtro Ano/Mes
+    let saldoAcumTotal = 0;
+    const saldoMap = {};
+    B2_ROWS.forEach(r=>{
+      saldoAcumTotal += (r.aplicacao||0) - (r.resgate||0) + (r.rend||0);
+      saldoMap[r.key] = saldoAcumTotal;
+    });
     active.forEach(r=>{
       const rb   = r.rend_b||0;
       const ir   = r.irf||0;
       const liq  = r.rend||0;
       const aplic = r.aplicacao||0;
       const resg  = r.resgate||0;
-      // Status badge
+      const saldoLinha = saldoMap[r.key]||0;
+      // Status badge - detecta transferencia entre bancos (aplic e resg no mesmo mes)
       let badge='';
-      if(aplic>0)       badge='<span class="badge bv">Aplicado</span>';
+      if(aplic>0 && resg>0) badge='<span class="badge bv">Transferência entre bancos</span>';
+      else if(aplic>0)       badge='<span class="badge bv">Aplicado</span>';
       else if(liq<0)    badge='<span class="badge br">Aten\u00e7\u00e3o IR</span>';
       else if(resg>0)   badge='<span class="badge bg">Resgatado</span>';
       else              badge='<span class="badge">-</span>';
@@ -1541,6 +1679,7 @@ function renderB2() {
         ${fmtCell(rb,     rb>0?'pos':'')}
         ${fmtCell(ir,     ir<0?'neg':'')}
         ${fmtCell(liq,    liq>0?'pos':liq<0?'neg':'')}
+        ${fmtCell(saldoLinha, 'pos')}
         <td>${badge}</td>
       </tr>`;
     });
@@ -1553,6 +1692,11 @@ function renderB2() {
   fEl('b2f-rend',   tRendB);
   fEl('b2f-ir',     tIrf);
   fEl('b2f-liq',    tRendL);
+  const saldoFinalEl = document.getElementById('b2f-saldo');
+  if(saldoFinalEl){
+    const saldoFinalTotal = B2_ROWS.reduce((a,r)=>a+(r.aplicacao||0)-(r.resgate||0)+(r.rend||0),0);
+    saldoFinalEl.textContent = Math.round(saldoFinalTotal).toLocaleString('pt-BR');
+  }
 
   // ── Gráfico ────────────────────────────────────────────────────────────────
   const labels     = active.map(r=>r.label);
@@ -1561,9 +1705,16 @@ function renderB2() {
   drawBar('b2-chart1', labels, [
     {label:'Resgates CDI',   data:resgates,    backgroundColor:COLORS.greenA+'44', borderColor:COLORS.green, borderWidth:1.5},
     {label:'Rendimento Liq.',data:rendimentos, type:'line', borderColor:COLORS.green, borderWidth:2},
-  ], {height:185, legend:true});
+  ], {height:185, legend:true, showValues:true});
 
   // Grafico Transicao de Banco - Saldo CDI Inter vs Safra (fixo, todo o periodo)
+  if(document.getElementById('b2-chartPie')){
+    drawDonut('b2-chartPie',
+      ['Equiprime','Waimea','Zeit'],
+      [360000,100000,90000],
+      ['#7c3aed','#a78bfa','#c4b5fd'],
+      {height:160});
+  }
   if(typeof DB_CDI_BANCO!=='undefined' && document.getElementById('b2-chartBanco')){
     const cdiMeses = MESES_R.filter(k=>(DB_CDI_BANCO.INTER&&k in DB_CDI_BANCO.INTER)||(DB_CDI_BANCO.SAFRA&&k in DB_CDI_BANCO.SAFRA));
     const interSerie = cdiMeses.map(k=>DB_CDI_BANCO.INTER?(DB_CDI_BANCO.INTER[k]||0):0);
@@ -1634,6 +1785,12 @@ function renderB4() {
   document.getElementById('b4k3').textContent='('+Math.round(tTot).toLocaleString('pt-BR')+')';
   // b4k5 removido (sem previsto)
   document.getElementById('b4k4').textContent='~R$ '+Math.round(tTot/nMeses).toLocaleString('pt-BR')+'/mes';
+  if(document.getElementById('b4k5-media3')){
+    const mesesComDesp2026 = MESES_R.filter(k=>DB[k].desp_total>0 && k.startsWith('2026'));
+    const ultimos3B4 = mesesComDesp2026.slice(-3);
+    const mediaB4 = ultimos3B4.length ? ultimos3B4.reduce((a,k)=>a+DB[k].desp_total,0)/ultimos3B4.length : 0;
+    document.getElementById('b4k5-media3').textContent = fmtR(Math.round(mediaB4));
+  }
 
   // Grafico FIXO - sempre todo o periodo realizado (nao varia com filtro)
   const allKeys = [...MESES_R];
@@ -1642,11 +1799,11 @@ function renderB4() {
   const allRecInter = allKeys.map(k=>DB[k].rec_inter);
   const allDespReal = allKeys.map(k=>{const d=DB[k];return d.desp_pessoal+d.desp_mkt+d.desp_juridico+d.desp_outros;});
   drawBar('b4-chartAll', allLabels, [
-    {label:'20% devida 2025', data:allR20, backgroundColor:COLORS.gray+'44', borderColor:COLORS.grayB, borderWidth:1, stack:'r'},
-    {label:'Receita Inter', data:allRecInter, backgroundColor:COLORS.greenA, borderColor:COLORS.green, borderWidth:1, stack:'r'},
     {label:'Desp. realizada', data:allDespReal, backgroundColor:COLORS.redA, borderColor:COLORS.red, borderWidth:1, stack:'d'},
+    {label:'20% devida 2025', data:allR20, type:'line', borderColor:COLORS.grayB, borderWidth:1.5},
+    {label:'Receita Inter', data:allRecInter, type:'line', borderColor:COLORS.green, borderWidth:2},
   ], {
-    height:240, legend:false, showValues:true,
+    height:240, legend:true, showValueStack:'d', padRight:26,
     onHover: (e, reg) => showTT(e, makeTTHtml(allKeys[reg.xi])),
     onClick: (e, reg) => { const k=allKeys[reg.xi]; if(DB[k]) openDetail(k); }
   });
@@ -1667,11 +1824,11 @@ function renderB4() {
     const rowTotal = CC_ORDER.reduce((a,cc)=>a+(DB_CC[cc]?.[k]||0), 0);
     if(!rowTotal) return;
     const cells = CC_ORDER.map(cc=>cell(DB_CC[cc]?.[k]||0)).join('');
-    tb.innerHTML+=`<tr><td>${LABEL_MAP[k]}</td>${cells}<td class="mono neg" style="text-align:right;font-weight:700">(${Math.round(rowTotal).toLocaleString('pt-BR')})</td></tr>`;
+    tb.innerHTML+=`<tr><td>${LABEL_MAP[k]}</td>${cells}<td class="mono neg" style="text-align:right">(${Math.round(rowTotal).toLocaleString('pt-BR')})</td></tr>`;
   });
   const tf=document.getElementById('b4-tfoot');
   const ccTotals = CC_ORDER.map(cc=>keysR.reduce((a,k)=>a+(DB_CC[cc]?.[k]||0),0));
-  const footCells = ccTotals.map(v=>v?`<td class="mono neg" style="text-align:right"><strong>(${Math.round(v).toLocaleString('pt-BR')})</strong></td>`:'<td></td>').join('');
+  const footCells = ccTotals.map(v=>v?`<td class="mono neg" style="text-align:right">(${Math.round(v).toLocaleString('pt-BR')})</td>`:'<td></td>').join('');
   tf.innerHTML=`<tr><td><strong>TOTAL</strong></td>${footCells}<td class="mono neg" style="text-align:right"><strong>(${Math.round(ccTotals.reduce((a,v)=>a+v,0)).toLocaleString('pt-BR')})</strong></td></tr>`;
 
   // Tabela real por categoria do Excel - filtra por ano+mes
@@ -1726,10 +1883,10 @@ function renderB4() {
     totRec+=r.val;
     const mesLabel = r.data_fin ? r.data_fin.slice(0,7) : '';
     const label = LABEL_MAP[mesLabel] || r.data_fin;
-    rtb.innerHTML+=`<tr><td>${label}</td><td>${r.banco}</td><td style="font-size:10px;color:var(--muted)">${r.subgrupo}</td><td style="font-size:10px;color:var(--muted)">${r.descricao}</td><td class="mono pos" style="text-align:right">${r.val.toLocaleString('pt-BR',{minimumFractionDigits:2})}</td><td><span class="badge bg">Recebido</span></td></tr>`;
+    rtb.innerHTML+=`<tr><td>${label}</td><td>${r.banco}</td><td style="font-size:10px;color:var(--muted)">${r.subgrupo}</td><td class="mono pos" style="text-align:right;font-size:15px;font-weight:600">${r.val.toLocaleString('pt-BR',{minimumFractionDigits:2})}</td><td><span class="badge bg">Recebido</span></td></tr>`;
   });
-  if(!REC_INTER_DETAIL.length) rtb.innerHTML=`<tr><td colspan="6" style="color:var(--muted);text-align:center;padding:12px">Nenhuma receita TAXA DE ADMINISTRACAO lancada</td></tr>`;
-  document.getElementById('b4-rec-tfoot').innerHTML=`<tr><td colspan="4"><strong>Total TAXA DE ADMINISTRACAO (+)</strong></td><td class="mono pos" style="text-align:right"><strong>${totRec.toLocaleString('pt-BR',{minimumFractionDigits:2})}</strong></td><td></td></tr>`;
+  if(!REC_INTER_DETAIL.length) rtb.innerHTML=`<tr><td colspan="5" style="color:var(--muted);text-align:center;padding:12px">Nenhuma receita TAXA DE ADMINISTRACAO lancada</td></tr>`;
+  document.getElementById('b4-rec-tfoot').innerHTML=`<tr><td colspan="3"><strong>Total TAXA DE ADMINISTRACAO (+)</strong></td><td class="mono pos" style="text-align:right;font-size:15px"><strong>${totRec.toLocaleString('pt-BR',{minimumFractionDigits:2})}</strong></td><td></td></tr>`;
 
 
   // -- Detalhamento de Lancamentos (filtro do B4) ----------------
@@ -1737,10 +1894,27 @@ function renderB4() {
   const detPer = document.getElementById('b4-det-period');
   if(detTb){
     detTb.innerHTML='';
+    const allDet = (typeof DB_DET!=='undefined'?DB_DET:[]);
+    // Popula dropdowns uma unica vez (so na primeira renderizacao)
+    const ccSel = document.getElementById('b4-det-cc');
+    const catSel = document.getElementById('b4-det-cat');
+    const favSel = document.getElementById('b4-det-fav');
+    if(ccSel && ccSel.options.length===1){
+      const uniq = (field) => [...new Set(allDet.map(r=>r[field]).filter(Boolean))].sort((a,b)=>a.localeCompare(b,'pt-BR'));
+      uniq('cc').forEach(v=>{ const o=document.createElement('option'); o.value=v; o.textContent=v; ccSel.appendChild(o); });
+      uniq('cat').forEach(v=>{ const o=document.createElement('option'); o.value=v; o.textContent=v; catSel.appendChild(o); });
+      uniq('fav').forEach(v=>{ const o=document.createElement('option'); o.value=v; o.textContent=v; favSel.appendChild(o); });
+    }
+    const selCC = ccSel ? ccSel.value : '';
+    const selCat = catSel ? catSel.value : '';
+    const selFav = favSel ? favSel.value : '';
     const q = (document.getElementById('b4-det-filter') ? document.getElementById('b4-det-filter').value : '').toLowerCase().trim();
-    const rows = (typeof DB_DET!=='undefined'?DB_DET:[]).filter(r=>
+    const rows = allDet.filter(r=>
       (fy==='todos' || r.year===fy) &&
       (fm==='todos' || r.month===fm) &&
+      (!selCC || r.cc===selCC) &&
+      (!selCat || r.cat===selCat) &&
+      (!selFav || r.fav===selFav) &&
       (!q || (r.fav+' '+r.cat+' '+r.cc+' '+r.date).toLowerCase().indexOf(q)>=0)
     );
     let html='';
@@ -1755,6 +1929,11 @@ function renderB4() {
     });
     detTb.innerHTML = html;
     if(detPer) detPer.textContent = rows.length + ' lan\u00e7amentos \u00b7 filtrado pela sele\u00e7\u00e3o acima';
+    const totalEl = document.getElementById('b4-det-total');
+    if(totalEl){
+      const total = rows.reduce((a,r)=>a+Math.abs(r.val),0);
+      totalEl.textContent = '(' + total.toLocaleString('pt-BR',{minimumFractionDigits:2}) + ')';
+    }
   }
 }
 
@@ -1902,8 +2081,90 @@ function openDetailAccum() {
 
   panel.style.right='0';
 };
+function renderB5() {
+  const meses = (typeof DB_ORCADO!=='undefined') ? Object.keys(DB_ORCADO).sort() : [];
+  const saldoCDI = B2_ROWS.reduce((a,r)=>a+(r.aplicacao||0),0)
+    - B2_ROWS.reduce((a,r)=>a+(r.resgate||0),0)
+    + B2_ROWS.reduce((a,r)=>a+(r.rend||0),0);
+  const saldoSafra = (typeof SALDO_SAFRA_CC!=='undefined') ? SALDO_SAFRA_CC : 0;
+  let saldo = saldoCDI + saldoSafra;
+  const saldoInicialGlobal = saldo;
+
+  if(document.getElementById('b5-saldo-ini')) document.getElementById('b5-saldo-ini').textContent = fmtN(Math.round(saldoInicialGlobal));
+
+  const tbody = document.getElementById('b5-tbody');
+  if(tbody){
+    tbody.innerHTML='';
+    let totalDesp = 0;
+    meses.forEach(m=>{
+      const desp = DB_ORCADO[m]||0;
+      totalDesp += desp;
+      const ini = saldo;
+      saldo -= desp;
+      const lbl = (typeof LABEL_MAP!=='undefined' && LABEL_MAP[m]) ? LABEL_MAP[m] : m;
+      const fmtCell = (v)=>`<td class="mono ${v<0?'neg':'pos'}" style="text-align:right">${v<0?'('+Math.abs(v).toLocaleString('pt-BR',{minimumFractionDigits:0})+')':v.toLocaleString('pt-BR',{minimumFractionDigits:0})}</td>`;
+      tbody.innerHTML += `<tr><td>${lbl}</td>${fmtCell(ini)}<td class="mono neg" style="text-align:right">(${desp.toLocaleString('pt-BR',{minimumFractionDigits:0})})</td>${fmtCell(saldo)}</tr>`;
+    });
+    if(document.getElementById('b5-desp-total')) document.getElementById('b5-desp-total').textContent = '('+totalDesp.toLocaleString('pt-BR',{minimumFractionDigits:0})+')';
+    const saldoFinalEl = document.getElementById('b5-saldo-fim');
+    if(saldoFinalEl){
+      saldoFinalEl.textContent = fmtN(Math.round(saldo));
+      saldoFinalEl.className = 'kpi-val ' + (saldo<0?'c-red':'c-green');
+    }
+    const mesFimEl = document.getElementById('b5-saldo-fim-mes');
+    if(mesFimEl && meses.length) mesFimEl.textContent = 'Final de ' + ((typeof LABEL_MAP!=='undefined' && LABEL_MAP[meses[meses.length-1]]) ? LABEL_MAP[meses[meses.length-1]] : meses[meses.length-1]);
+  }
+
+  // Grafico de barras - despesa orcada por mes
+  if(document.getElementById('b5-chart1')){
+    const labels = meses.map(m=>(typeof LABEL_MAP!=='undefined' && LABEL_MAP[m]) ? LABEL_MAP[m] : m);
+    drawBar('b5-chart1', labels, [
+      {label:'Despesa Or\u00e7ada', data:meses.map(m=>DB_ORCADO[m]||0), backgroundColor:COLORS.redA, borderColor:COLORS.red, borderWidth:1}
+    ], {height:180, legend:false, showValues:true, rotateLabels:false, valueFontSize:12, xLabelFontSize:11});
+  }
+
+  // Detalhamento
+  const detTb = document.getElementById('b5-det-tbody');
+  if(detTb && typeof DB_ORCADO_DET!=='undefined'){
+    detTb.innerHTML='';
+    const mesSel = document.getElementById('b5-det-mes');
+    const ccSel = document.getElementById('b5-det-cc');
+    if(mesSel && mesSel.options.length===1){
+      [...new Set(DB_ORCADO_DET.map(r=>r.mes))].sort().forEach(m=>{
+        const o=document.createElement('option'); o.value=m;
+        o.textContent=(typeof LABEL_MAP!=='undefined' && LABEL_MAP[m])?LABEL_MAP[m]:m;
+        mesSel.appendChild(o);
+      });
+      [...new Set(DB_ORCADO_DET.map(r=>r.cc))].sort((a,b)=>a.localeCompare(b,'pt-BR')).forEach(v=>{
+        const o=document.createElement('option'); o.value=v; o.textContent=v; ccSel.appendChild(o);
+      });
+    }
+    const selMes = mesSel ? mesSel.value : '';
+    const selCC = ccSel ? ccSel.value : '';
+    const rowsFiltradas = DB_ORCADO_DET.filter(r=>(!selMes||r.mes===selMes)&&(!selCC||r.cc===selCC));
+    rowsFiltradas.forEach(r=>{
+      detTb.innerHTML += `<tr><td>${r.date}</td><td>${r.cc}</td><td style="font-size:10px;color:var(--muted)">${r.cat}</td><td>${r.fav}</td><td class="mono neg" style="text-align:right">(${r.val.toLocaleString('pt-BR',{minimumFractionDigits:2})})</td></tr>`;
+    });
+    const perEl = document.getElementById('b5-det-period');
+    if(perEl) perEl.textContent = rowsFiltradas.length + ' lan\u00e7amentos j\u00e1 contratados';
+  }
+}
+
 // -- INIT ---------------------------------------------------
 window.addEventListener('load', renderHome);
+
+// Redesenha os graficos da pagina ativa com a largura correta antes/depois de imprimir
+// (canvas usa largura da tela no momento do render; sem isso, corta na impressao)
+const RENDER_MAP_PRINT = {home:renderHome,b1:renderB1,b2:renderB2,b3:renderB3,b4:renderB4,b5:renderB5};
+function reRenderActivePageForPrint(){
+  const activePage = document.querySelector('.page.active');
+  if(activePage){
+    const id = activePage.id.replace('page-','');
+    if(RENDER_MAP_PRINT[id]) RENDER_MAP_PRINT[id]();
+  }
+}
+window.addEventListener('beforeprint', reRenderActivePageForPrint);
+window.addEventListener('afterprint', reRenderActivePageForPrint);
 
 </script>
 </body>

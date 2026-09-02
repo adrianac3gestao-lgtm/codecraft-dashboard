@@ -140,6 +140,12 @@ def main():
 
     # -- Ler Excel --------------------------------------------
     print("\n  Lendo Excel...")
+    GERADO_EM = datetime.datetime.now().strftime("%d/%m/%Y \u00e0s %H:%M")
+    try:
+        excel_mtime = datetime.datetime.fromtimestamp(excel_path.stat().st_mtime)
+        EXCEL_MODIFICADO_EM = excel_mtime.strftime("%d/%m/%Y \u00e0s %H:%M")
+    except Exception:
+        EXCEL_MODIFICADO_EM = "desconhecido"
     try:
         df = pd.read_excel(str(excel_path), sheet_name=SHEET_NAME)
     except Exception as e:
@@ -169,6 +175,33 @@ def main():
 
     print(f"  Realizados: {meses_reais[0]} a {ultimo_real} ({len(meses_reais)} meses)")
 
+    # -- ORCADO: despesas com Vencimento futuro (sem Data Financ ainda) --
+    # Usa a data de Vencimento (nao Data Financ) para classificar por mes
+    df["Vencimento"] = pd.to_datetime(df["Vencimento"], errors="coerce")
+    df["venc_mes"] = df["Vencimento"].dt.to_period("M").astype(str)
+    orcado_rows = df[df["Data Financ"].isna() & df["Vencimento"].notna() & (df["Tipo"] == "Despesa")]
+    orcado_rows = orcado_rows[orcado_rows["venc_mes"] > ultimo_real]
+    DB_ORCADO_RAW = {}
+    for mes, grp in orcado_rows.groupby("venc_mes"):
+        DB_ORCADO_RAW[mes] = round(float(grp["Valor"].abs().sum()), 2)
+    meses_orcado = sorted(DB_ORCADO_RAW.keys())
+
+    DB_ORCADO_DET = []
+    for _, row in orcado_rows.iterrows():
+        dt = row.get("Vencimento", "")
+        dt_str = dt.strftime("%d/%m/%y") if hasattr(dt, "strftime") else str(dt)[:10]
+        mes = str(row.get("venc_mes", ""))
+        DB_ORCADO_DET.append({
+            "date": dt_str, "mes": mes,
+            "cc": norm_cat(str(row.get("Centro de Custo", "") or "")),
+            "cat": str(row.get("Categoria", "") or ""),
+            "fav": str(row.get("Nome", "") or "")[:30],
+            "val": round(abs(float(row.get("Valor", 0) or 0)), 2)
+        })
+
+    # -- Saldo real conta corrente SAFRA (operacional, soma bruta) --
+    SALDO_SAFRA_CC = round(float(df[df["banco_norm"] == "SAFRA"]["Valor"].sum()), 2)
+
     # -- Custodia: por SUBGRUPO (independente do banco) --------
     # Subgrupo SALDO RECEITA_CONTA CUSTODIA identifica a custodia
     # (funciona com MP hoje e com Inter/outros no futuro)
@@ -180,15 +213,17 @@ def main():
                 .groupby("mes_fin")["Valor"].sum().abs())
 
     # -- Custodia por BANCO (para grafico de transicao MP -> Inter) --
+    # So conta CREDITO_CUSTODIA DE JOGADORES (exclui creditos de teste de plataforma)
     BANCOS_CUST = ["MERCADO PAGO", "BANCO INTER"]
     DB_CUST_BANCO_RAW = {}
     for nome_banco in BANCOS_CUST:
-        sub_b = cust[(cust["banco_norm"] == nome_banco) & (cust["Tipo"] == "Receita")]
+        sub_b = cust[(cust["banco_norm"] == nome_banco) & (cust["Tipo"] == "Receita") &
+                     (cust["cat_norm"].str.contains("CREDITO_CUSTODIA", na=False))]
         serie_b = sub_b.groupby("mes_fin")["Valor"].sum()
         DB_CUST_BANCO_RAW[nome_banco] = {m: round(float(v), 2) for m, v in serie_b.items()}
 
-    # -- Tarifa Bancaria (nova taxa por transacao, so existe no Inter) --
-    tarifa_m = (df[df["cat_norm"].str.contains("TARIFA BANCARIA", na=False)]
+    # -- Taxa Rate Plataforma (mesma taxa de 2025 no MP, reapareceu no Inter) --
+    tarifa_m = (df[df["cat_norm"].str.contains("TAXAS RATE_PLATAFORMA", na=False)]
                 .groupby("mes_fin")["Valor"].sum().abs())
     DB_TARIFA_RAW = {m: round(float(v), 2) for m, v in tarifa_m.items()}
 
@@ -238,6 +273,7 @@ def main():
         (df["Tipo"] == "Despesa") &
         (~df["Subgrupo"].isin(EXCL_SUBGRUPOS)) &
         (~df["Subgrupo"].str.contains("SALDO RECEITA", na=False)) &
+        (~df["cat_norm"].str.contains("ENTRE CONTAS", na=False)) &
         (df["banco_norm"] != "MERCADO PAGO") &
         (df["mes_fin"].isin(meses_reais))
     ].copy()
@@ -492,8 +528,13 @@ def main():
         "const DB_CUST_BANCO = " + json.dumps(DB_CUST_BANCO_RAW, ensure_ascii=True) + ";",
         "const DB_TARIFA = " + json.dumps(DB_TARIFA_RAW, ensure_ascii=True) + ";",
         "const DB_CDI_BANCO = " + json.dumps(DB_CDI_BANCO_RAW, ensure_ascii=True) + ";",
+        "const DB_ORCADO = " + json.dumps(DB_ORCADO_RAW, ensure_ascii=True) + ";",
+        "const SALDO_SAFRA_CC = %s;" % SALDO_SAFRA_CC,
+        "const GERADO_EM = %s;" % json.dumps(GERADO_EM, ensure_ascii=True),
+        "const EXCEL_MODIFICADO_EM = %s;" % json.dumps(EXCEL_MODIFICADO_EM, ensure_ascii=True),
         "",
         "const DB_DET = " + json.dumps(DB_DET_RAW, ensure_ascii=True) + ";",
+        "const DB_ORCADO_DET = " + json.dumps(DB_ORCADO_DET, ensure_ascii=True) + ";",
         "",
         B2_ROWS_JS,
         "",

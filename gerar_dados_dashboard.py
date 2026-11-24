@@ -200,6 +200,8 @@ def main():
 
     # -- Saldo real conta corrente SAFRA (operacional, soma bruta) --
     SALDO_SAFRA_CC = round(float(df[df["banco_norm"] == "SAFRA"]["Valor"].sum()), 2)
+    # -- Saldo da conta Equiprime (paga as despesas com aporte do Bruno) --
+    SALDO_EQUIPRIME = round(float(df[df["banco_norm"] == "BANCO INTER - EQUIPRIME MUTUO"]["Valor"].sum()), 2)
 
     # -- Custodia: por SUBGRUPO (independente do banco) --------
     # Subgrupo SALDO RECEITA_CONTA CUSTODIA identifica a custodia
@@ -569,6 +571,7 @@ def main():
         "const DB_CDI_BANCO = " + json.dumps(DB_CDI_BANCO_RAW, ensure_ascii=True) + ";",
         "const DB_ORCADO = " + json.dumps(DB_ORCADO_RAW, ensure_ascii=True) + ";",
         "const SALDO_SAFRA_CC = %s;" % SALDO_SAFRA_CC,
+        "const SALDO_EQUIPRIME = %s;" % SALDO_EQUIPRIME,
         "const DB_APORTE_BRUNO = " + json.dumps(DB_APORTE_BRUNO_RAW, ensure_ascii=True) + ";",
         "const DB_SOCIO_DET = " + json.dumps(DB_SOCIO_DET, ensure_ascii=True) + ";",
         "const GERADO_EM = %s;" % json.dumps(GERADO_EM, ensure_ascii=True),

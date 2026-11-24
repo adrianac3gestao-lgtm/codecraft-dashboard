@@ -75,6 +75,13 @@ CAT_OUTROS   = [
     "SERVS. DE RECRUTAMENTO E SELECAO - PJ"
 ]
 
+# Categorias que o Nibo classifica em Atividades de investimento e NAO sao
+# despesa operacional (despesas de outras empresas e ativo imobilizado)
+CAT_FORA_OPERACIONAL = [
+    "SERVICOS PRESTADOS PJ - OUTRAS EMPRESAS", "COMPRA DE ATIVO IMOBILIZADO",
+    "APORTE BRUNO (SISTEMICO)",
+]
+
 CAT_COLORS = {
     "SALARIOS E ORDENADOS ADM":           "#f59e0b",
     "SERVS. DE PUBLICIDADE E PROPAGANDA": "#8b5cf6",
@@ -129,14 +136,6 @@ def main():
 
     print(f"\n  Excel : {excel_path.name}")
     print(f"  HTML  : {html_path.name}")
-
-    # Backup
-    data_hoje = datetime.date.today().strftime("%Y%m%d")
-    backup_dir = html_path.parent / "_backups_dashboard"
-    backup_dir.mkdir(exist_ok=True)
-    backup = backup_dir / f"{html_path.stem}.backup_{data_hoje}.html"
-    shutil.copy2(html_path, backup)
-    print(f"  Backup: _backups_dashboard/{backup.name}")
 
     # -- Ler Excel --------------------------------------------
     print("\n  Lendo Excel...")
@@ -274,9 +273,18 @@ def main():
         (~df["Subgrupo"].isin(EXCL_SUBGRUPOS)) &
         (~df["Subgrupo"].str.contains("SALDO RECEITA", na=False)) &
         (~df["cat_norm"].str.contains("ENTRE CONTAS", na=False)) &
+        (~df["cat_norm"].isin(CAT_FORA_OPERACIONAL)) &
         (df["banco_norm"] != "MERCADO PAGO") &
         (df["mes_fin"].isin(meses_reais))
     ].copy()
+
+    # Impostos retidos (IRPJ/CSLL/PIS/COFINS Retido sobre Pagamentos) entram no
+    # Nibo como valor positivo no grupo de despesas: abatem as despesas, igual ao painel.
+    ret_m = (df[(df["Subgrupo"].astype(str).str.upper() == "IMPOSTOS RETIDOS SOBRE PAGAMENTOS") &
+                (df["Tipo"] == "Receita") &
+                (df["banco_norm"] != "MERCADO PAGO") &
+                (df["mes_fin"].isin(meses_reais))]
+             .groupby("mes_fin")["Valor"].sum())
 
     def gr(dff, cats):
         return dff[dff["cat_norm"].isin(cats)].groupby("mes_fin")["Valor"].sum().abs()
@@ -284,7 +292,12 @@ def main():
     dp = gr(desp_b4, CAT_PESSOAL)
     dm = gr(desp_b4, CAT_MKT)
     dj = gr(desp_b4, CAT_JURIDICO)
-    do = gr(desp_b4, CAT_OUTROS)
+    # Outras despesas = todo o resto das despesas operacionais (catch-all),
+    # para o total bater com o Resultado Operacional do Nibo
+    do = (desp_b4[~desp_b4["cat_norm"].isin(CAT_PESSOAL + CAT_MKT + CAT_JURIDICO)]
+          .groupby("mes_fin")["Valor"].sum().abs())
+    for mes, v in ret_m.items():
+        do[mes] = do.get(mes, 0) - float(v)
 
     # Sem previstos - nao usa Orcado
     dpp = {}; dpm = {}; dpj = {}; dpo = {}
@@ -370,6 +383,16 @@ def main():
             saldo_acum += a - r + rb + ir
             serie_b[mes] = round(saldo_acum, 2)
         DB_CDI_BANCO_RAW[nome_b] = serie_b
+
+    # -- Aportes do Bruno mes a mes (subgrupo INVESTIMENTO BRUNO do Nibo) --
+    apb = df[df["cat_norm"] == "APORTE BRUNO (SISTEMICO)"].groupby("mes_fin")["Valor"].sum()
+    oem = df[df["cat_norm"] == "SERVICOS PRESTADOS PJ - OUTRAS EMPRESAS"].groupby("mes_fin")["Valor"].sum()
+    DB_APORTE_BRUNO_RAW = {}
+    for mes in sorted(set(apb.index) | set(oem.index)):
+        if not (isinstance(mes, str) and len(mes) == 7 and mes[4] == "-"):
+            continue
+        a = rnd(apb.get(mes, 0)); o = rnd(oem.get(mes, 0))
+        DB_APORTE_BRUNO_RAW[mes] = {"aporte": a, "outras_emp": o, "liquido": rnd(a + o)}
 
     # -- DB_CAT: despesas por categoria e mes -----------------
     DB_CAT_RAW = {}
@@ -530,6 +553,7 @@ def main():
         "const DB_CDI_BANCO = " + json.dumps(DB_CDI_BANCO_RAW, ensure_ascii=True) + ";",
         "const DB_ORCADO = " + json.dumps(DB_ORCADO_RAW, ensure_ascii=True) + ";",
         "const SALDO_SAFRA_CC = %s;" % SALDO_SAFRA_CC,
+        "const DB_APORTE_BRUNO = " + json.dumps(DB_APORTE_BRUNO_RAW, ensure_ascii=True) + ";",
         "const GERADO_EM = %s;" % json.dumps(GERADO_EM, ensure_ascii=True),
         "const EXCEL_MODIFICADO_EM = %s;" % json.dumps(EXCEL_MODIFICADO_EM, ensure_ascii=True),
         "",

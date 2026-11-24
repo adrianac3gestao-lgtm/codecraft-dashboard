@@ -394,6 +394,22 @@ def main():
         a = rnd(apb.get(mes, 0)); o = rnd(oem.get(mes, 0))
         DB_APORTE_BRUNO_RAW[mes] = {"aporte": a, "outras_emp": o, "liquido": rnd(a + o)}
 
+    # -- Aporte Equiprime e pago pelo Bruno (contas Equiprime e Bruno Niro) --
+    DB_SOCIO_DET = []
+    contas_socio = {"BANCO INTER - EQUIPRIME MUTUO": "EQUIPRIME", "BRUNO NIRO": "BRUNO"}
+    soc = df[df["banco_norm"].isin(contas_socio.keys()) & df["Data Financ"].notna()].sort_values("Data Financ")
+    for _, row in soc.iterrows():
+        dt = row["Data Financ"]
+        DB_SOCIO_DET.append({
+            "date": dt.strftime("%d/%m/%y"),
+            "mes": str(row["mes_fin"]),
+            "conta": contas_socio[row["banco_norm"]],
+            "cat": str(row.get("Categoria", "") or ""),
+            "fav": str(row.get("Nome", "") or "")[:30],
+            "val": rnd(row["Valor"]),
+            "aporte": 1 if row["cat_norm"] == "APORTE BRUNO (SISTEMICO)" else 0,
+        })
+
     # -- DB_CAT: despesas por categoria e mes -----------------
     DB_CAT_RAW = {}
     for _, row in desp_b4.iterrows():
@@ -554,6 +570,7 @@ def main():
         "const DB_ORCADO = " + json.dumps(DB_ORCADO_RAW, ensure_ascii=True) + ";",
         "const SALDO_SAFRA_CC = %s;" % SALDO_SAFRA_CC,
         "const DB_APORTE_BRUNO = " + json.dumps(DB_APORTE_BRUNO_RAW, ensure_ascii=True) + ";",
+        "const DB_SOCIO_DET = " + json.dumps(DB_SOCIO_DET, ensure_ascii=True) + ";",
         "const GERADO_EM = %s;" % json.dumps(GERADO_EM, ensure_ascii=True),
         "const EXCEL_MODIFICADO_EM = %s;" % json.dumps(EXCEL_MODIFICADO_EM, ensure_ascii=True),
         "",
